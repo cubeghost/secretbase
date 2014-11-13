@@ -49,6 +49,13 @@
         
         document.getElementById('theme').volume = 0.1;
         
+        $('form#save').submit(function(){
+        
+            var basehtml = $('.base').html();
+            $('#html').val(basehtml);
+        
+        });
+        
     
     });
     </script>
@@ -294,7 +301,11 @@
             <source src="ui/theme.ogg" type="audio/ogg" />
             <source src="ui/theme.mp3" type="audio/mpeg" />
         </audio>
-        <button class="save" style="margin-top:20px;">don't click me</button> 
+        <form id="save" action="save.php" method="post">
+            <input type="hidden" name="html" id="html" value="">
+            <input type="submit" name="save" class="save" style="margin-top:20px;" value="don't click me"> 
+            
+        </form>
     </section>
     <br/>
     <footer>you know what's hilarious? i made something almost exactly like this 8 years ago</footer>
