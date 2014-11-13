@@ -4,8 +4,6 @@
     <title>hoenn secret base designer</title>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="jquery.gridster.min.js"></script>
-    <link href="jquery.gridster.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="assets.js"></script>
     <script type="text/javascript">
     $(function() {
@@ -51,9 +49,27 @@
         
         $('form#save').submit(function(){
         
-            var basehtml = $('.base').html();
+            var rawhtml = $('.base').html();
+            var off_top = 96;
+            if ($(document).width() <= 1376) {
+                var off_left = 544;
+            } else {
+                var off_left = 800;
+            }
+            var pattern = /left:\s(\d+)px;\stop:\s(\d+)px;/g;
+            var level = 1;
+            var _match;
+            var basehtml = rawhtml.replace(pattern,function(string,match){
+                while ( _match = pattern.exec(rawhtml)){
+                     var _left = _match[1] - off_left;
+                     var _top = _match[2] - off_top;
+                     var str = 'left: ' + _left + 'px; top: ' + _top + 'px;';
+                     return str;
+                     level ++;
+                }
+            });
             $('#html').val(basehtml);
-        
+            
         });
         
     
@@ -72,7 +88,6 @@
         header img {vertical-align:-7px;}
         header span {margin:0 20px 0 24px;font-size:39px;} 
         
-        section.right {position:fixed;left:704px;}
         section.items {width:704px;margin-top:32px;float:left;background:#eee;margin-left:32px;} 
         section.base {float:left;margin-top:32px;margin-left:32px;} 
         section.controls {height:96px;float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;} 
@@ -109,7 +124,6 @@
         footer {margin-left:64px;margin-top:64px;}
         
         @media (max-width:1376px) {
-            section.right {left:448px;margin-left:64px;}
             section.items {width:448px;}
         }
         
