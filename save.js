@@ -9,12 +9,12 @@ page.onLoadFinished = function(status) {
   var url = page.url;
   console.log("Status:  " + status);
   console.log("Loaded:  " + url);
-  page.render("google.png");
-  phantom.exit();
-};
-
-page.open(address , function () {
+  page.open(address , function () {
     //page.render(system.args[2]);
     page.render('img.png');
     phantom.exit();
-});
+  });
+
+
+};
+
