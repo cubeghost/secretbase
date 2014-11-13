@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hoenn secret base designer</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="jquery.gridster.min.js"></script>
+    <link href="jquery.gridster.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="assets.js"></script>
+    <script type="text/javascript">
+    $(function() {
+    
+        $('.basetype').change(function(){
+            var base = $(this).val();
+            $('#base').attr('src',base);
+        });
+        
+        $('.base').droppable({
+            tolerance: 'pointer', 
+            accept: '.item',
+            drop: function(event, ui) {
+                $(this).append($(ui.helper).clone());
+                $('.base .item').addClass('new');
+                $('.new').removeClass('ui-draggable item');
+                $('.new').draggable({
+                    //containment: 'parent',
+                    grid: [8,8],
+                    zIndex: 9000
+                });
+            }
+        });
+        $('.trash').droppable({
+            drop: function(event, ui) {
+                $(ui.helper).remove();
+                $('.trash').animate({opacity:1},300);
+            },
+            over: function(event, ui) {
+                $('.trash').animate({opacity:'0.7'},300);
+            },
+            out: function(event, ui) {
+                $('.trash').animate({opacity:1},300);
+            }
+        });
+        $('.item').draggable({
+            helper: 'clone',
+            grid: [8,8]
+        });
+
+        
+        document.getElementById('theme').volume = 0.1;
+        
+    
+    });
+    </script>
+    <style type="text/css">
+    
+        @font-face {
+          font-family: 'pkmnrs';
+          src: url('pkmnrs.otf');
+        } 
+        
+        * {margin:0;padding:0;}
+        body {font-family:'pkmnrs',sans-serif;background:url(grass.png);font-size:13px;}
+        header {height:64px;margin-left:64px;clear:both;line-height:102px;-webkit-font-smoothing:none;font-smooth:never;}
+        header img {vertical-align:-7px;}
+        header span {margin:0 20px 0 24px;font-size:39px;} 
+        
+        section.right {position:fixed;left:704px;}
+        section.items {width:704px;margin-top:32px;float:left;background:#eee;margin-left:32px;} 
+        section.base {float:left;margin-top:32px;margin-left:32px;} 
+        section.controls {height:96px;float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;} 
+        section.trash {background:url(trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;margin-bottom:16px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
+        select.basetype {float:left;margin-left:32px;margin-right:16px;}
+        
+        img.item {z-index:900;margin:0;padding:0;}
+        .items span {padding:0;margin:0;display:block;float:left;}
+        span.dragging {background:rgba(112, 236, 255, 0.6);}
+        audio#theme {width:48px;float:left;margin-top:-64px;margin-left:128px;}
+        
+        br {clear:both;}
+        
+        ._1x1 {height:32px;width:32px;}
+        ._1x2 {height:32px;width:64px;}
+        ._2x1 {height:64px;width:32px;}
+        ._2x2 {height:64px;width:64px;}
+        ._2x3 {height:64px;width:96px;}
+        ._3x3 {height:96px;width:96px;}
+        ._2x4 {height:64px;width:128px;}
+        ._4x2 {height:128px;width:64px;}
+        
+        .border {
+            border-style: solid;
+            border-width: 12px;
+            -moz-border-image: url(border2.png) 12 16 12 round;
+            -webkit-border-image: url(border2.png) 12 16 12 round;
+            -o-border-image: url(border2.png) 12 16 12 round;
+            border-image: url(border2.png) 12 16 12 fill round;  
+            padding:4px;
+            background:none!important;
+        }
+        
+        footer {margin-left:64px;margin-top:64px;}
+        
+        @media (max-width:1376px) {
+            section.right {left:448px;margin-left:64px;}
+            section.items {width:448px;}
+        }
+        
+    </style>
+</head>
+<body>
+    <header><img src="flower.png"><span>hoenn secret base designer</span><img src="flower.png"></header>
+    <section class="items border">
+
+        <!-- 1x1 -->
+        <span class="_1x1"><img src="assets_2x/rsrh076.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh077.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh078.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh079.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh080.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh081.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh082.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh083.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh084.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh085.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh086.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh087.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh088.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh089.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh090.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh091.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh092.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh093.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh094.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh095.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh096.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh097.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh098.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh099.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh100.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh101.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh102.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh103.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh104.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh105.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh106.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh107.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh108.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh109.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh110.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh010.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh011.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh012.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh013.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh014.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh015.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh016.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh017.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh018.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh028.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh029.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh030.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh035.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh036.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh039.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh045.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh046.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh047.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh048.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh049.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh050.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh051.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh066.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh067.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh068.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh069.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh070.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh001.png" class="item drag"></span>
+        <span class="_1x1"><img src="assets_2x/rsrh002.png" class="item drag"></span>
+        <br/>
+
+        <!-- 1x2 -->
+        <span class="_1x2"><img src="assets_2x/rsrh071.png" class="item drag"></span>
+        <span class="_1x2"><img src="assets_2x/rsrh072.png" class="item drag"></span>
+        <span class="_1x2"><img src="assets_2x/rsrh073.png" class="item drag"></span>
+        <span class="_1x2"><img src="assets_2x/rsrh074.png" class="item drag"></span>
+        <span class="_1x2"><img src="assets_2x/rsrh075.png" class="item drag"></span>
+        <br/>
+
+        <!-- 3x3 -->
+        <span class="_3x3"><img src="assets_2x/rsrh006.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh007.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh008.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh009.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh031.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh032.png" class="item drag"></span>
+        <br>
+
+        <!-- 2x3 -->
+        <span class="_2x3"><img src="assets_2x/rsrh003.png" class="item drag"></span>
+        <span class="_2x3"><img src="assets_2x/rsrh004.png" class="item drag"></span>
+        <span class="_2x3"><img src="assets_2x/rsrh005.png" class="item drag"></span>
+        <!-- 2x4 -->
+        <span class="_2x4"><img src="assets_2x/rsrh038.png" class="item drag"></span>
+        <br>
+
+        <!-- 2x1 -->
+        <span class="_2x1"><img src="assets_2x/rsrh019.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh020.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh021.png" class="item drag"></span>   
+        <!-- 2x2 -->
+        <span class="_2x2"><img src="assets_2x/rsrh022.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh023.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh024.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh037.png" class="item drag"></span>
+        <br>
+
+        <!-- 2x1 -->
+        <span class="_2x1"><img src="assets_2x/rsrh025.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh026.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh027.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh033.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh040.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh041.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh042.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh043.png" class="item drag"></span>
+        <span class="_2x1"><img src="assets_2x/rsrh044.png" class="item drag"></span>
+        <br/>
+
+        <!-- 3x3 again -->
+        <span class="_3x3"><img src="assets_2x/rsrh059.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh060.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh061.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh062.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh063.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh064.png" class="item drag"></span>
+        <span class="_3x3"><img src="assets_2x/rsrh065.png" class="item drag"></span>
+        <br/>
+
+        <!-- 2x2 -->
+        <span class="_2x2"><img src="assets_2x/rsrh111.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh112.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh113.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh114.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh115.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh116.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh117.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh118.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh119.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/rsrh120.png" class="item drag"></span>
+
+        <br/>
+        <!-- 4x2 -->
+        <span class="_4x2"><img src="assets_2x/rsrh034.png" class="item drag"></span>
+        <br/>
+        
+        <!-- extra -->
+        <span class="_2x1"><img src="assets_2x/tv1.png" class="item drag"></span>
+        <span class="_2x2"><img src="assets_2x/bed.png" class="item drag"></span>
+    </section>
+    <section class="base">
+        <img src="bases_2x/base_0000_1.png" id="base">
+    </section>
+    <section class="controls border">
+        <section class="trash"><p>trash</p></section> 
+        <select class="basetype">
+            <option value="bases_2x/base_0000_1.png">Dirt Base 1</option>
+            <option value="bases_2x/base_0005_6.png">Dirt Base 2</option>
+            <option value="bases_2x/base_0016_17.png">Dirt Base 3</option>
+            <option value="bases_2x/base_0019_20.png">Dirt Base 4</option>
+            <option value="bases_2x/base_0001_2.png">Tree Base 1</option>
+            <option value="bases_2x/base_0015_16.png">Tree Base 2</option>
+            <option value="bases_2x/base_0018_19.png">Tree Base 3</option>
+            <option value="bases_2x/base_0021_22.png">Tree Base 4</option>
+            <option value="bases_2x/base_0002_3.png">Bush Base 1</option>
+            <option value="bases_2x/base_0011_12.png">Bush Base 2</option>
+            <option value="bases_2x/base_0014_15.png">Bush Base 3</option>
+            <option value="bases_2x/base_0020_21.png">Bush Base 4</option>
+            <option value="bases_2x/base_0003_4.png">Rock Base 1</option>
+            <option value="bases_2x/base_0007_8.png">Rock Base 2</option>
+            <option value="bases_2x/base_0009_10.png">Rock Base 3</option>
+            <option value="bases_2x/base_0017_18.png">Rock Base 4</option>
+            <option value="bases_2x/base_0006_7.png">Sand Base 1</option>
+            <option value="bases_2x/base_0008_9.png">Sand Base 2</option>
+            <option value="bases_2x/base_0012_13.png">Sand Base 3</option>
+            <option value="bases_2x/base_0022_23.png">Sand Base 4</option>
+            <option value="bases_2x/base_0004_5.png">Blue Base 1</option>
+            <option value="bases_2x/base_0010_11.png">Blue Base 2</option>
+            <option value="bases_2x/base_0013_14.png">Blue Base 3</option>
+            <option value="bases_2x/base_0023_24.png">Blue Base 4</option>
+        </select>
+        <br/>
+        <audio id="theme" controls loop>
+            <source src="theme.ogg" type="audio/ogg" />
+            <source src="theme.mp3" type="audio/mpeg" />
+         </audio>
+    </section>
+    <br/>
+    <footer>you know what's hilarious? i made something almost exactly like this 8 years ago</footer>
+</body>
