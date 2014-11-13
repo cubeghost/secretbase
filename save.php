@@ -1,6 +1,6 @@
 <?php
 
-set_time_limit(400000);
+set_time_limit(0);
 
 if(isset($_POST['html'])) {
     $html = $_POST['html'];
