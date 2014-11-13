@@ -1,5 +1,7 @@
 <?php
 
+set_time_limit(400000);
+
 if(isset($_POST['html'])) {
     $html = $_POST['html'];
     $width = $_POST['width'];

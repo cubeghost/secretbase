@@ -71,6 +71,7 @@
                 }
             });
             basehtml = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
+            basehtml = basehtml.replace('img src="','img src="../');
             $('#html').val(basehtml);
             
         });
