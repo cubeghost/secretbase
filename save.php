@@ -6,7 +6,7 @@ if(isset($_POST['html'])) {
     $height = $_POST['height'];
     
     $tempname = md5(rand());
-    chmod("tmp/", 0777);
+    //chmod("tmp/", 0777);
     $tempHTML = 'tmp/' . $tempname . '.html';
     $tempPNG = 'tmp/' . $tempname . '.png';
     file_put_contents($tempHTML,$html);
