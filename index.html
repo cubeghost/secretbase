@@ -49,6 +49,8 @@
         
         $('form#save').submit(function(){
         
+            $('#width').val( $('#base').width() );
+            $('#height').val( $('#base').width() );
             var rawhtml = $('.base').html();
             var off_top = 96;
             if ($(document).width() <= 1376) {
@@ -68,6 +70,7 @@
                      level ++;
                 }
             });
+            basehtml = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
             $('#html').val(basehtml);
             
         });
@@ -317,6 +320,8 @@
         </audio>
         <form id="save" action="save.php" method="post">
             <input type="hidden" name="html" id="html" value="">
+            <input type="hidden" name="width" id="width" value="">
+            <input type="hidden" name="height" id="height" value="">
             <input type="submit" name="save" class="save" style="margin-top:20px;" value="don't click me"> 
             
         </form>
