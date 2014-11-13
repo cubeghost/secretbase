@@ -2,6 +2,15 @@
 
 set_time_limit(0);
 
+if (ob_get_level()==0) ob_start();
+for ( $i = 0; $i < 450; $i++) {
+    print($i."\n");
+    ob_flush();
+    flush();
+    sleep(1);
+    } 
+
+
 if(isset($_POST['html'])) {
     $html = $_POST['html'];
     $width = $_POST['width'];
