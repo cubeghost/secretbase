@@ -56,11 +56,11 @@
     
         @font-face {
           font-family: 'pkmnrs';
-          src: url('pkmnrs.otf');
+          src: url('ui/pkmnrs.otf');
         } 
         
         * {margin:0;padding:0;}
-        body {font-family:'pkmnrs',sans-serif;background:url(grass.png);font-size:13px;}
+        body {font-family:'pkmnrs',sans-serif;background:url(ui/grass.png);font-size:13px;}
         header {height:64px;margin-left:64px;clear:both;line-height:102px;-webkit-font-smoothing:none;font-smooth:never;}
         header img {vertical-align:-7px;}
         header span {margin:0 20px 0 24px;font-size:39px;} 
@@ -69,7 +69,7 @@
         section.items {width:704px;margin-top:32px;float:left;background:#eee;margin-left:32px;} 
         section.base {float:left;margin-top:32px;margin-left:32px;} 
         section.controls {height:96px;float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;} 
-        section.trash {background:url(trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;margin-bottom:16px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
+        section.trash {background:url(ui/trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;margin-bottom:16px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
         select.basetype {float:left;margin-left:32px;margin-right:16px;}
         
         img.item {z-index:900;margin:0;padding:0;}
@@ -91,10 +91,10 @@
         .border {
             border-style: solid;
             border-width: 12px;
-            -moz-border-image: url(border2.png) 12 16 12 round;
-            -webkit-border-image: url(border2.png) 12 16 12 round;
-            -o-border-image: url(border2.png) 12 16 12 round;
-            border-image: url(border2.png) 12 16 12 fill round;  
+            -moz-border-image: url(ui/border.png) 12 16 12 round;
+            -webkit-border-image: url(ui/border.png) 12 16 12 round;
+            -o-border-image: url(ui/border.png) 12 16 12 round;
+            border-image: url(ui/border.png) 12 16 12 fill round;  
             padding:4px;
             background:none!important;
         }
@@ -109,7 +109,7 @@
     </style>
 </head>
 <body>
-    <header><img src="flower.png"><span>hoenn secret base designer</span><img src="flower.png"></header>
+    <header><img src="ui/flower.png"><span>hoenn secret base designer</span><img src="ui/flower.png"></header>
     <section class="items border">
 
         <!-- 1x1 -->
@@ -291,8 +291,8 @@
         </select>
         <br/>
         <audio id="theme" controls loop>
-            <source src="theme.ogg" type="audio/ogg" />
-            <source src="theme.mp3" type="audio/mpeg" />
+            <source src="ui/theme.ogg" type="audio/ogg" />
+            <source src="ui/theme.mp3" type="audio/mpeg" />
          </audio>
     </section>
     <br/>
