@@ -18,9 +18,10 @@ if(isset($_POST['html'])) {
     $tempHTML = 'tmp/' . $tempname . '.html';
     $tempPNG = 'tmp/' . $tempname . '.png';
     file_put_contents($tempHTML,$html);
-
+    echo 'almost done';
 
     exec('phantomjs save.js $tempHTML $tempPNG $width $height',$output,$error);
+    echo $error;
     
     
     header('Content-type: image/png');
