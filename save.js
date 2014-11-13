@@ -1,3 +1,4 @@
+var system = require('system');
 var page = require('webpage').create();
 var address = system.args[1];
 /*page.viewportSize = {
