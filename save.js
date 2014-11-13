@@ -1,6 +1,6 @@
 var system = require('system');
 var page = require('webpage').create();
-var address = system.args[1];
+var address = 'file.html';
 /*page.viewportSize = {
   width: system.args[3],
   height: system.args[4]
