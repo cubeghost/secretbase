@@ -100,7 +100,7 @@
         } 
         
         * {margin:0;padding:0;}
-        body {font-family:'pkmnrs',sans-serif;background:url(ui/grass.png);font-size:13px;}
+        body {font-family:'pkmnrs',sans-serif;background:url(ui/grass.png);font-size:13px;height:100%;}
         header {height:64px;margin-left:64px;clear:both;line-height:102px;-webkit-font-smoothing:none;font-smooth:never;}
         header img {vertical-align:-7px;}
         header span {margin:0 20px 0 24px;font-size:39px;} 
@@ -108,7 +108,7 @@
         section.items {width:704px;margin-top:32px;float:left;background:#eee;margin-left:32px;} 
         section.base {float:left;margin-top:32px;margin-left:32px;} 
 
-        section.controls {float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;} 
+        section.controls {float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;width:198px;} 
         section.trash {background:url(ui/trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
         select.basetype {float:left;margin-left:16px;border-radius:0px;border:2px solid #ddd;font-family:'pkmnrs';font-size:13px;cursor:pointer;width:160px;margin-bottom:16px;}
         select.basetype:focus {outline:none;border-color:#73bfa1;}
@@ -117,6 +117,8 @@
         form#save {background:url(ui/laptop.png) no-repeat center center;width:96px;height:96px;float:left;margin-top:2px;}
         input.save {width:96px;height:24px;background:none;border:none;font-size:13px;text-align:center;font-family:'pkmnrs',sans-serif;text-transform:uppercase;display:block;padding-bottom:96px;cursor:pointer;}
         input.save:focus {outline:none;}
+        
+        section.credits {float:left;margin:32px;}
         
         img.item {z-index:900;margin:0;padding:0;}
         .items span {padding:0;margin:0;display:block;float:left;}
@@ -143,9 +145,7 @@
             padding:4px;
             background:none!important;
         }
-        
-        footer {margin-left:64px;margin-top:64px;}
-        
+                
         @media (max-width:1376px) {
             section.items {width:448px;}
         }
@@ -350,5 +350,10 @@
         </section>
     </section>
     <br/>
-    <footer>in honor of Omega Ruby/Alpha Sapphire</footer>
+    <section class="credits border">
+      <p>Made in honor of the 11/21 release of Omega Ruby/Alpha Sapphire.</p>
+      <p>Special thanks to Nicki, Fedya, Cecile, and 10-year-old me (for coming up with this idea in the first place).</p>
+      <p>All images, sounds, and typefaces belong to Nintendo and GameFreak. No copyright infringement is intended.</p>
+    </section>
+
 </body>
