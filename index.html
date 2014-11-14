@@ -49,13 +49,17 @@
             var music = document.getElementById('theme');
             if (music.paused) {
                 music.play();
+                $(this).child('span').text('PAUSE MUSIC');
             } else {
                 music.pause();
+                $(this).child('span').text('PLAY MUSIC');
             }
         });
         
         $('form#save').submit(function(){
-        
+            
+            $(this).css({'background-image':'url(ui/laptop_blink.gif)'});
+            
             $('#width').val( $('#base').width() );
             $('#height').val( $('#base').height() );
             var rawhtml = $('.base').html();
@@ -82,9 +86,13 @@
             $('#html').val(basehtml3);
             
             $('input.submit').blur();
-            
+                    
         });
         
+        $(window).blur(function(){
+            $('form#save').css({'background-image':'url(ui/laptop.png)'});
+        });
+
     
     });
     </script>
@@ -109,10 +117,10 @@
         select.basetype {float:left;margin-left:16px;border-radius:0px;border:2px solid #ddd;font-family:'pkmnrs';font-size:13px;cursor:pointer;width:160px;margin-bottom:16px;}
         select.basetype:focus {outline:none;border-color:#73bfa1;}
         audio#theme {width:48px;margin-top:16px;margin-left:16px;}
-        section.audio {margin-left:16px;width:160px;cursor:pointer;background:url(ui/pokeball.png) no-repeat;text-indent:32px;}
+        section.audio {margin-left:16px;width:160px;cursor:pointer;background:url(ui/pokeball.png) no-repeat;text-indent:32px;line-height:25px;height:24px;vertical-align:middle;}
         form#save {background:url(ui/laptop.png) no-repeat center center;width:96px;height:96px;float:left;margin-top:2px;}
         input.save {width:96px;height:24px;background:none;border:none;font-size:13px;text-align:center;font-family:'pkmnrs',sans-serif;text-transform:uppercase;display:block;padding-bottom:96px;cursor:pointer;}
-        input.save:focus {outline:none;opacity:0.5;background:#f8f8f8;}
+        input.save:focus {outline:none;}
         
         img.item {z-index:900;margin:0;padding:0;}
         .items span {padding:0;margin:0;display:block;float:left;}
