@@ -21,10 +21,6 @@ if(isset($_POST['html'])) {
     header('Content-type: image/png');
     header('Content-Disposition: attachment; filename="base.png"');
     echo file_get_contents($png);
-    echo '<script type="text/javascript">';
-    echo '$("form#save").css({"background-image":"url(ui/laptop.png)"});';
-    echo 'console.log("downloaded");';
-    echo '</script>';
     
     unlink($tempHTML);
     
