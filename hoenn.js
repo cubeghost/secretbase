@@ -81,5 +81,24 @@
             $('#html').val(basehtml3);
                                 
         });
+        
+        function resize() {
+            $('section.items').height( ( $(window).height() - 176) ).queue(function(){
+                var left_height = $('section.items').height();
+                var right_height = $('section.base').height() + $('section.base').height() + 32;
+                if (right_height > left_height) {
+                    $('section.items').height(right_height);
+                } else {
+                    //
+                }
+                
+            });
+        }
+        
+        resize();
+        
+        $(window).resize(function(){
+            resize();   
+        });
             
     });
