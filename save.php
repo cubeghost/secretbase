@@ -22,6 +22,8 @@ if(isset($_POST['html'])) {
     header('Content-Disposition: attachment; filename="base.png"');
     echo file_get_contents($png);
     
+    unlink($tempHTML);
+    
 }
 
 ?>
