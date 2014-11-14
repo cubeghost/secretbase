@@ -58,7 +58,10 @@
         
         $('form#save').submit(function(){
                     
-            $(this).css({'background-image':'url(ui/laptop_blink.gif)'}).delay(3000).css({'background-image':'url(ui/laptop.png)'});
+            $(this).css({'background-image':'url(ui/laptop_blink.gif)'}).delay(3000).queue(function(){
+                $('form#save').css({'background-image':'url(ui/laptop.png)'});
+                $(this).dequeue();
+            });
 
             $('#width').val( $('#base').width() );
             $('#height').val( $('#base').height() );
