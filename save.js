@@ -8,8 +8,10 @@ page.open('http://secret-base.herokuapp.com/file.html', function() {
         console.log('Request ' + JSON.stringify(request, undefined, 4));
     };*/
     window.setTimeout(function () {
-          console.log('page opened');
-          page.render('base.png');
-          phantom.exit();
+        console.log('page opened');
+        page.render('base.png',function(){
+            console.log('base.png saved');
+        });
+        phantom.exit();
     }, 400);
 });
