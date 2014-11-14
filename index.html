@@ -85,15 +85,10 @@
             var basehtml3 = basehtml2.replace(/img src="/g,'img src="../');
             $('#html').val(basehtml3);
             
-            $('input.submit').blur();
+            //$('input.submit').blur();
                     
         });
-        
-        $(window).blur(function(){
-            $('form#save').css({'background-image':'url(ui/laptop.png)'});
-        });
-
-    
+            
     });
     </script>
     <style type="text/css">
