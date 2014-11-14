@@ -70,8 +70,8 @@
                      level ++;
                 }
             });
-            basehtml = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
-            basehtml = basehtml.replace('img src="','img src="../');
+            var basehtml2 = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
+            var basehtml3 = basehtml2.replace(/img src="/g,'img src="../');
             $('#html').val(basehtml);
             
         });
