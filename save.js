@@ -11,7 +11,8 @@ page.open('http://secret-base.herokuapp.com/file.html', function() {
         console.log('page opened');
         page.render('base.png',function(){
             console.log('base.png saved');
+            phantom.exit();
         });
-        phantom.exit();
+        
     }, 400);
 });
