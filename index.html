@@ -44,8 +44,15 @@
             grid: [8,8]
         });
 
-        
         document.getElementById('theme').volume = 0.1;
+        $('.audio').click(function(){
+            var music = document.getElementById('theme');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        });
         
         $('form#save').submit(function(){
         
@@ -74,6 +81,8 @@
             var basehtml3 = basehtml2.replace(/img src="/g,'img src="../');
             $('#html').val(basehtml3);
             
+            $('input.submit').blur();
+            
         });
         
     
@@ -96,11 +105,14 @@
         section.base {float:left;margin-top:32px;margin-left:32px;} 
 
         section.controls {float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;} 
-        section.trash {background:url(ui/trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;margin-bottom:16px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
-        select.basetype {float:left;margin-left:16px;}
+        section.trash {background:url(ui/trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
+        select.basetype {float:left;margin-left:16px;border-radius:0px;border:2px solid #ddd;font-family:'pkmnrs';font-size:13px;cursor:pointer;width:160px;margin-bottom:16px;}
+        select.basetype:focus {outline:none;border-color:#73bfa1;}
         audio#theme {width:48px;margin-top:16px;margin-left:16px;}
+        section.audio {margin-left:16px;width:160px;cursor:pointer;background:url(ui/pokeball.png) no-repeat;text-indent:32px;}
         form#save {background:url(ui/laptop.png) no-repeat center center;width:96px;height:96px;float:left;margin-top:2px;}
-        input.save {width:96px;height:24px;background:none;border:none;font-size:13px;text-align:center;font-family:'pkmnrs',sans-serif;text-transform:uppercase;display:block;padding-bottom:96px;}
+        input.save {width:96px;height:24px;background:none;border:none;font-size:13px;text-align:center;font-family:'pkmnrs',sans-serif;text-transform:uppercase;display:block;padding-bottom:96px;cursor:pointer;}
+        input.save:focus {outline:none;opacity:0.5;background:#f8f8f8;}
         
         img.item {z-index:900;margin:0;padding:0;}
         .items span {padding:0;margin:0;display:block;float:left;}
@@ -325,10 +337,13 @@
             <option value="bases_2x/base_0023_24.png">Blue Base 4</option>
         </select>
         <br/>
-        <audio id="theme" controls loop>
+        <audio id="theme" loop>
             <source src="ui/theme.ogg" type="audio/ogg" />
             <source src="ui/theme.mp3" type="audio/mpeg" />
         </audio>
+        <section class="audio">
+            <span>PLAY MUSIC</span>
+        </section>
     </section>
     <br/>
     <footer>in honor of Omega Ruby/Alpha Sapphire</footer>
