@@ -1,5 +1,3 @@
-    $(function() {
-    
         function resize() {
             $.when( $('section.items').height( ( $(window).height() - 176) ) ).then(function(){
                 var left_height = $(window).height() - 176;
@@ -10,8 +8,13 @@
                     //
                 }
             });
+            console.log('resized');
         }
-        
+
+
+
+    $(function() {
+    
         resize();
         
         $(window).resize(function(){
@@ -101,6 +104,10 @@
                                 
         });
         
-       resize();
+       
             
+    });
+    
+    $(window).load(function(){
+        resize();
     });
