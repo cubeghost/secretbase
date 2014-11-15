@@ -21,6 +21,7 @@
         $('.basetype').change(function(){
             var base = $(this).val();
             $('#base').attr('src',base);
+            resize();
         });
         
         $('.base').droppable({
@@ -100,6 +101,6 @@
                                 
         });
         
-       
+       resize();
             
     });
