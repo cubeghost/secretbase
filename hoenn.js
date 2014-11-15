@@ -83,15 +83,14 @@
         });
         
         function resize() {
-            $('section.items').height( ( $(window).height() - 176) ).queue(function(){
-                var left_height = $('section.items').height();
-                var right_height = $('section.base').height() + $('section.controls').height() + 32;
+            $.when( $('section.items').height( ( $(window).height() - 176) ) ).then(function(){
+                var left_height = $(window).height() - 176;
+                var right_height = $('section.base').height() + $('section.controls').height() + 48;
                 if (right_height > left_height) {
                     $('section.items').height(right_height);
                 } else {
                     //
                 }
-                
             });
         }
         
