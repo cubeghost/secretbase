@@ -12,7 +12,7 @@
                     //
                 }
             });
-            console.log('resized');
+            //console.log('resized');
         }
 
 
@@ -28,7 +28,7 @@
         $('.basetype').change(function(){
             var base = $(this).val();
             $('#base').attr('src',base);
-            resize();
+            setTimeout(resize,600);
         });
         
         $('.base').droppable({
