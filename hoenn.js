@@ -1,7 +1,11 @@
         function resize() {
             $.when( $('section.items').height( ( $(window).height() - 176) ) ).then(function(){
                 var left_height = $(window).height() - 176;
-                var right_height = $('section.base').height() + $('section.controls').height() + 48;
+                if ( $('section.controls').offsetTop > 112 ) {
+                    var right_height = $('section.base').height() + $('section.controls').height() + 48;
+                } else {
+                    var right_height = $('section.base').height();
+                }
                 if (right_height > left_height) {
                     $('section.items').height(right_height);
                 } else {
