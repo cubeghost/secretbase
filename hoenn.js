@@ -103,7 +103,7 @@
                 }
             });
             var basehtml2 = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
-            var basehtml3 = basehtml2.replace(/img src="/g,'img src="../');
+            var basehtml3 = basehtml2.replace(/src="/g,'src="../');
             $('#html').val(basehtml3);
                                 
         });
