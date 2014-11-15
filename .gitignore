@@ -1,8 +1,4 @@
 .DS_Store
 assets.csv
-Game Boy Advance - Pokemon Emerald - Secret Bases.png
-Game Boy Advance - Pokemon Emerald - Secret Bases.psd
-jquery.gridster.min.css
-jquery.gridster.min.js
-pkmnrs.ttf
-plank____.png
+ui/plank____.png
+assets.js
