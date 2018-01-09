@@ -1,29 +1,80 @@
 <?php
 
-if(isset($_POST['html'])) {
+require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+
+$phantomjscloud_api_key = getenv('PHANTOMJSCLOUD_API_KEY');
+
+function outputImage($image) {
+  header('Content-type: image/png');
+  header('Content-Disposition: attachment; filename="secretbase.png"');
+  echo $image;
+}
+
+function generateImage() {
+  global $phantomjscloud_api_key;
+
+  if(isset($_POST['html'])) {
     $html = $_POST['html'];
     $width = $_POST['width'];
     $height = $_POST['height'];
-    
-    $tempname = md5(rand());
-    chmod("tmp/", 0777);
-    $tempHTML = 'tmp/' . $tempname . '.html';
-    //$tempPNG = 'tmp/' . $tempname . '.png';
-    file_put_contents($tempHTML,$html);
 
-    $png = 'http://api.phantomjscloud.com/single/browser/v1/664746476ad374f19647c2627b4b42d6b4a72dfe/?targetUrl=http://base.goose.im/' . $tempHTML . '&loadImages=true&resourceUrlBlacklist=[]&viewportSize={"width":' . $width . ',"height":' . $height . ',+"zoomFactor":1.0+}&clipRectangle={+top:+0,+left:+0,+width:+' . $width . ',+height:+' . $height . '+}&requestType=png';
+    $json = array(
+      'url' => 'about:blank',
+      'content' => $html,
+      'renderType' => 'png',
+      'renderSettings' => array(
+        'clipRectangle' => array(
+          'top' => 0,
+          'left' => 0,
+          'height' => $height,
+          'width' => $width
+        )
+      )
+    );
 
+    $options = array(
+      'http' => array(
+          'header'  => "Content-type: application/json\r\n",
+          'method'  => 'POST',
+          'content' => json_encode($json)
+      )
+    );
 
-    //exec('phantomjs --progress save.js $tempHTML $tempPNG $width $height',$output,$error);
-    //echo $error;
-    
-    
-    header('Content-type: image/png');
-    header('Content-Disposition: attachment; filename="base.png"');
-    echo file_get_contents($png);
-    
-    unlink($tempHTML);
-    
+    $url = "http://api.phantomjscloud.com/api/browser/v2/{$phantomjscloud_api_key}/";
+
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    if ($result === FALSE) { /* Handle error */ }
+
+    outputImage($result);
+
+  } else {
+    echo 'Missing payload';
+  }
+}
+
+function unauthorized() {
+  http_response_code(401);
+  echo 'Unauthorized';
+}
+
+if (!isset($_SERVER['HTTP_REFERER'])) {
+  unauthorized();
+} else {
+
+  $referer = parse_url($_SERVER['HTTP_REFERER']);
+  $host = $referer['host'];
+
+  if ($host === 'localhost' || $host === 'bldwn.co') {
+    generateImage();
+  } else {
+    unauthorized();
+  }
+
 }
 
 ?>

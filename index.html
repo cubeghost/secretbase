@@ -10,22 +10,22 @@
     <script type="text/javascript">
     </script>
     <style type="text/css">
-    
+
         @font-face {
           font-family: 'pkmnrs';
           src: url('ui/pkmnrs.otf');
-        } 
-        
+        }
+
         * {margin:0;padding:0;}
         body {font-family:'pkmnrs',sans-serif;background:url(ui/grass.png);font-size:13px;height:100%;}
         header {height:64px;margin-left:64px;clear:both;line-height:102px;-webkit-font-smoothing:none;font-smooth:never;}
         header img {vertical-align:-7px;}
-        header span {margin:0 20px 0 24px;font-size:39px;} 
-        
-        section.items {width:704px;overflow-x:auto;margin-top:32px;float:left;background:#eee;margin-left:32px;} 
-        section.base {float:left;margin-top:32px;margin-left:32px;} 
+        header span {margin:0 20px 0 24px;font-size:39px;}
 
-        section.controls {float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;width:198px;} 
+        section.items {width:704px;overflow-x:auto;margin-top:32px;float:left;background:#eee;margin-left:32px;}
+        section.base {float:left;margin-top:32px;margin-left:32px;}
+
+        section.controls {float:left;margin-top:32px;margin-left:32px;padding:12px;margin-right:32px;width:198px;}
         section.trash {background:url(ui/trash.png) center center no-repeat;width:96px;height:96px;font-size:13px;z-index:-900;float:left;text-align:center;text-transform:uppercase;}
         select.basetype {float:left;margin-left:16px;border-radius:0px;border:2px solid #ddd;font-family:'pkmnrs';font-size:13px;cursor:pointer;width:160px;margin-bottom:16px;}
         select.basetype:focus {outline:none;border-color:#73bfa1;}
@@ -34,18 +34,18 @@
         form#save {background:url(ui/laptop.png) no-repeat center center;width:96px;height:96px;float:left;margin-top:2px;}
         input.save {width:96px;height:24px;background:none;border:none;font-size:13px;text-align:center;font-family:'pkmnrs',sans-serif;text-transform:uppercase;display:block;padding-bottom:96px;cursor:pointer;}
         input.save:focus {outline:none;}
-        
+
         section.credits {float:left;margin:32px;}
         section.credits p {margin:8px;}
-        
+
         img.item {z-index:900;margin:0;padding:0;}
         .items span {padding:0;margin:0;display:block;float:left;}
         span.dragging {background:rgba(112, 236, 255, 0.6);}
-        
+
         br {clear:both;}
-        
+
         a {color:#73bfa1;}
-        
+
         ._1x1 {height:32px;width:32px;}
         ._1x2 {height:32px;width:64px;}
         ._2x1 {height:64px;width:32px;}
@@ -54,24 +54,24 @@
         ._3x3 {height:96px;width:96px;}
         ._2x4 {height:64px;width:128px;}
         ._4x2 {height:128px;width:64px;}
-        
+
         .border {
             border-style: solid;
             border-width: 12px;
             -moz-border-image: url(ui/border.png) 12 16 12 round;
             -webkit-border-image: url(ui/border.png) 12 16 12 round;
             -o-border-image: url(ui/border.png) 12 16 12 round;
-            border-image: url(ui/border.png) 12 16 12 fill round;  
+            border-image: url(ui/border.png) 12 16 12 fill round;
             padding:4px;
             background:none!important;
         }
-                
+
         @media (max-width:1376px) {
             section.items {width:448px;}
         }
-        
+
         #paypal {position:fixed;bottom:32px;right:32px;}
-        
+
     </style>
 </head>
 <body>
@@ -173,7 +173,7 @@
         <!-- 2x1 -->
         <span class="_2x1"><img src="assets_2x/rsrh019.png" class="item drag"></span>
         <span class="_2x1"><img src="assets_2x/rsrh020.png" class="item drag"></span>
-        <span class="_2x1"><img src="assets_2x/rsrh021.png" class="item drag"></span>   
+        <span class="_2x1"><img src="assets_2x/rsrh021.png" class="item drag"></span>
         <!-- 2x2 -->
         <span class="_2x2"><img src="assets_2x/rsrh022.png" class="item drag"></span>
         <span class="_2x2"><img src="assets_2x/rsrh023.png" class="item drag"></span>
@@ -219,7 +219,7 @@
         <!-- 4x2 -->
         <span class="_4x2"><img src="assets_2x/rsrh034.png" class="item drag"></span>
         <br/>
-        
+
         <!-- extra -->
         <!--<span class="_2x1"><img src="assets_2x/tv1.png" class="item drag"></span>
         <span class="_2x2"><img src="assets_2x/bed.png" class="item drag"></span>-->
@@ -228,12 +228,12 @@
         <img src="bases_2x/base_0000_1.png" id="base">
     </section>
     <section class="controls border">
-        <section class="trash"><p>trash</p></section> 
+        <section class="trash"><p>trash</p></section>
         <form id="save" action="save.php" method="post">
             <input type="hidden" name="html" id="html" value="">
             <input type="hidden" name="width" id="width" value="">
             <input type="hidden" name="height" id="height" value="">
-            <input type="submit" name="save" class="save" value="save"> 
+            <input type="submit" name="save" class="save" value="save">
         </form>
         <br/>
         <select class="basetype">
@@ -273,17 +273,10 @@
     </section>
     <br/>
     <section class="credits border">
-        <p>Made by <a href="http://goose.im/">Alex</a> in honor of the 11/21 release of Omega Ruby/Alpha Sapphire.</p>
-        <p>Special thanks to Nicky, Fedya, Cecile, and 10-year-old me (for coming up with this idea in the first place).</p>
-        <p>All images, sounds, and typefaces belong to Nintendo and GameFreak. No copyright infringement is intended.</p>
+        <p>Made by <a href="https://bldwn.co/">Alex</a> for the 11/21 release of Omega Ruby/Alpha Sapphire.</p>
+        <p>Special thanks to Nicky, Vanya, Cecile, and 10-year-old me.</p>
+        <p>All images, sounds, and typefaces belong to Nintendo and GameFreak. No copyright infringement intended.</p>
     </section>
-    <form id="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-        <input type="hidden" name="cmd" value="_s-xclick">
-        <input type="hidden" name="hosted_button_id" value="5KN7LBC3M8LB2">
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-    </form>
-
     <img src="ui/laptop_blink.gif" style="display:none;">
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

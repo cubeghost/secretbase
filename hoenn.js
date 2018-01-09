@@ -18,21 +18,21 @@
 
 
     $(function() {
-    
+
         resize();
-        
+
         $(window).resize(function(){
-            resize();   
-        });    
-        
+            resize();
+        });
+
         $('.basetype').change(function(){
             var base = $(this).val();
             $('#base').attr('src',base);
             setTimeout(resize,600);
         });
-        
+
         $('.base').droppable({
-            tolerance: 'pointer', 
+            tolerance: 'pointer',
             accept: '.item',
             drop: function(event, ui) {
                 $(this).append($(ui.helper).clone());
@@ -73,9 +73,9 @@
                 $(this).children('span').text('PLAY MUSIC');
             }
         });
-        
+
         $('form#save').submit(function(){
-                    
+
             $(this).css({'background-image':'url(ui/laptop_blink.gif)'}).delay(3000).queue(function(){
                 $('form#save').css({'background-image':'url(ui/laptop.png)'});
                 $(this).dequeue();
@@ -103,15 +103,15 @@
                 }
             });
             var basehtml2 = basehtml.replace('id="base">','id="base" style="position:absolute;top:0;left:0;">');
-            var basehtml3 = basehtml2.replace(/src="/g,'src="../');
+            var basehtml3 = basehtml2.replace(/src="/g,'src="https://raw.githubusercontent.com/cubeghost/secretbase/master/');
             $('#html').val(basehtml3);
-                                
+
         });
-        
-       
-            
+
+
+
     });
-    
+
     $(window).load(function(){
         resize();
     });
