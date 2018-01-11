@@ -1,7 +1,6 @@
 .DS_Store
-assets.csv
-ui/plank____.png
-assets.js
 .env
 composer.phar
 /vendor/
+node_modules
+/public/build/

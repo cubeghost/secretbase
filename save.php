@@ -6,6 +6,7 @@ $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
 $phantomjscloud_api_key = getenv('PHANTOMJSCLOUD_API_KEY');
+$hostname = getenv('HOSTNAME');
 
 function outputImage($image) {
   header('Content-type: image/png');
@@ -69,7 +70,7 @@ if (!isset($_SERVER['HTTP_REFERER'])) {
   $referer = parse_url($_SERVER['HTTP_REFERER']);
   $host = $referer['host'];
 
-  if ($host === 'localhost' || $host === 'bldwn.co') {
+  if ($host === $hostname) {
     generateImage();
   } else {
     unauthorized();

@@ -1,0 +1,41 @@
+@import '_reset';
+
+@font-face {
+  font-family: 'pkmnrs';
+  src: url(/assets/pkmnrs.otf);
+}
+
+body {
+  font-family: 'pkmnrs', sans-serif;
+  background-image: url(/assets/grass.png);
+  font-size: 13px;
+  height: 100%;
+  line-height: 1.25;
+}
+
+.app {
+  padding: 2em;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: normal;
+}
+
+header h1 {
+  &:before,
+  &:after {
+    content: '';
+    height: 44px;
+    width: 56px;
+    display: inline-block;
+    background-image: url(/assets/flower.png);
+    vertical-align: -6px;
+  }
+  &:before {
+    margin-right: 0.5em;
+  }
+  &:after {
+    margin-left: 0.4em;
+  }
+}
