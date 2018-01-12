@@ -1,0 +1,18 @@
+:local {
+  .base {
+    flex: 1 0 auto;
+    position: relative;
+  }
+  .image {
+    position: relative;
+    display: block;
+  }
+  .items {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .items {
+  }
+}

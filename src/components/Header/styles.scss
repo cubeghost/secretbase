@@ -1,0 +1,26 @@
+:local {
+  .header {
+
+    h1 {
+      font-size: 3em;
+      font-weight: normal;
+
+      &:before,
+      &:after {
+        content: '';
+        height: 44px;
+        width: 56px;
+        display: inline-block;
+        background-image: url(/assets/flower.png);
+        vertical-align: -6px;
+      }
+      &:before {
+        margin-right: 0.5em;
+      }
+      &:after {
+        margin-left: 0.4em;
+      }
+    }
+
+  }
+}
