@@ -23,6 +23,7 @@ function getItemStyles({ initialOffset, currentOffset }) {
 
   let { x, y } = currentOffset;
 
+  // TODO determine how much of this is necessary/correct
   x -= initialOffset.x;
   y -= initialOffset.y;
   x = snapToGrid(x);

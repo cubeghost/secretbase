@@ -6,6 +6,11 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+require('babel-register')({
+  only: /src\/constants/
+});
+const { GRID_SPACING } = require('./src/constants');
+
 const config = {
   entry: {
     app: './src/index.js'
@@ -39,7 +44,12 @@ const config = {
               }
             },
             'postcss-loader',
-            'sass-loader'
+            {
+              loader: 'sass-loader',
+              options: {
+                data: '$gridSpacing: 8px;'
+              }
+            }
           ]
         })
       }

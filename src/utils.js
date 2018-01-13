@@ -1,5 +1,7 @@
+import { GRID_SPACING } from 'src/constants';
+
 export function snapToGrid(d) {
-  return Math.round(d / 8) * 8;
+  return Math.round(d / GRID_SPACING) * GRID_SPACING;
 }
 
 export function randomId() {

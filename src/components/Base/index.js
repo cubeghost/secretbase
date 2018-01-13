@@ -9,18 +9,16 @@ import { snapToGrid } from 'src/utils';
 import styles from './styles.scss';
 
 const dropTarget = {
-  canDrop: (props, monitor) => {
-    return monitor.isOver();
-  },
+  canDrop: (props, monitor) => monitor.isOver(),
   drop: (props, monitor, component) => {
+    const item = monitor.getItem();
     const baseOffset = component.ref.getBoundingClientRect();
     const clientOffset = monitor.getSourceClientOffset();
-    const item = monitor.getItem();
 
     const x = snapToGrid(Math.round(Math.abs(baseOffset.x - clientOffset.x)));
     const y = snapToGrid(Math.round(Math.abs(baseOffset.y - clientOffset.y)));
 
-    props.handleDrop(item, x, y);
+    return props.handleDrop(item, x, y);
   },
 };
 
@@ -30,7 +28,7 @@ const collect = connect => ({
 
 class Base extends Component {
   render() {
-    const { base, items, connectDropTarget } = this.props;
+    const { base, items, connectDropTarget, itemProps } = this.props;
 
     return connectDropTarget(
       <div className={styles.base} ref={(ref) => { this.ref = ref; }}>
@@ -39,6 +37,7 @@ class Base extends Component {
           {Object.keys(items).map(key => (
             <Item
               key={key}
+              {...itemProps}
               {...items[key]}
             />
           ))}
@@ -46,6 +45,12 @@ class Base extends Component {
       </div>
     );
   }
+};
+
+Base.propTypes = {
+  base: PropTypes.string.isRequired,
+  items: PropTypes.object.isRequired,
+  itemProps: PropTypes.object.isRequired,
 };
 
 export default DropTarget(

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -17,6 +18,7 @@ class App extends Component {
     super(props);
 
     this.handleDrop = this.handleDrop.bind(this);
+    this.removeItem = this.removeItem.bind(this);
 
     this.state = {
       base: 'base_0001_2',
@@ -44,19 +46,37 @@ class App extends Component {
     this.setState({ items });
   }
 
+  removeItem(item) {
+    const items = Object.assign({}, this.state.items);
+
+    delete items[item.id];
+
+    this.setState({ items });
+  }
+
   render() {
     const { base, items } = this.state;
+    const itemProps = {
+      removeItem: this.removeItem,
+    };
 
     return (
       <div className={styles.app}>
         <Header />
         <section className={styles.main}>
-          <ItemPicker />
-          <Base
-            base={base}
-            items={items}
-            handleDrop={this.handleDrop}
-          />
+          <div className={classNames(styles.column, styles.columnLeft)}>
+            <ItemPicker
+              itemProps={itemProps}
+            />
+          </div>
+          <div className={classNames(styles.column, styles.columnRight)}>
+            <Base
+              base={base}
+              items={items}
+              itemProps={itemProps}
+              handleDrop={this.handleDrop}
+            />
+          </div>
         </section>
         <CustomDragLayer />
       </div>

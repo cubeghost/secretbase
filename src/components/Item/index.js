@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
@@ -15,6 +14,12 @@ const dragSource = {
     x: props.x || 0,
     y: props.y || 0,
   }),
+  endDrag: (props, monitor, component) => {
+    const dropResult = monitor.getDropResult();
+    if (props.id && !dropResult) {
+      props.removeItem(props);
+    }
+  }
 };
 
 function collect(connect, monitor) {
@@ -22,7 +27,7 @@ function collect(connect, monitor) {
     connectDragSource: connect.dragSource(),
     connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging(),
-  }
+  };
 }
 
 class Item extends Component {
@@ -57,6 +62,7 @@ class Item extends Component {
 Item.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string,
+  removeItem: PropTypes.func,
 };
 
 export default DragSource(

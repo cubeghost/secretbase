@@ -6,9 +6,11 @@
 }
 
 body {
-  font-family: 'pkmnrs', sans-serif;
+  font-family: 'pkmnrs', monospace, sans-serif;
   background-image: url(/assets/grass.png);
   font-size: 13px;
   height: 100%;
   line-height: 1.25;
 }
+
+// $gridSpacing

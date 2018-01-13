@@ -1,3 +1,5 @@
+export const GRID_SPACING = 8;
+
 export const bases = [
   'base_0000_1',
   'base_0001_2',

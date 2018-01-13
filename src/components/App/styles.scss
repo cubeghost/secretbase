@@ -4,6 +4,13 @@
 
     .main {
       display: flex;
+
+      .columnLeft {
+        flex: 0 1 auto;
+      }
+      .columnRight {
+        flex: 1 0 auto;
+      }
     }
   }
 }
