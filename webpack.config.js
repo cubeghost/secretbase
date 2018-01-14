@@ -2,14 +2,13 @@ require('dotenv').config();
 
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 require('babel-register')({
   only: /src\/constants/
 });
-const { GRID_SPACING } = require('./src/constants');
+const { STRICT_GRID_SPACING } = require('./src/constants');
 
 const config = {
   entry: {
@@ -33,7 +32,7 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.scss/,
+        test: /\.s?css/,
         use: ExtractTextPlugin.extract({
           use: [
             {
@@ -47,7 +46,10 @@ const config = {
             {
               loader: 'sass-loader',
               options: {
-                data: '$gridSpacing: 8px;'
+                data: `$gridSpacing: ${STRICT_GRID_SPACING}px;`,
+                includePaths: [
+                  path.resolve(__dirname, 'src/styles')
+                ]
               }
             }
           ]

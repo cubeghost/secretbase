@@ -13,4 +13,10 @@ body {
   line-height: 1.25;
 }
 
+.border {
+  border-style: solid;
+  border-width: 12px;
+  border-image: url(/assets/border.png) 12 16 12 fill round;
+}
+
 // $gridSpacing

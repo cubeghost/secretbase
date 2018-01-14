@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import autobind from 'class-autobind';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import Header from 'components/Header';
+import Options from 'components/Options';
 import Base from 'components/Base';
 import ItemPicker from 'components/ItemPicker';
+import BasePicker from 'components/BasePicker';
 import CustomDragLayer from 'components/CustomDragLayer';
 
+import { STRICT_GRID_SPACING, EASY_GRID_SPACING } from 'src/constants';
 import { randomId } from 'src/utils';
 
 import styles from './styles.scss';
@@ -16,14 +20,19 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-
-    this.handleDrop = this.handleDrop.bind(this);
-    this.removeItem = this.removeItem.bind(this);
+    autobind(this);
 
     this.state = {
       base: 'base_0001_2',
       items: {},
+      enableUnofficialItems: false,
+      enableStrictGrid: true,
     };
+  }
+
+  snapToGrid(d) {
+    const gridSpacing = this.state.enableStrictGrid ? STRICT_GRID_SPACING : EASY_GRID_SPACING;
+    return Math.round(d / gridSpacing) * gridSpacing;
   }
 
   handleDrop(item, x, y) {
@@ -54,19 +63,59 @@ class App extends Component {
     this.setState({ items });
   }
 
+  selectBase(base) {
+    if (base) {
+      this.setState({
+        base: base.id
+      });
+    }
+  }
+
+  toggleUnofficialItems(event) {
+    this.setState({
+      enableUnofficialItems: event.target.checked
+    });
+  }
+
+  toggleStrictGrid(event) {
+    this.setState({
+      toggleStrictGrid: event.target.checked
+    });
+  }
+
+  clearItems() {
+    this.setState({
+      items: {}
+    });
+  }
+
   render() {
-    const { base, items } = this.state;
+    const { base, items, enableUnofficialItems, enableStrictGrid } = this.state;
     const itemProps = {
       removeItem: this.removeItem,
     };
 
     return (
       <div className={styles.app}>
-        <Header />
+        <div className={styles.top}>
+          <Header />
+          <BasePicker
+            base={base}
+            selectBase={this.selectBase}
+          />
+        </div>
         <section className={styles.main}>
           <div className={classNames(styles.column, styles.columnLeft)}>
+            <Options
+              enableUnofficialItems={enableUnofficialItems}
+              toggleUnofficialItems={this.toggleUnofficialItems}
+              enableStrictGrid={enableStrictGrid}
+              toggleStrictGrid={this.toggleStrictGrid}
+              clearItems={this.clearItems}
+            />
             <ItemPicker
               itemProps={itemProps}
+              enableUnofficialItems={enableUnofficialItems}
             />
           </div>
           <div className={classNames(styles.column, styles.columnRight)}>
@@ -75,10 +124,13 @@ class App extends Component {
               items={items}
               itemProps={itemProps}
               handleDrop={this.handleDrop}
+              snapToGrid={this.snapToGrid}
             />
           </div>
         </section>
-        <CustomDragLayer />
+        <CustomDragLayer
+          snapToGrid={this.snapToGrid}
+        />
       </div>
     );
   }

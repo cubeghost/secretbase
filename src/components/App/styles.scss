@@ -1,12 +1,29 @@
+@import 'variables';
+
 :local {
   .app {
-    padding: 32px;
+    padding: $padding--standard;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - (#{$padding--standard} * 2));
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $padding--standard / 2;
+      min-height: $height--header;
+      align-items: center;
+    }
 
     .main {
       display: flex;
+      height: 100%;
 
       .columnLeft {
         flex: 0 1 auto;
+        margin-right: $padding--standard;
+        display: flex;
+        flex-direction: column;
       }
       .columnRight {
         flex: 1 0 auto;

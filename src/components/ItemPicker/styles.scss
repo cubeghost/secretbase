@@ -1,5 +1,22 @@
+@import 'variables';
+
 :local {
   .picker {
+    height: calc(100% - (12px * 2));
+    overflow: hidden;
 
+    .scrollContainer {
+      overflow: scroll;
+      height: 100%;
+      padding: $padding--standard / 2;
+    }
+
+    .category {
+      padding-bottom: $padding--standard / 2;
+
+      p {
+        margin: 0;
+      }
+    }
   }
 }

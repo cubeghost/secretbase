@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import autobind from 'class-autobind';
 import { DragLayer } from 'react-dnd';
 
 import Item from 'components/Item';
-
-import { snapToGrid } from 'src/utils';
 
 import styles from './styles.scss';
 
@@ -16,30 +15,37 @@ const collect = monitor => ({
   isDragging: monitor.isDragging(),
 });
 
-function getItemStyles({ initialOffset, currentOffset }) {
-  if (!initialOffset || !currentOffset) {
-    return { display: 'none' };
-  }
-
-  let { x, y } = currentOffset;
-
-  // TODO determine how much of this is necessary/correct
-  x -= initialOffset.x;
-  y -= initialOffset.y;
-  x = snapToGrid(x);
-  y = snapToGrid(y);
-  x += initialOffset.x;
-  y += initialOffset.y;
-
-  return {
-    transform: `translate(${x}px, ${y}px)`
-  };
-}
-
 class CustomDragLayer extends Component {
 
+  constructor(props) {
+    super(props);
+    autobind(this);
+  }
+
+  getItemStyles() {
+    const { initialOffset, currentOffset, snapToGrid } = this.props;
+
+    if (!initialOffset || !currentOffset) {
+      return { display: 'none' };
+    }
+
+    let { x, y } = currentOffset;
+
+    // TODO determine how much of this is necessary/correct
+    x -= initialOffset.x;
+    y -= initialOffset.y;
+    x = snapToGrid(x);
+    y = snapToGrid(y);
+    x += initialOffset.x;
+    y += initialOffset.y;
+
+    return {
+      transform: `translate(${x}px, ${y}px)`
+    };
+  }
+
   render() {
-    const { item, isDragging, initialOffset, currentOffset } = this.props
+    const { item, isDragging } = this.props;
 
     if (!isDragging) {
       return null;
@@ -47,9 +53,9 @@ class CustomDragLayer extends Component {
 
     return (
       <div className={styles.customDragLayer}>
-        <Item type={item.type} style={getItemStyles({ initialOffset, currentOffset })} />
+        <Item type={item.type} style={this.getItemStyles()} />
       </div>
-    )
+    );
   }
 }
 
@@ -65,6 +71,7 @@ CustomDragLayer.propTypes = {
     y: PropTypes.number.isRequired,
   }),
   isDragging: PropTypes.bool.isRequired,
+  snapToGrid: PropTypes.func.isRequired,
 };
 
 export default DragLayer(collect)(CustomDragLayer);

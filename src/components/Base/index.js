@@ -4,13 +4,12 @@ import { DropTarget } from 'react-dnd';
 
 import Item, { ItemType } from 'components/Item';
 
-import { snapToGrid } from 'src/utils';
-
 import styles from './styles.scss';
 
 const dropTarget = {
   canDrop: (props, monitor) => monitor.isOver(),
   drop: (props, monitor, component) => {
+    const { snapToGrid } = props;
     const item = monitor.getItem();
     const baseOffset = component.ref.getBoundingClientRect();
     const clientOffset = monitor.getSourceClientOffset();
@@ -51,6 +50,7 @@ Base.propTypes = {
   base: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
   itemProps: PropTypes.object.isRequired,
+  snapToGrid: PropTypes.func.isRequired,
 };
 
 export default DropTarget(

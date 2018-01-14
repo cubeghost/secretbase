@@ -53,14 +53,14 @@ class Item extends Component {
 
     return connectDragSource(
       <div className={styles.item} style={mergedStyle}>
-        <img src={`/assets/items/${type}.png`} alt="" />
+        <img src={`/assets/items/${type}`} alt="" />
       </div>
     );
   }
 }
 
 Item.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired, // filename
   id: PropTypes.string,
   removeItem: PropTypes.func,
 };
