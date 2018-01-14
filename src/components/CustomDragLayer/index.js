@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import autobind from 'class-autobind';
 import { DragLayer } from 'react-dnd';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import Item from 'components/Item';
+
+import { POOF_DURATION } from 'src/constants';
 
 import styles from './styles.scss';
 
 const collect = monitor => ({
   item: monitor.getItem(),
-  itemType: monitor.getItemType(),
   initialOffset: monitor.getInitialSourceClientOffset(),
   currentOffset: monitor.getSourceClientOffset(),
   isDragging: monitor.isDragging(),
@@ -47,13 +49,16 @@ class CustomDragLayer extends Component {
   render() {
     const { item, isDragging } = this.props;
 
-    if (!isDragging) {
-      return null;
-    }
-
     return (
       <div className={styles.customDragLayer}>
-        <Item type={item.type} style={this.getItemStyles()} />
+        <TransitionGroup enter={false}>
+          {isDragging ? (
+            <CSSTransition classNames="poof" timeout={POOF_DURATION} key="dragLayerItem">
+              <Item type={item.type} style={this.getItemStyles()} />
+            </CSSTransition>
+          ) : null }
+        </TransitionGroup>
+
       </div>
     );
   }
@@ -61,7 +66,6 @@ class CustomDragLayer extends Component {
 
 CustomDragLayer.propTypes = {
   item: PropTypes.object,
-  itemType: PropTypes.string,
   initialOffset: PropTypes.shape({
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,

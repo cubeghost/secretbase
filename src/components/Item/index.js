@@ -38,7 +38,7 @@ class Item extends Component {
   }
 
   render() {
-    const { id, type, style, x, y, isDragging, connectDragSource } = this.props;
+    const { id, type, style, x, y, isRemoving, isDragging, connectDragSource } = this.props;
     const mergedStyle = style || {};
 
     if (x !== undefined && y !== undefined) {
@@ -47,7 +47,7 @@ class Item extends Component {
       mergedStyle.left = `${x}px`;
     }
 
-    if (id && isDragging) {
+    if (id && (isDragging || isRemoving)) {
       mergedStyle.opacity = 0;
     }
 

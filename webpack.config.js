@@ -8,7 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 require('babel-register')({
   only: /src\/constants/
 });
-const { STRICT_GRID_SPACING } = require('./src/constants');
+const { STRICT_GRID_SPACING, POOF_DURATION } = require('./src/constants');
 
 const config = {
   entry: {
@@ -46,7 +46,7 @@ const config = {
             {
               loader: 'sass-loader',
               options: {
-                data: `$gridSpacing: ${STRICT_GRID_SPACING}px;`,
+                data: `$gridSpacing: ${STRICT_GRID_SPACING}px;$poofDuration: ${POOF_DURATION}ms;`,
                 includePaths: [
                   path.resolve(__dirname, 'src/styles')
                 ]

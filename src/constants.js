@@ -1,6 +1,8 @@
 export const STRICT_GRID_SPACING = 32;
 export const EASY_GRID_SPACING = 8;
 
+export const POOF_DURATION = 480;
+
 export const bases = [
   { id: 'base_0000_1', label: 'Square Cave', type: 'cave' },
   { id: 'base_0005_6', label: 'Long Cave', type: 'cave' },
@@ -148,6 +150,8 @@ export const items = [
   { filename: 'rsrh119.png', category: 'doll_large' },
   { filename: 'rsrh120.png', category: 'doll_large' },
   { filename: 'laptop.png', category: 'device', unofficial: true },
+  { filename: 'pc.png', category: 'device', unofficial: true },
+  { filename: 'map.png', category: 'wall', unofficial: true },
 ];
 
 export const categories = [

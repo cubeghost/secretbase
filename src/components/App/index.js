@@ -11,7 +11,7 @@ import ItemPicker from 'components/ItemPicker';
 import BasePicker from 'components/BasePicker';
 import CustomDragLayer from 'components/CustomDragLayer';
 
-import { STRICT_GRID_SPACING, EASY_GRID_SPACING } from 'src/constants';
+import { STRICT_GRID_SPACING, EASY_GRID_SPACING, POOF_DURATION } from 'src/constants';
 import { randomId } from 'src/utils';
 
 import styles from './styles.scss';
@@ -58,9 +58,19 @@ class App extends Component {
   removeItem(item) {
     const items = Object.assign({}, this.state.items);
 
-    delete items[item.id];
+    items[item.id].isRemoving = true;
 
-    this.setState({ items });
+    this.setState({ items }, () => {
+      setTimeout(() => {
+
+        const items = Object.assign({}, this.state.items);
+
+        delete items[item.id];
+
+        this.setState({ items });
+
+      }, POOF_DURATION);
+    });
   }
 
   selectBase(base) {
