@@ -1,3 +1,5 @@
+@import 'mixins';
+
 :local {
   .base {
     position: relative;
@@ -5,6 +7,7 @@
   .image {
     position: relative;
     display: block;
+    @include pixelated;
   }
   .items {
     position: absolute;

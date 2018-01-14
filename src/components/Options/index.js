@@ -34,7 +34,7 @@ const Options = ({
       </label>
     </div>
     <div>
-      <button onClick={clearItems}>Clear</button>
+      <button onClick={clearItems}>Clear items</button>
     </div>
   </div>
 );

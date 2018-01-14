@@ -1,6 +1,9 @@
+@import 'mixins';
+
 :local {
   .item {
     display: inline-block;
+    @include pixelated;
 
     img {
       display: block;

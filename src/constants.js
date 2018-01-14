@@ -152,6 +152,8 @@ export const items = [
   { filename: 'laptop.png', category: 'device', unofficial: true },
   { filename: 'pc.png', category: 'device', unofficial: true },
   { filename: 'map.png', category: 'wall', unofficial: true },
+  { filename: 'plant1.png', category: 'plant', unofficial: true },
+  { filename: 'plant2.png', category: 'plant', unofficial: true },
 ];
 
 export const categories = [
