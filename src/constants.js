@@ -1,7 +1,7 @@
 export const STRICT_GRID_SPACING = 32;
 export const EASY_GRID_SPACING = 8;
 
-export const POOF_DURATION = 480;
+export const POOF_DURATION = 600;
 
 export const bases = [
   { id: 'base_0000_1', label: 'Square Cave', type: 'cave' },

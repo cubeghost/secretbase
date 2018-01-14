@@ -31,6 +31,7 @@ function collect(connect, monitor) {
 }
 
 class Item extends Component {
+
   componentDidMount() {
     this.props.connectDragPreview(getEmptyImage(), {
       captureDraggingState: true,

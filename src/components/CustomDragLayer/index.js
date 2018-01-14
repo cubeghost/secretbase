@@ -52,7 +52,7 @@ class CustomDragLayer extends Component {
     return (
       <div className={styles.customDragLayer}>
         <TransitionGroup enter={false}>
-          {isDragging ? (
+          {isDragging && item ? (
             <CSSTransition classNames="poof" timeout={POOF_DURATION} key="dragLayerItem">
               <Item type={item.type} style={this.getItemStyles()} />
             </CSSTransition>
