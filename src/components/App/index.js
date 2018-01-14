@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import classNames from 'classnames';
 import autobind from 'class-autobind';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import download from 'downloadjs';
 
 import Header from 'components/Header';
 import Options from 'components/Options';
@@ -10,6 +12,7 @@ import Base from 'components/Base';
 import ItemPicker from 'components/ItemPicker';
 import BasePicker from 'components/BasePicker';
 import CustomDragLayer from 'components/CustomDragLayer';
+import StaticRender from 'components/StaticRender';
 
 import { STRICT_GRID_SPACING, EASY_GRID_SPACING, POOF_DURATION } from 'src/constants';
 import { randomId } from 'src/utils';
@@ -99,6 +102,38 @@ class App extends Component {
     });
   }
 
+  save() {
+    const { base, items } = this.state;
+
+    const rendered = ReactDOMServer.renderToStaticMarkup(
+      <StaticRender
+        base={base}
+        items={items}
+      />
+    );
+    const { width, height } = document.getElementById('baseImage').getBoundingClientRect();
+    const stylesheet = document.styleSheets[0].href;
+
+    const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
+
+    fetch('/save.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        html,
+        width,
+        height
+      })
+    }).then(response => {
+      if (!response.ok) { throw Error(response.statusText); }
+      return response.blob();
+    }).then(blob => {
+      download(blob, `secretbase_${randomId()}.png`);
+    });
+  }
+
   render() {
     const { base, items, enableUnofficialItems, enableStrictGrid } = this.state;
     const itemProps = {
@@ -122,6 +157,7 @@ class App extends Component {
               enableStrictGrid={enableStrictGrid}
               toggleStrictGrid={this.toggleStrictGrid}
               clearItems={this.clearItems}
+              save={this.save}
             />
             <ItemPicker
               itemProps={itemProps}

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
+import { domainRoot } from 'src/utils';
+
 import styles from './styles.scss';
 
 export const ItemType = 'item';
@@ -30,6 +32,26 @@ function collect(connect, monitor) {
   };
 }
 
+export const RenderItem = ({ id, type, style, x, y, isRemoving, isDragging }) => {
+  const mergedStyle = style || {};
+
+  if (x !== undefined && y !== undefined) {
+    mergedStyle.position = 'absolute';
+    mergedStyle.top = `${y}px`;
+    mergedStyle.left = `${x}px`;
+  }
+
+  if (id && (isDragging || isRemoving)) {
+    mergedStyle.opacity = 0;
+  }
+
+  return (
+    <div className={styles.item} style={mergedStyle}>
+      <img src={`${domainRoot()}/assets/items/${type}`} alt="" />
+    </div>
+  );
+};
+
 class Item extends Component {
 
   componentDidMount() {
@@ -39,24 +61,11 @@ class Item extends Component {
   }
 
   render() {
-    const { id, type, style, x, y, isRemoving, isDragging, connectDragSource } = this.props;
-    const mergedStyle = style || {};
+    const { connectDragSource, ...otherProps } = this.props;
 
-    if (x !== undefined && y !== undefined) {
-      mergedStyle.position = 'absolute';
-      mergedStyle.top = `${y}px`;
-      mergedStyle.left = `${x}px`;
-    }
+    const item = RenderItem(otherProps);
 
-    if (id && (isDragging || isRemoving)) {
-      mergedStyle.opacity = 0;
-    }
-
-    return connectDragSource(
-      <div className={styles.item} style={mergedStyle}>
-        <img src={`/assets/items/${type}`} alt="" />
-      </div>
-    );
+    return connectDragSource(item);
   }
 }
 

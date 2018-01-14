@@ -17,10 +17,12 @@ function outputImage($image) {
 function generateImage() {
   global $phantomjscloud_api_key;
 
-  if(isset($_POST['html'])) {
-    $html = $_POST['html'];
-    $width = $_POST['width'];
-    $height = $_POST['height'];
+  $data = json_decode(file_get_contents('php://input'), true);
+
+  if(isset($data['html'])) {
+    $html = $data['html'];
+    $width = $data['width'];
+    $height = $data['height'];
 
     $json = array(
       'url' => 'about:blank',
@@ -38,7 +40,7 @@ function generateImage() {
 
     $options = array(
       'http' => array(
-          'header'  => "Content-type: application/json\r\n",
+          'header'  => "Content-Type: application/json\r\n",
           'method'  => 'POST',
           'content' => json_encode($json)
       )
@@ -49,7 +51,10 @@ function generateImage() {
     $context = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
 
-    if ($result === FALSE) { /* Handle error */ }
+    if ($result === FALSE) {
+      http_response_code(500);
+      echo 'Request failed';
+    }
 
     outputImage($result);
 

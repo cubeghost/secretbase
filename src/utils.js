@@ -1,7 +1,5 @@
-import { GRID_SPACING } from 'src/constants';
-
-export function snapToGrid(d) {
-  return Math.round(d / GRID_SPACING) * GRID_SPACING;
+export function domainRoot() {
+  return `${window.location.protocol}//${window.location.host}`;
 }
 
 export function randomId() {

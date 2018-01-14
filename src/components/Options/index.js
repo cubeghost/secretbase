@@ -9,6 +9,7 @@ const Options = ({
   enableStrictGrid,
   toggleStrictGrid,
   clearItems,
+  save,
 }) => (
   <div className={classNames(styles.options, 'border')}>
     <div>
@@ -35,6 +36,9 @@ const Options = ({
     </div>
     <div>
       <button onClick={clearItems}>Clear items</button>
+    </div>
+    <div>
+      <button onClick={save}>Save</button>
     </div>
   </div>
 );

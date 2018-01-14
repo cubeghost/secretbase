@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 :local {
   .header {
@@ -15,6 +16,7 @@
         display: inline-block;
         background-image: url(/assets/flower.png);
         vertical-align: -6px;
+        @include pixelated;
       }
       &:before {
         margin-right: 0.5em;

@@ -49,6 +49,10 @@ class CustomDragLayer extends Component {
   render() {
     const { item, isDragging } = this.props;
 
+    if (item && !item.type) {
+      return null;
+    }
+
     return (
       <div className={styles.customDragLayer}>
         <TransitionGroup enter={false}>
