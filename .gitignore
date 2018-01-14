@@ -4,3 +4,4 @@ composer.phar
 /vendor/
 node_modules
 /public/build/
+/public/assets/poof.png
