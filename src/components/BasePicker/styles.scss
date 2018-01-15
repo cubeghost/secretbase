@@ -1,6 +1,7 @@
+@import 'variables';
+
 :local {
   .basePicker {
-    margin-bottom: 1em;
     flex: 0 0 200px;
 
     .selectValue {
@@ -14,5 +15,11 @@
         margin-right: 8px;
       }
     }
+  }
+}
+
+:global {
+  .Select.is-focused:not(.is-open) > .Select-control {
+    // border-color: $color-green !important;
   }
 }

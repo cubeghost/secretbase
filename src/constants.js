@@ -3,6 +3,8 @@ export const EASY_GRID_SPACING = 8;
 
 export const POOF_DURATION = 600;
 
+export const LOCALSTORAGE_KEY = 'secretbase:save';
+
 export const bases = [
   { id: 'base_0000_1', label: 'Square Cave', type: 'cave' },
   { id: 'base_0005_6', label: 'Long Cave', type: 'cave' },

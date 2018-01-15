@@ -34,6 +34,7 @@
     "postcss-loader": "^2.0.10",
     "promise-polyfill": "^7.0.0",
     "prop-types": "^15.6.0",
+    "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
@@ -41,6 +42,7 @@
     "react-select": "^1.2.1",
     "react-transition-group": "^2.2.1",
     "sass-loader": "^6.0.6",
+    "store": "^2.0.12",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
     "whatwg-fetch": "^2.0.3"

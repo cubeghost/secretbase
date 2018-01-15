@@ -34,6 +34,8 @@ class CustomDragLayer extends Component {
     let { x, y } = currentOffset;
 
     // TODO determine how much of this is necessary/correct
+    // probably replace with something that corrects the delta
+    // of the offset with the position of <Base />
     x -= initialOffset.x;
     y -= initialOffset.y;
     x = snapToGrid(x);
@@ -62,7 +64,6 @@ class CustomDragLayer extends Component {
             </CSSTransition>
           ) : null }
         </TransitionGroup>
-
       </div>
     );
   }

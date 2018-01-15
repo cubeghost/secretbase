@@ -5,6 +5,8 @@ import autobind from 'class-autobind';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import download from 'downloadjs';
+import queryString from 'query-string';
+import store from 'store';
 
 import Header from 'components/Header';
 import Options from 'components/Options';
@@ -14,7 +16,12 @@ import BasePicker from 'components/BasePicker';
 import CustomDragLayer from 'components/CustomDragLayer';
 import StaticRender from 'components/StaticRender';
 
-import { STRICT_GRID_SPACING, EASY_GRID_SPACING, POOF_DURATION } from 'src/constants';
+import {
+  STRICT_GRID_SPACING,
+  EASY_GRID_SPACING,
+  POOF_DURATION,
+  LOCALSTORAGE_KEY
+} from 'src/constants';
 import { randomId } from 'src/utils';
 
 import styles from './styles.scss';
@@ -30,7 +37,74 @@ class App extends Component {
       items: {},
       enableUnofficialItems: false,
       enableStrictGrid: true,
+      isSaving: false,
+      loadedFromUrl: false,
     };
+  }
+
+  componentDidMount() {
+    // TODO move this shit
+    const acceptableKeys = Object.keys(this.state);
+
+    if (window.location.search) {
+      const parsed = queryString.parse(window.location.search);
+
+      if (parsed && parsed.save) {
+
+        let saveState;
+        try {
+          const saveStateString = window.atob(parsed.save);
+          saveState = JSON.parse(saveStateString);
+        } catch (e) {
+          console.log(e); // ignore
+        }
+
+        if (saveState) {
+          Object.keys(saveState).forEach(key => {
+            if (acceptableKeys.indexOf(key) < 0) {
+              delete saveState[key];
+            }
+          });
+
+          this.setState({
+            ...saveState,
+            loadedFromUrl: true
+          }); // TODO gotta really think through how safe this is
+        }
+
+      }
+    } else {
+      const saveState = store.get(LOCALSTORAGE_KEY);
+      Object.keys(saveState).forEach(key => {
+        if (acceptableKeys.indexOf(key) < 0) {
+          delete saveState[key];
+        }
+      });
+      if (saveState) {
+        this.setState(saveState);
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const prevLoadedFromUrl = prevState.loadedFromUrl;
+    const { loadedFromUrl } = this.state;
+    const saveState = this.getSaveState();
+    const previousSaveState = store.get(LOCALSTORAGE_KEY);
+
+    if (!prevLoadedFromUrl && loadedFromUrl) {
+      return;
+    }
+
+    // not actually sure what behavior should be when loaded from url
+    if (
+      (!loadedFromUrl && saveState !== previousSaveState) ||
+      (loadedFromUrl && !previousSaveState)
+      // maybe when you change something loaded from a url it then saves
+      // but not the first time
+    ) {
+      store.set(LOCALSTORAGE_KEY, saveState);
+    }
   }
 
   snapToGrid(d) {
@@ -98,12 +172,30 @@ class App extends Component {
 
   clearItems() {
     this.setState({
-      items: {}
+      items: {},
+      loadedFromUrl: false,
     });
+  }
+
+  getSaveState() {
+    const { base, items, enableUnofficialItems, enableStrictGrid } = this.state;
+    const saveState = { base, items, enableUnofficialItems, enableStrictGrid };
+    return saveState;
+  }
+
+  getBase64SaveState() {
+    const saveState = this.getSaveState();
+    const string = JSON.stringify(saveState);
+    const base64 = window.btoa(string);
+    return base64;
   }
 
   save() {
     const { base, items } = this.state;
+
+    this.setState({
+      isSaving: true
+    });
 
     const rendered = ReactDOMServer.renderToStaticMarkup(
       <StaticRender
@@ -131,11 +223,19 @@ class App extends Component {
       return response.blob();
     }).then(blob => {
       download(blob, `secretbase_${randomId()}.png`);
+      this.setState({
+        isSaving: false,
+      });
+    }).catch(error => {
+      // TODO
+      this.setState({
+        isSaving: false,
+      });
     });
   }
 
   render() {
-    const { base, items, enableUnofficialItems, enableStrictGrid } = this.state;
+    const { base, items, enableUnofficialItems, enableStrictGrid, isSaving } = this.state;
     const itemProps = {
       removeItem: this.removeItem,
     };
@@ -158,6 +258,10 @@ class App extends Component {
               toggleStrictGrid={this.toggleStrictGrid}
               clearItems={this.clearItems}
               save={this.save}
+              isSaving={isSaving}
+              tempSaveState={() => {
+                console.log(this.getBase64SaveState())
+              }}
             />
             <ItemPicker
               itemProps={itemProps}

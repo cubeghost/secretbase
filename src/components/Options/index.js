@@ -10,8 +10,12 @@ const Options = ({
   toggleStrictGrid,
   clearItems,
   save,
+  isSaving,
+  // TEMP
+  tempSaveState,
 }) => (
   <div className={classNames(styles.options, 'border')}>
+
     <div>
       <input
         type="checkbox"
@@ -23,6 +27,7 @@ const Options = ({
         Enable unofficial items
       </label>
     </div>
+
     <div>
       <input
         type="checkbox"
@@ -34,12 +39,37 @@ const Options = ({
         Snap to grid
       </label>
     </div>
+
     <div>
-      <button onClick={clearItems}>Clear items</button>
+      {/* TEMP */}
+      <button onClick={tempSaveState}>test</button>
     </div>
+
     <div>
-      <button onClick={save}>Save</button>
+      <button
+        className={classNames(
+          styles.iconButton,
+          styles.clearButton,
+        )}
+        onClick={clearItems}
+      >
+        <span>Clear</span>
+      </button>
     </div>
+
+    <div>
+      <button
+        className={classNames(
+          styles.iconButton,
+          styles.saveButton,
+          isSaving ? styles.saveButtonActive : null
+        )}
+        onClick={save}
+      >
+        <span>Save</span>
+      </button>
+    </div>
+
   </div>
 );
 

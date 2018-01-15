@@ -1,8 +1,49 @@
 @import 'variables';
+@import 'mixins';
 
 :local {
   .options {
     margin-bottom: $padding--standard / 2;
     display: flex;
+  }
+  .iconButton {
+    font-family: $fontFamily--pokemon;
+    text-transform: uppercase;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    vertical-align: 28px;
+
+    &:before {
+      content: '';
+      width: 64px;
+      height: 64px;
+      display: block;
+      background-position: center center;
+      background-repeat: no-repeat;
+      margin-bottom: 8px;
+      @include pixelated;
+    }
+  }
+  .saveButton {
+    &:before {
+      background-image: url(/assets/laptop.png);
+    }
+    &Active:before {
+      background-image: url(/assets/laptop_blink.gif);
+    }
+
+    &:after { // preload laptop_blink.gif
+      content: '';
+      position: absolute;
+      right: -9999px;
+      background-image: url(/assets/laptop_blink.gif);
+    }
+  }
+  .clearButton {
+    &:before {
+      background-image: url(/assets/trash.png);
+      background-size: auto 48px;
+    }
   }
 }
