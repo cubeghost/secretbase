@@ -14,38 +14,40 @@ const Options = ({
   // TEMP
   tempSaveState,
 }) => (
-  <div className={classNames(styles.options, 'border')}>
+  <div className={classNames(styles.container, 'border')}>
 
-    <div>
-      <input
-        type="checkbox"
-        checked={enableUnofficialItems}
-        onChange={toggleUnofficialItems}
-        id="enableUnofficialItems"
-      />
-      <label htmlFor="enableUnofficialItems">
-        Enable unofficial items
-      </label>
-    </div>
+    <div className={styles.options}>
+      <h3>Options</h3>
 
-    <div>
-      <input
-        type="checkbox"
-        checked={enableStrictGrid}
-        onChange={toggleStrictGrid}
-        id="enableStrictGrid"
-      />
-      <label htmlFor="enableStrictGrid">
-        Snap to grid
-      </label>
-    </div>
+      <div className={styles.field}>
+        <input
+          type="checkbox"
+          checked={enableUnofficialItems}
+          onChange={toggleUnofficialItems}
+          id="enableUnofficialItems"
+        />
+        <label htmlFor="enableUnofficialItems">
+          Enable unofficial items
+        </label>
+      </div>
 
-    <div>
+      <div className={styles.field}>
+        <input
+          type="checkbox"
+          checked={enableStrictGrid}
+          onChange={toggleStrictGrid}
+          id="enableStrictGrid"
+        />
+        <label htmlFor="enableStrictGrid">
+          Snap to grid
+        </label>
+      </div>
+
       {/* TEMP */}
-      <button onClick={tempSaveState}>test</button>
+      <button onClick={tempSaveState}>test base64 save state</button>
     </div>
 
-    <div>
+    <div className={styles.controls}>
       <button
         className={classNames(
           styles.iconButton,
@@ -55,9 +57,7 @@ const Options = ({
       >
         <span>Clear</span>
       </button>
-    </div>
 
-    <div>
       <button
         className={classNames(
           styles.iconButton,

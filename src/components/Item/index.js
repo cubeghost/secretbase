@@ -62,10 +62,11 @@ class Item extends Component {
 
   render() {
     const { connectDragSource, ...otherProps } = this.props;
+    const dropEffect = this.props.id ? 'move' : 'copy';
 
     const item = RenderItem(otherProps);
 
-    return connectDragSource(item);
+    return connectDragSource(item, { dropEffect });
   }
 }
 

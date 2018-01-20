@@ -75,12 +75,12 @@ class App extends Component {
       }
     } else {
       const saveState = store.get(LOCALSTORAGE_KEY);
-      Object.keys(saveState).forEach(key => {
-        if (acceptableKeys.indexOf(key) < 0) {
-          delete saveState[key];
-        }
-      });
       if (saveState) {
+        Object.keys(saveState).forEach(key => {
+          if (acceptableKeys.indexOf(key) < 0) {
+            delete saveState[key];
+          }
+        });
         this.setState(saveState);
       }
     }
@@ -92,17 +92,13 @@ class App extends Component {
     const saveState = this.getSaveState();
     const previousSaveState = store.get(LOCALSTORAGE_KEY);
 
+    // ignore if initial load from URL, otherwise save changes to localStorage
+
     if (!prevLoadedFromUrl && loadedFromUrl) {
       return;
     }
 
-    // not actually sure what behavior should be when loaded from url
-    if (
-      (!loadedFromUrl && saveState !== previousSaveState) ||
-      (loadedFromUrl && !previousSaveState)
-      // maybe when you change something loaded from a url it then saves
-      // but not the first time
-    ) {
+    if (saveState !== previousSaveState) {
       store.set(LOCALSTORAGE_KEY, saveState);
     }
   }
@@ -166,7 +162,7 @@ class App extends Component {
 
   toggleStrictGrid(event) {
     this.setState({
-      toggleStrictGrid: event.target.checked
+      enableStrictGrid: event.target.checked
     });
   }
 
