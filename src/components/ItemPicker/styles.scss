@@ -2,7 +2,7 @@
 
 :local {
   .picker {
-    height: calc(100% - (12px * 2));
+    height: calc(100% - (#{$border--width} * 2));
     overflow: hidden;
 
     .scrollContainer {
@@ -14,9 +14,23 @@
     .category {
       padding-bottom: $padding--standard / 2;
 
-      p {
+      h4 {
         margin: 0;
+        margin-bottom: 0.5em;
       }
+    }
+    .categoryItems {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+    /*
+     * would rather this specifically target .item, but
+     * https://github.com/css-modules/css-modules/issues/147
+     */
+    .categoryItems > div {
+      margin-right: $padding--standard / 2;
+      margin-bottom: $padding--standard / 2;
     }
   }
 }

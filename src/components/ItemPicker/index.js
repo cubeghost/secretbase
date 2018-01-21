@@ -14,8 +14,8 @@ const ItemPicker = ({ itemProps, enableUnofficialItems }) => (
       {categories.map(category => {
         return (
           <div key={category.id} className={styles.category}>
-            <p>{category.label}</p>
-            <div>
+            <h4>{category.label}</h4>
+            <div className={styles.categoryItems}>
 
               {category.items.map(item => {
                 if (!enableUnofficialItems && item.unofficial) {

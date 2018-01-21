@@ -23,9 +23,11 @@ h6 {
   font-weight: normal;
 }
 
+
+
 .border {
   border-style: solid;
-  border-width: 12px;
+  border-width: $border--width;
   border-image: url(/assets/border.png) 12 16 12 fill round;
 }
 

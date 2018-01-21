@@ -65,23 +65,23 @@ export const items = [
   { filename: 'rsrh025.png', category: 'table_medium' },
   { filename: 'rsrh026.png', category: 'table_medium' },
   { filename: 'rsrh027.png', category: 'table_medium' },
-  { filename: 'rsrh028.png', category: 'misc' },
-  { filename: 'rsrh029.png', category: 'misc' },
-  { filename: 'rsrh030.png', category: 'misc' },
-  { filename: 'rsrh031.png', category: 'misc' },
-  { filename: 'rsrh032.png', category: 'misc' },
+  { filename: 'rsrh028.png', category: 'misc' }, // balloon
+  { filename: 'rsrh029.png', category: 'misc' }, // balloon
+  { filename: 'rsrh030.png', category: 'misc' }, // balloon
+  { filename: 'rsrh035.png', category: 'misc' }, // vertical fence
+  { filename: 'rsrh036.png', category: 'misc' }, // horizontal fence
+  { filename: 'rsrh039.png', category: 'misc' }, // mud ball
   { filename: 'rsrh033.png', category: 'misc' },
-  { filename: 'rsrh034.png', category: 'misc' },
-  { filename: 'rsrh035.png', category: 'misc' },
-  { filename: 'rsrh036.png', category: 'misc' },
   { filename: 'rsrh037.png', category: 'misc' },
-  { filename: 'rsrh038.png', category: 'misc' },
-  { filename: 'rsrh039.png', category: 'misc' },
   { filename: 'rsrh040.png', category: 'misc' },
   { filename: 'rsrh041.png', category: 'misc' },
   { filename: 'rsrh042.png', category: 'misc' },
   { filename: 'rsrh043.png', category: 'misc' },
   { filename: 'rsrh044.png', category: 'misc' },
+  { filename: 'rsrh031.png', category: 'misc' }, // red tent
+  { filename: 'rsrh032.png', category: 'misc' }, // blue tent
+  { filename: 'rsrh034.png', category: 'misc' }, // slide
+  { filename: 'rsrh038.png', category: 'misc' }, // platform
   { filename: 'rsrh045.png', category: 'device' },
   { filename: 'rsrh046.png', category: 'device' },
   { filename: 'rsrh047.png', category: 'device' },
@@ -153,7 +153,9 @@ export const items = [
   { filename: 'rsrh120.png', category: 'doll_large' },
   { filename: 'laptop.png', category: 'device', unofficial: true },
   { filename: 'pc.png', category: 'device', unofficial: true },
+  { filename: 'gamecube.png', category: 'device', unofficial: true },
   { filename: 'map.png', category: 'wall', unofficial: true },
+  { filename: 'pikachu_poster.png', category: 'wall', unofficial: true },
   { filename: 'plant1.png', category: 'plant', unofficial: true },
   { filename: 'plant2.png', category: 'plant', unofficial: true },
 ];
