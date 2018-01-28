@@ -209,7 +209,7 @@ class App extends Component {
 
     const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
 
-    fetch('/save.php', {
+    fetch(`${domainRoot()}/save.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
