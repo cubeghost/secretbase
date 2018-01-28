@@ -42,7 +42,7 @@ class Footer extends Component {
         )}
 
         <button onClick={this.toggleCredits}>
-          <img className={styles.creditsButton} src="/assets/credits.png" alt="Credits" />
+          <img className={styles.creditsButton} src={require('./credits.png')} alt="Credits" />
         </button>
       </footer>
     );

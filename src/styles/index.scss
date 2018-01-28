@@ -3,15 +3,7 @@
 
 @font-face {
   font-family: 'pkmnrs';
-  src: url(/assets/pkmnrs.otf);
-}
-
-body {
-  font-family: $fontFamily--pokemon;
-  background-image: url(/assets/grass.png);
-  font-size: 13px;
-  height: 100%;
-  line-height: 1.25;
+  src: url(../fonts/pkmnrs.otf);
 }
 
 h1,
@@ -30,50 +22,4 @@ h3 {
 
 a {
   color: $color-green;
-}
-
-.border {
-  border-style: solid;
-  border-width: $border--width;
-  border-image: url(/assets/border.png) 12 16 12 fill round;
-}
-
-
-
-
-// "poof" item disappearing animation
-
-$poofFrames: 10;
-
-@keyframes poof {
-  0%   { background-position: 0px; }
-  100% { background-position: -64px * $poofFrames; }
-}
-
-.poof-exit {
-
-  img {
-    opacity: 0;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    height: 64px;
-    width: 64px;
-    display: block;
-    background-image: url(/assets/poof.png);
-    background-size: (64px * $poofFrames) 64px;
-    z-index: 1;
-  }
-}
-
-.poof-exit.poof-exit-active {
-  &:before {
-    animation: poof #{$poofDuration} steps(#{$poofFrames});
-    animation-iteration-count: 1;
-  }
 }

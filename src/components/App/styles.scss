@@ -1,5 +1,21 @@
 @import 'variables';
 
+:global {
+  body {
+    font-family: $fontFamily--pokemon;
+    background-image: url(./grass.png);
+    font-size: 13px;
+    height: 100%;
+    line-height: 1.25;
+  }
+
+  .border {
+    border-style: solid;
+    border-width: $border--width;
+    border-image: url(./border.png) 12 16 12 fill round;
+  }
+}
+
 :local {
   .app {
     padding: $padding--standard;

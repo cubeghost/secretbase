@@ -13,7 +13,7 @@
         height: $headerFlowerHeight;
         width: $headerFlowerWidth;
         display: inline-block;
-        background-image: url(/assets/flower.png);
+        background-image: url(./flower.png);
         vertical-align: -6px;
         @include pixelated;
       }

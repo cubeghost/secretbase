@@ -11,3 +11,44 @@
     }
   }
 }
+
+:global {
+  // "poof" item disappearing animation
+  // $poofDuration is injected with value of POOF_DURATION in constants.js
+
+  $poofFrames: 10;
+
+  @keyframes poof {
+    0%   { background-position: 0px; }
+    100% { background-position: -64px * $poofFrames; }
+  }
+
+  .poof-exit {
+
+    img {
+      opacity: 0;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      height: 64px;
+      width: 64px;
+      display: block;
+      background-image: url(./poof.png);
+      background-size: (64px * $poofFrames) 64px;
+      z-index: 1;
+    }
+  }
+
+  .poof-exit.poof-exit-active {
+    &:before {
+      animation: poof #{$poofDuration} steps(#{$poofFrames});
+      animation-iteration-count: 1;
+    }
+  }
+
+}

@@ -16,7 +16,8 @@ const config = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'public/build')
+    path: path.resolve(__dirname, 'public/build'),
+    publicPath: '/build/',
   },
   resolve: {
     alias: {
@@ -32,6 +33,15 @@ const config = {
         loader: 'babel-loader'
       },
       {
+        test: /\.(jpg|png|gif|mp3|eot|svg|ttf|otf|woff|woff2)$/,
+        include: path.resolve(__dirname, 'src/'),
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          //publicPath: 'build/'
+        }
+      },
+      {
         test: /\.s?css/,
         use: ExtractTextPlugin.extract({
           use: [
@@ -39,7 +49,6 @@ const config = {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                url: false,
               }
             },
             'postcss-loader',
@@ -54,12 +63,13 @@ const config = {
             }
           ]
         })
-      }
+      },
     ]
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
   ],
   devtool: 'inline-source-map',
 };
@@ -67,6 +77,7 @@ const config = {
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(new UglifyJsPlugin());
   config.devtool = undefined;
+  config.output.publicPath = '/secretbase/build/';
 }
 
 module.exports = config;

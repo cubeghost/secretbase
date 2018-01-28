@@ -49,23 +49,23 @@
 
   .saveButton {
     &:before {
-      background-image: url(/assets/laptop.png);
+      background-image: url(./laptop.png);
     }
     &Active:before {
-      background-image: url(/assets/laptop_blink.gif);
+      background-image: url(./laptop_blink.gif);
     }
 
     &:after { // preload laptop_blink.gif
       content: '';
       position: absolute;
       right: -9999px;
-      background-image: url(/assets/laptop_blink.gif);
+      background-image: url(./laptop_blink.gif);
     }
   }
 
   .shareButton {
     &:before {
-      background-image: url(/assets/pokeball.png);
+      background-image: url(./pokeball.png);
       background-size: auto 40px;
       background-position: center 16px;
     }
@@ -73,7 +73,7 @@
 
   .clearButton {
     &:before {
-      background-image: url(/assets/trash.png);
+      background-image: url(./trash.png);
       background-size: auto 48px;
     }
   }

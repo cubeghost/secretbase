@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { bases } from 'src/constants';
 
 import styles from './styles.scss';
-import 'react-select/dist/react-select.css';
 
 const renderOption = (option) => (
   <div className={styles.selectValue}>
