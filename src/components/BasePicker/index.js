@@ -8,7 +8,7 @@ import styles from './styles.scss';
 
 const renderOption = (option) => (
   <div className={styles.selectValue}>
-    <img src={`${domainRoot}/assets/bases/icon_${option.type}.png`} />
+    <img src={`${domainRoot()}/assets/bases/icon_${option.type}.png`} />
     <span>{option.label}</span>
   </div>
 );
