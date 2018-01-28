@@ -24,11 +24,7 @@
       flex-wrap: wrap;
       align-items: baseline;
     }
-    /*
-     * would rather this specifically target .item, but
-     * https://github.com/css-modules/css-modules/issues/147
-     */
-    .categoryItems > div {
+    .item {
       margin-right: $padding--standard / 2;
       margin-bottom: $padding--standard / 2;
     }

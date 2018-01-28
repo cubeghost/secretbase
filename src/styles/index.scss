@@ -23,7 +23,14 @@ h6 {
   font-weight: normal;
 }
 
+h3 {
+  text-transform: uppercase;
+  font-size: 1.25em;
+}
 
+a {
+  color: $color-green;
+}
 
 .border {
   border-style: solid;

@@ -9,6 +9,7 @@ import queryString from 'query-string';
 import store from 'store';
 
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import Options from 'components/Options';
 import Base from 'components/Base';
 import ItemPicker from 'components/ItemPicker';
@@ -272,6 +273,7 @@ class App extends Component {
               handleDrop={this.handleDrop}
               snapToGrid={this.snapToGrid}
             />
+            <Footer />
           </div>
         </section>
         <CustomDragLayer

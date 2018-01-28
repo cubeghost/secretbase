@@ -1,0 +1,24 @@
+@import 'variables';
+
+:local {
+  .controls {
+    button {
+      font-family: $fontFamily--pokemon;
+      font-size: 1em;
+      background-color: transparent;
+      border: 0;
+      padding: 0;
+
+      &:before {
+        content: '';
+        background-image: url(/assets/items/rsrh051.png);
+        background-size: 16px 16px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+        vertical-align: -1.5px;
+      }
+    }
+  }
+}

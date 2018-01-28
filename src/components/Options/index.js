@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import Audio from 'components/Audio';
+
 import styles from './styles.scss';
 
 const Options = ({
@@ -44,7 +46,9 @@ const Options = ({
       </div>
 
       {/* TEMP */}
-      <button onClick={tempSaveState}>test base64 save state</button>
+      {/* <button onClick={tempSaveState}>test base64 save state</button> */}
+
+      <Audio />
     </div>
 
     <div className={styles.controls}>
@@ -56,6 +60,16 @@ const Options = ({
         onClick={clearItems}
       >
         <span>Clear</span>
+      </button>
+
+      <button
+        className={classNames(
+          styles.iconButton,
+          styles.shareButton,
+        )}
+        onClick={tempSaveState}
+      >
+        <span>Share</span>
       </button>
 
       <button

@@ -25,6 +25,7 @@ const ItemPicker = ({ itemProps, enableUnofficialItems }) => (
                   <Item
                     key={item.filename}
                     type={item.filename}
+                    className={styles.item}
                     {...itemProps}
                   />
                 );

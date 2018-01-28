@@ -18,15 +18,19 @@
     .main {
       display: flex;
       height: 100%;
+      position: relative;
 
-      .columnLeft {
-        flex: 0 1 auto;
-        margin-right: $padding--standard;
+      .column {
         display: flex;
         flex-direction: column;
       }
+      .columnLeft {
+        flex: 0 1 auto;
+        margin-right: $padding--standard;
+      }
       .columnRight {
         flex: 1 0 auto;
+        justify-content: space-between;
       }
     }
 

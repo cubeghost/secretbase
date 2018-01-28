@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
@@ -32,7 +33,7 @@ function collect(connect, monitor) {
   };
 }
 
-export const RenderItem = ({ id, type, style, x, y, isRemoving, isDragging }) => {
+export const RenderItem = ({ id, type, style, x, y, isRemoving, isDragging, className }) => {
   const mergedStyle = style || {};
 
   if (x !== undefined && y !== undefined) {
@@ -46,7 +47,7 @@ export const RenderItem = ({ id, type, style, x, y, isRemoving, isDragging }) =>
   }
 
   return (
-    <div className={styles.item} style={mergedStyle}>
+    <div className={classNames(styles.item, className)} style={mergedStyle}>
       <img src={`${domainRoot()}/assets/items/${type}`} alt="" />
     </div>
   );

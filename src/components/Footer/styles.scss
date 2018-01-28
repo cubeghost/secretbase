@@ -1,0 +1,44 @@
+@import 'variables';
+@import 'mixins';
+
+:local {
+  .footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    max-width: 224px; // width of narrowest base image ugh
+
+    button {
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+      vertical-align: bottom;
+    }
+
+    img.creditsButton {
+      height: 21px;
+      display: block;
+      @include pixelated;
+    }
+
+    .credits {
+      text-align: left;
+      padding: $padding--standard / 2;
+
+      p {
+        margin: 0.5em 0;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px dotted rgba(0, 0, 0, 0.2);
+        margin: 0.75em 0;
+      }
+    }
+
+  }
+}

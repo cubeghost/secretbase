@@ -11,13 +11,16 @@
     padding: 4px 8px;
 
     h3 {
-      text-transform: uppercase;
-      font-size: 1.25em;
+      margin-bottom: 0.5em;
     }
   }
 
   .field {
     display: block;
+
+    input[type=checkbox] {
+      margin-right: 5px;
+    }
   }
 
   .controls {
@@ -57,6 +60,14 @@
       position: absolute;
       right: -9999px;
       background-image: url(/assets/laptop_blink.gif);
+    }
+  }
+
+  .shareButton {
+    &:before {
+      background-image: url(/assets/pokeball.png);
+      background-size: auto 40px;
+      background-position: center 16px;
     }
   }
 
