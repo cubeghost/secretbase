@@ -23,7 +23,7 @@ import {
   POOF_DURATION,
   LOCALSTORAGE_KEY
 } from 'src/constants';
-import { randomId } from 'src/utils';
+import { domainRoot, randomId } from 'src/utils';
 
 import styles from './styles.scss';
 
@@ -187,6 +187,10 @@ class App extends Component {
     return base64;
   }
 
+  getShareUrl() {
+    return `${domainRoot()}/?save=${this.getBase64SaveState()}`;
+  }
+
   save() {
     const { base, items } = this.state;
 
@@ -254,11 +258,9 @@ class App extends Component {
               enableStrictGrid={enableStrictGrid}
               toggleStrictGrid={this.toggleStrictGrid}
               clearItems={this.clearItems}
+              getShareUrl={this.getShareUrl}
               save={this.save}
               isSaving={isSaving}
-              tempSaveState={() => {
-                console.log(this.getBase64SaveState())
-              }}
             />
             <ItemPicker
               itemProps={itemProps}

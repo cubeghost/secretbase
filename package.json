@@ -26,6 +26,7 @@
     "babel-register": "^6.26.0",
     "class-autobind": "^0.1.4",
     "classnames": "^2.2.5",
+    "copy-to-clipboard": "^3.0.8",
     "css-loader": "^0.28.8",
     "dotenv": "^4.0.0",
     "downloadjs": "^1.4.7",

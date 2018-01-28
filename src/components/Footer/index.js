@@ -10,7 +10,7 @@ class Footer extends Component {
     autobind(this);
 
     this.state = {
-      areCreditsOpen: true,
+      areCreditsOpen: false,
     };
   }
 
@@ -23,9 +23,6 @@ class Footer extends Component {
 
     return (
       <footer className={styles.footer}>
-        <button onClick={this.toggleCredits}>
-          <img className={styles.creditsButton} src="/assets/credits.png" alt="Credits" />
-        </button>
         {areCreditsOpen && (
           <div className={classNames(styles.credits, 'border')}>
             <h3>Big thanks to</h3>
@@ -43,6 +40,10 @@ class Footer extends Component {
             </p>
           </div>
         )}
+
+        <button onClick={this.toggleCredits}>
+          <img className={styles.creditsButton} src="/assets/credits.png" alt="Credits" />
+        </button>
       </footer>
     );
   }

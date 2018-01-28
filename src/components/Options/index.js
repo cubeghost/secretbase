@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Audio from 'components/Audio';
+import Copy from 'components/Copy';
 
 import styles from './styles.scss';
 
@@ -11,10 +12,9 @@ const Options = ({
   enableStrictGrid,
   toggleStrictGrid,
   clearItems,
+  getShareUrl,
   save,
   isSaving,
-  // TEMP
-  tempSaveState,
 }) => (
   <div className={classNames(styles.container, 'border')}>
 
@@ -62,15 +62,15 @@ const Options = ({
         <span>Clear</span>
       </button>
 
-      <button
+      <Copy
         className={classNames(
           styles.iconButton,
           styles.shareButton,
         )}
-        onClick={tempSaveState}
+        text={getShareUrl}
       >
         <span>Share</span>
-      </button>
+      </Copy>
 
       <button
         className={classNames(

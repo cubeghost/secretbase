@@ -1,0 +1,34 @@
+:local {
+  .button {
+    position: relative;
+
+    .tooltip {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      width: 100%;
+    }
+
+    // react-transition-group classes
+    :global(.tooltip-enter) {
+      opacity: 0.01;
+      transform: translateX(-50%) translateY(0);
+    }
+    :global(.tooltip-enter.tooltip-enter-active) {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+      transition-property: opacity, transform;
+      transition-duration: 400ms;
+      transition-timing-function: ease-in;
+    }
+    :global(.tooltip-exit) {
+      opacity: 1;
+    }
+    :global(.tooltip-exit.tooltip-exit-active) {
+      opacity: 0.01;
+      transition: opacity 400ms ease-in;
+    }
+
+  }
+}
