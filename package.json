@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "webpack --watch",
+    "build": "webpack",
     "server": "php -S localhost:8000 -t public"
   },
   "author": "Alex Baldwin <alex@bldwn.co> (http://bldwn.co/)",
