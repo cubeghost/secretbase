@@ -10,6 +10,8 @@ require('babel-register')({
 });
 const { STRICT_GRID_SPACING, POOF_DURATION } = require('./src/constants');
 
+console.log('\n\nNODE_ENV=' + process.env.NODE_ENV + '\n\n')
+
 const config = {
   entry: {
     app: './src/index.js'

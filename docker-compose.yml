@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
     volumes:
       - /usr/src/app/node_modules
       - /usr/src/app/vendor
