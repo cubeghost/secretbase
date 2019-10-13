@@ -17,7 +17,7 @@ const config = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public/build'),
-    publicPath: '/build/',
+    publicPath: 'build/',
   },
   resolve: {
     alias: {
