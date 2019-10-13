@@ -20,4 +20,4 @@ COPY . ./
 RUN chown -R node: /usr/src/app
 USER node
 
-CMD npm run build
+CMD NODE_ENV=production npm run build
