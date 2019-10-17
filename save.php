@@ -6,7 +6,7 @@ $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
 $phantomjscloud_api_key = getenv('PHANTOMJSCLOUD_API_KEY');
-$hostname = getenv('HOSTNAME');
+$hostname = getenv('HOST_HOSTNAME');
 
 function outputImage($image) {
   header('Content-type: image/png');
