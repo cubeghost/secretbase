@@ -1,6 +1,5 @@
 export function domainRoot() {
-  const directory = process.env.NODE_ENV === 'production' ? '/secretbase' : '';
-  return `${window.location.protocol}//${window.location.host}${directory}`;
+  return `${window.location.protocol}//${window.location.host}`;
 }
 
 export function randomId() {
