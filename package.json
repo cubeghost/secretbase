@@ -11,7 +11,7 @@
     "build": "webpack",
     "server": "php -S localhost:8000 -t public"
   },
-  "author": "Alex Baldwin <alex@bldwn.co> (http://bldwn.co/)",
+  "author": "Alex Baldwin <alex@cubegho.st> (https://cubegho.st/)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cubeghost/secretbase/issues"
