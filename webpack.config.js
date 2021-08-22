@@ -77,7 +77,6 @@ const config = {
 if (process.env.NODE_ENV === 'production') {
   config.plugins.push(new UglifyJsPlugin());
   config.devtool = undefined;
-  config.output.publicPath = '/secretbase/build/';
 }
 
 module.exports = config;
