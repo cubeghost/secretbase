@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/cubeghost/secretbase/issues"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "homepage": "https://github.com/cubeghost/secretbase#readme",
   "dependencies": {
     "autoprefixer": "^7.2.4",
