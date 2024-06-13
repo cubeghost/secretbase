@@ -1,7 +1,8 @@
 .DS_Store
 .env
-composer.phar
-/vendor/
 node_modules
 /public/build/
 post-receive
+
+# Local Netlify folder
+.netlify

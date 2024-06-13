@@ -209,7 +209,7 @@ class App extends Component {
 
     const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
 
-    fetch(`${domainRoot()}/save.php`, {
+    fetch(`${domainRoot()}/.netlify/functions/save`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

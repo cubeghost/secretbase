@@ -27,7 +27,7 @@ class Footer extends Component {
           <div className={classNames(styles.credits, 'border')}>
             <h3>Big thanks to</h3>
             <p>
-              <a href="http://yanneyanen.com/" target="_blank" rel="noopener">Janne Markkula</a> for
+              <a href="https://twitter.com/OddJayMarksman" target="_blank" rel="noopener">Janne Markkula</a> for
               the "poof" animation
             </p>
             <p>
