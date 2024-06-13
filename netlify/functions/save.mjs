@@ -1,6 +1,9 @@
 
 export default async (request, context) => {
-  console.log(Netlify.env.toObject())
+  console.log('CONTEXT', Netlify.env.get('CONTEXT'))
+  console.log('URL', Netlify.env.get('URL'))
+  console.log('DEPLOY_URL', Netlify.env.get('DEPLOY_URL'))
+  console.log('DEPLOY_PRIME_URL', Netlify.env.get('DEPLOY_PRIME_URL'))
   if (!request.headers.has('Referer') || !request.headers.get('Referer').startsWith(Netlify.env.get('DEPLOY_PRIME_URL'))) {
     return new Response('Unauthorized', { status: 401 });
   }
