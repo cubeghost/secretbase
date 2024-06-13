@@ -3,3 +3,6 @@
 node_modules
 /public/build/
 post-receive
+
+# Local Netlify folder
+.netlify

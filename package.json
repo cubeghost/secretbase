@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "webpack --watch",
-    "build": "webpack",
-    "server": "php -S localhost:8000 -t public"
+    "build": "webpack"
   },
   "author": "Alex Baldwin <alex@cubegho.st> (https://cubegho.st/)",
   "license": "ISC",
@@ -17,10 +16,11 @@
     "url": "https://github.com/cubeghost/secretbase/issues"
   },
   "engines": {
-    "node": "14.x"
+    "node": "18.x"
   },
   "homepage": "https://github.com/cubeghost/secretbase#readme",
   "dependencies": {
+    "@netlify/functions": "^2.7.0",
     "autoprefixer": "^7.2.4",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -36,7 +36,6 @@
     "downloadjs": "^1.4.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
-    "node-sass": "^4.14.1",
     "postcss-loader": "^2.0.10",
     "promise-polyfill": "^7.0.0",
     "prop-types": "^15.6.0",
@@ -47,7 +46,8 @@
     "react-dom": "^16.2.0",
     "react-select": "^1.2.1",
     "react-transition-group": "^2.2.1",
-    "sass-loader": "^6.0.6",
+    "sass": "^1.77.5",
+    "sass-loader": "^7.3.1",
     "store": "^2.0.12",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
