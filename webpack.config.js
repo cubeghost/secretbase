@@ -4,6 +4,9 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const { globSync } = require('glob');
+const imageSize = require('image-size');
 
 require('@babel/register')({
   only: [/src\/constants/]
@@ -81,4 +84,38 @@ if (process.env.CONTEXT === 'production') {
   config.optimization.minimizer = [new TerserPlugin()];
 }
 
-module.exports = config;
+const staticRenderConfig = {
+  mode: config.mode,
+  devtool: config.devtool,
+  target: 'node',
+  externals: [nodeExternals()],
+  entry: {
+    staticRender: './src/staticRender.js',
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'public/build'),
+    publicPath: '/build/',
+    libraryExport: 'default',
+    libraryTarget: 'commonjs2',
+  },
+  module: {
+    rules: config.module.rules,
+  },
+  optimization: {
+    minimize: false,
+  },
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      BASE_DIMENSIONS: JSON.stringify(Object.fromEntries(
+        globSync('public/assets/bases/base_*.png').map((filepath) => {
+          const { width, height } = imageSize(filepath);
+          return [path.parse(filepath).name, [width, height]]
+        })
+      ))
+    }),
+  ],
+};
+
+module.exports = [config, staticRenderConfig];

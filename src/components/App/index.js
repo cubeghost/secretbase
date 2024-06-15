@@ -198,26 +198,14 @@ class App extends Component {
       isSaving: true
     });
 
-    const rendered = ReactDOMServer.renderToStaticMarkup(
-      <StaticRender
-        base={base}
-        items={items}
-      />
-    );
-    const { width, height } = document.getElementById('baseImage').getBoundingClientRect();
-    const stylesheet = document.styleSheets[0].href;
-
-    const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
-
     fetch(`${domainRoot()}/.netlify/functions/save`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        html,
-        width,
-        height
+        base,
+        items
       })
     }).then(response => {
       if (!response.ok) { throw Error(response.statusText); }
