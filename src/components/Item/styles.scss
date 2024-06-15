@@ -14,13 +14,13 @@
 
 :global {
   // "poof" item disappearing animation
-  // $poofDuration is injected with value of POOF_DURATION in constants.js
+  // --poofDuration is injected with value of POOF_DURATION in constants.js
 
-  $poofFrames: 10;
+  --poofFrames: 10;
 
   @keyframes poof {
     0%   { background-position: 0px; }
-    100% { background-position: -64px * $poofFrames; }
+    100% { background-position: calc(-64px * var(--poofFrames)); }
   }
 
   .poof-exit {
@@ -39,14 +39,14 @@
       width: 64px;
       display: block;
       background-image: url(./poof.png);
-      background-size: (64px * $poofFrames) 64px;
+      background-size: calc(64px * var(--poofFrames)) 64px;
       z-index: 1;
     }
   }
 
   .poof-exit.poof-exit-active {
     &:before {
-      animation: poof #{$poofDuration} steps(#{$poofFrames});
+      animation: poof var(--poofDuration) steps(var(--poofFrames));
       animation-iteration-count: 1;
     }
   }

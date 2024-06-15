@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { RenderBase } from 'components/Base';
-import { RenderItem } from 'components/Item';
+import { RenderBase } from '../Base';
+import { RenderItem } from '../Item';
 
 const StaticRender = ({ items, base }) => (
   <RenderBase

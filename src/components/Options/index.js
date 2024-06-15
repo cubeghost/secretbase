@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Audio from 'components/Audio';
-import Copy from 'components/Copy';
+import Audio from '../Audio';
+import Copy from '../Copy';
 
 import styles from './styles.scss';
 

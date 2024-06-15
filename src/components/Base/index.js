@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 
-import Item, { ItemType } from 'components/Item';
+import Item, { ItemType } from '../Item';
 
-import { domainRoot } from 'src/utils';
+import { domainRoot } from '../../utils';
 
 import styles from './styles.scss';
 

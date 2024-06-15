@@ -8,22 +8,22 @@ import download from 'downloadjs';
 import queryString from 'query-string';
 import store from 'store';
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import Options from 'components/Options';
-import Base from 'components/Base';
-import ItemPicker from 'components/ItemPicker';
-import BasePicker from 'components/BasePicker';
-import CustomDragLayer from 'components/CustomDragLayer';
-import StaticRender from 'components/StaticRender';
+import Header from '../Header';
+import Footer from '../Footer';
+import Options from '../Options';
+import Base from '../Base';
+import ItemPicker from '../ItemPicker';
+import BasePicker from '../BasePicker';
+import CustomDragLayer from '../CustomDragLayer';
+import StaticRender from '../StaticRender';
 
 import {
   STRICT_GRID_SPACING,
   EASY_GRID_SPACING,
   POOF_DURATION,
   LOCALSTORAGE_KEY
-} from 'src/constants';
-import { domainRoot, randomId } from 'src/utils';
+} from '../../constants';
+import { domainRoot, randomId } from '../../utils';
 
 import styles from './styles.scss';
 
@@ -242,7 +242,7 @@ class App extends Component {
     };
 
     return (
-      <div className={styles.app}>
+      <div className={styles.app} style={{ '--poofDuration': POOF_DURATION }}>
         <div className={styles.top}>
           <Header />
           <BasePicker

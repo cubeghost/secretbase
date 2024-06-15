@@ -2,31 +2,26 @@ require('dotenv').config();
 
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-require('babel-register')({
-  only: /src\/constants/
+require('@babel/register')({
+  only: [/src\/constants/]
 });
 const { STRICT_GRID_SPACING, POOF_DURATION } = require('./src/constants');
 
 const config = {
+  mode: process.env.CONTEXT === 'dev' ? 'development' : 'production', 
   entry: {
-    app: './src/index.js'
+    app: './src/index.js',
   },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public/build'),
     publicPath: '/build/',
   },
-  resolve: {
-    alias: {
-      src: path.resolve(__dirname, 'src'),
-      components: path.resolve(__dirname, 'src/components'),
-    }
-  },
-  module : {
-    loaders : [
+  module: {
+    rules: [
       {
         test: /\.js/,
         exclude: /node_modules/,
@@ -38,45 +33,52 @@ const config = {
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
-          //publicPath: 'build/'
         }
       },
       {
         test: /\.s?css/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: {
+                auto: /\.scss$/,
+                exportGlobals: true,
+                localIdentName: "[folder]__[local]--[hash:base64:5]",
               }
-            },
-            'postcss-loader',
-            {
-              loader: 'sass-loader',
-              options: {
-                data: `$gridSpacing: ${STRICT_GRID_SPACING}px;$poofDuration: ${POOF_DURATION}ms;`,
+            }
+          },
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
                 includePaths: [
                   path.resolve(__dirname, 'src/styles')
                 ]
               }
             }
-          ]
-        })
+          }
+        ]
       },
     ]
   },
+  optimization: {
+    minimize: false,
+  },
   plugins: [
-    new ExtractTextPlugin('style.css'),
+    new MiniCssExtractPlugin({ filename: 'style.css' }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
   ],
   devtool: 'inline-source-map',
 };
 
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(new UglifyJsPlugin());
-  config.devtool = undefined;
+if (process.env.CONTEXT === 'production') {
+  config.devtool = 'source-map';
+  config.optimization.minimize = true;
+  config.optimization.minimizer = [new TerserPlugin()];
 }
 
 module.exports = config;
