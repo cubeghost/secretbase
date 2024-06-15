@@ -4,5 +4,3 @@
 
 [functions]
     directory = "netlify/functions/"
-    node_bundler = "esbuild"
-    external_node_modules = ["react", "react-dom"]

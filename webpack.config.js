@@ -4,14 +4,9 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
+const GenerateFilePlugin = require('generate-file-webpack-plugin');
 const { globSync } = require('glob');
 const imageSize = require('image-size');
-
-require('@babel/register')({
-  only: [/src\/constants/]
-});
-const { STRICT_GRID_SPACING, POOF_DURATION } = require('./src/constants');
 
 const config = {
   mode: process.env.CONTEXT === 'dev' ? 'development' : 'production', 
@@ -84,13 +79,19 @@ if (process.env.CONTEXT === 'production') {
   config.optimization.minimizer = [new TerserPlugin()];
 }
 
+const baseDimensions = Object.fromEntries(
+  globSync('public/assets/bases/base_*.png').map((filepath) => {
+    const { width, height } = imageSize(filepath);
+    return [path.parse(filepath).name, [width, height]]
+  })
+);
+
 const staticRenderConfig = {
   mode: config.mode,
   devtool: config.devtool,
   target: 'node',
-  externals: [nodeExternals()],
   entry: {
-    staticRender: './src/staticRender.js',
+    StaticRender: './src/components/StaticRender/index.js',
   },
   output: {
     filename: '[name].js',
@@ -107,13 +108,9 @@ const staticRenderConfig = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    new webpack.DefinePlugin({
-      BASE_DIMENSIONS: JSON.stringify(Object.fromEntries(
-        globSync('public/assets/bases/base_*.png').map((filepath) => {
-          const { width, height } = imageSize(filepath);
-          return [path.parse(filepath).name, [width, height]]
-        })
-      ))
+    new GenerateFilePlugin({
+      file: 'baseDimensions.js',
+      content: `export default ${JSON.stringify(baseDimensions)};`
     }),
   ],
 };
