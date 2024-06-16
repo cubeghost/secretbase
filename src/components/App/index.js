@@ -39,12 +39,14 @@ class App extends Component {
       enableUnofficialItems: false,
       enableStrictGrid: true,
       isSaving: false,
+      saveError: undefined,
       loadedFromUrl: false,
     };
   }
 
   componentDidMount() {
     // TODO move this shit
+    // TODO static list, exclude stuff like isSaving, saveError
     const acceptableKeys = Object.keys(this.state);
 
     if (window.location.search) {
@@ -191,40 +193,48 @@ class App extends Component {
     return `${domainRoot()}/?save=${this.getBase64SaveState()}`;
   }
 
-  save() {
+  async save() {
     const { base, items } = this.state;
 
     this.setState({
       isSaving: true
     });
 
-    fetch(`${domainRoot()}/.netlify/functions/save`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        base,
-        items
-      })
-    }).then(response => {
-      if (!response.ok) { throw Error(response.statusText); }
-      return response.blob();
-    }).then(blob => {
+    try {
+      const response = await fetch(`${domainRoot()}/.netlify/functions/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          base,
+          items
+        })
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw Error(message);
+      }
+
+      const blob = await response.blob();
       download(blob, `secretbase_${randomId()}.png`);
+
       this.setState({
         isSaving: false,
+        saveError: undefined,
       });
-    }).catch(error => {
-      // TODO
+    } catch (error) {
+      console.error(error);
       this.setState({
         isSaving: false,
+        saveError: error.message
       });
-    });
+    }
   }
 
   render() {
-    const { base, items, enableUnofficialItems, enableStrictGrid, isSaving } = this.state;
+    const { base, items, enableUnofficialItems, enableStrictGrid, isSaving, saveError } = this.state;
     const itemProps = {
       removeItem: this.removeItem,
     };
@@ -248,6 +258,7 @@ class App extends Component {
               clearItems={this.clearItems}
               getShareUrl={this.getShareUrl}
               save={this.save}
+              saveError={saveError}
               isSaving={isSaving}
             />
             <ItemPicker

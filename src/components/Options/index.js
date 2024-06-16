@@ -15,6 +15,7 @@ const Options = ({
   getShareUrl,
   save,
   isSaving,
+  saveError,
 }) => (
   <div className={classNames(styles.container, 'border')}>
 
@@ -81,6 +82,7 @@ const Options = ({
         onClick={save}
       >
         <span>Save</span>
+        {saveError && <div className={styles.saveButtonErrorOverlay}></div>}
       </button>
     </div>
 
