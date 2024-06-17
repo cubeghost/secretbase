@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import { domainRoot } from 'src/utils';
+import { domainRoot } from '../../utils';
 
 import styles from './styles.scss';
 

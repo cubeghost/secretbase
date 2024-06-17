@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import classNames from 'classnames';
 import autobind from 'class-autobind';
 import { DragDropContext } from 'react-dnd';
@@ -8,22 +7,21 @@ import download from 'downloadjs';
 import queryString from 'query-string';
 import store from 'store';
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import Options from 'components/Options';
-import Base from 'components/Base';
-import ItemPicker from 'components/ItemPicker';
-import BasePicker from 'components/BasePicker';
-import CustomDragLayer from 'components/CustomDragLayer';
-import StaticRender from 'components/StaticRender';
+import Header from '../Header';
+import Footer from '../Footer';
+import Options from '../Options';
+import Base from '../Base';
+import ItemPicker from '../ItemPicker';
+import BasePicker from '../BasePicker';
+import CustomDragLayer from '../CustomDragLayer';
 
 import {
   STRICT_GRID_SPACING,
   EASY_GRID_SPACING,
   POOF_DURATION,
   LOCALSTORAGE_KEY
-} from 'src/constants';
-import { domainRoot, randomId } from 'src/utils';
+} from '../../constants';
+import { domainRoot, randomId } from '../../utils';
 
 import styles from './styles.scss';
 
@@ -39,12 +37,14 @@ class App extends Component {
       enableUnofficialItems: false,
       enableStrictGrid: true,
       isSaving: false,
+      saveError: undefined,
       loadedFromUrl: false,
     };
   }
 
   componentDidMount() {
     // TODO move this shit
+    // TODO static list, exclude stuff like isSaving, saveError
     const acceptableKeys = Object.keys(this.state);
 
     if (window.location.search) {
@@ -191,58 +191,54 @@ class App extends Component {
     return `${domainRoot()}/?save=${this.getBase64SaveState()}`;
   }
 
-  save() {
+  async save() {
     const { base, items } = this.state;
 
     this.setState({
       isSaving: true
     });
 
-    const rendered = ReactDOMServer.renderToStaticMarkup(
-      <StaticRender
-        base={base}
-        items={items}
-      />
-    );
-    const { width, height } = document.getElementById('baseImage').getBoundingClientRect();
-    const stylesheet = document.styleSheets[0].href;
+    try {
+      const response = await fetch(`${domainRoot()}/.netlify/functions/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          base,
+          items
+        })
+      });
 
-    const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
+      if (!response.ok) {
+        const message = await response.text();
+        throw Error(message);
+      }
 
-    fetch(`${domainRoot()}/.netlify/functions/save`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        html,
-        width,
-        height
-      })
-    }).then(response => {
-      if (!response.ok) { throw Error(response.statusText); }
-      return response.blob();
-    }).then(blob => {
+      const blob = await response.blob();
       download(blob, `secretbase_${randomId()}.png`);
+
       this.setState({
         isSaving: false,
+        saveError: undefined,
       });
-    }).catch(error => {
-      // TODO
+    } catch (error) {
+      console.error(error);
       this.setState({
         isSaving: false,
+        saveError: error.message
       });
-    });
+    }
   }
 
   render() {
-    const { base, items, enableUnofficialItems, enableStrictGrid, isSaving } = this.state;
+    const { base, items, enableUnofficialItems, enableStrictGrid, isSaving, saveError } = this.state;
     const itemProps = {
       removeItem: this.removeItem,
     };
 
     return (
-      <div className={styles.app}>
+      <div className={styles.app} style={{ '--poofDuration': `${POOF_DURATION}ms` }}>
         <div className={styles.top}>
           <Header />
           <BasePicker
@@ -260,6 +256,7 @@ class App extends Component {
               clearItems={this.clearItems}
               getShareUrl={this.getShareUrl}
               save={this.save}
+              saveError={saveError}
               isSaving={isSaving}
             />
             <ItemPicker

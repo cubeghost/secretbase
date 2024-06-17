@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import 'variables';
 
 :local {
@@ -8,11 +9,11 @@
     .scrollContainer {
       overflow: scroll;
       height: 100%;
-      padding: $padding--standard / 2;
+      padding: math.div($padding--standard, 2);
     }
 
     .category {
-      padding-bottom: $padding--standard / 2;
+      padding-bottom: math.div($padding--standard, 2);
 
       h4 {
         margin: 0;
@@ -25,8 +26,8 @@
       align-items: baseline;
     }
     .item {
-      margin-right: $padding--standard / 2;
-      margin-bottom: $padding--standard / 2;
+      margin-right: math.div($padding--standard, 2);
+      margin-bottom: math.div($padding--standard, 2);
     }
   }
 }

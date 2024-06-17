@@ -4,9 +4,9 @@ import autobind from 'class-autobind';
 import { DragLayer } from 'react-dnd';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import Item from 'components/Item';
+import Item from '../Item';
 
-import { POOF_DURATION } from 'src/constants';
+import { POOF_DURATION } from '../../constants';
 
 import styles from './styles.scss';
 

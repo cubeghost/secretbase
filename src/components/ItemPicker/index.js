@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Item from 'components/Item';
+import Item from '../Item';
 
-import { categories } from 'src/constants';
+import { categories } from '../../constants';
 
 import styles from './styles.scss';
 

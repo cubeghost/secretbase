@@ -1,6 +1,11 @@
+@use 'sass:math';
 @import 'variables';
 
 :global {
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     font-family: $fontFamily--pokemon;
     background-image: url(./grass.png);
@@ -21,12 +26,12 @@
     padding: $padding--standard;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - (#{$padding--standard} * 2));
+    height: calc(100vh - (#{$padding--standard} * 2));
 
     .top {
       display: flex;
       justify-content: space-between;
-      margin-bottom: $padding--standard / 2;
+      margin-bottom: math.div($padding--standard, 2);
       min-height: $height--header;
       align-items: center;
     }

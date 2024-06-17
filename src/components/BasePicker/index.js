@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 
-import { domainRoot } from 'src/utils';
-import { bases } from 'src/constants';
+import { domainRoot } from '../../utils';
+import { bases } from '../../constants';
 
 import styles from './styles.scss';
 

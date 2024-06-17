@@ -36,7 +36,7 @@ class Audio extends Component {
     return (
       <div className={styles.audio}>
         <audio loop ref={this.setRef}>
-          <source src={require('./theme.mp3')} type="audio/mpeg" />
+          <source src={require('./theme.mp3').default} type="audio/mpeg" />
         </audio>
         <div className={styles.controls}>
           <button onClick={this.toggleAudio}>

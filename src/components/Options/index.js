@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Audio from 'components/Audio';
-import Copy from 'components/Copy';
+import Audio from '../Audio';
+import Copy from '../Copy';
 
 import styles from './styles.scss';
 
@@ -15,6 +15,7 @@ const Options = ({
   getShareUrl,
   save,
   isSaving,
+  saveError,
 }) => (
   <div className={classNames(styles.container, 'border')}>
 
@@ -81,6 +82,7 @@ const Options = ({
         onClick={save}
       >
         <span>Save</span>
+        {saveError && <div className={styles.saveButtonErrorOverlay}></div>}
       </button>
     </div>
 
