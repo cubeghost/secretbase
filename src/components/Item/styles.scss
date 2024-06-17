@@ -12,16 +12,21 @@
   }
 }
 
-:global {
-  // "poof" item disappearing animation
-  // --poofDuration is injected with value of POOF_DURATION in constants.js
+// "poof" item disappearing animation
+// --poofDuration is injected in App/index.js
+$poofFrames: 10;
 
-  --poofFrames: 10;
-
-  @keyframes poof {
-    0%   { background-position: 0px; }
-    100% { background-position: calc(-64px * var(--poofFrames)); }
+@keyframes :global(poof) {
+  0% {
+    background-position: 0px;
   }
+
+  100% {
+    background-position: -64px * $poofFrames;
+  }
+}
+    
+:global {
 
   .poof-exit {
 
@@ -39,14 +44,14 @@
       width: 64px;
       display: block;
       background-image: url(./poof.png);
-      background-size: calc(64px * var(--poofFrames)) 64px;
+      background-size: (64px * $poofFrames) 64px;
       z-index: 1;
     }
   }
 
   .poof-exit.poof-exit-active {
     &:before {
-      animation: poof var(--poofDuration) steps(var(--poofFrames));
+      animation: poof var(--poofDuration) steps(#{$poofFrames});
       animation-iteration-count: 1;
     }
   }

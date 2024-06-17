@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import classNames from 'classnames';
 import autobind from 'class-autobind';
 import { DragDropContext } from 'react-dnd';
@@ -15,7 +14,6 @@ import Base from '../Base';
 import ItemPicker from '../ItemPicker';
 import BasePicker from '../BasePicker';
 import CustomDragLayer from '../CustomDragLayer';
-import StaticRender from '../StaticRender';
 
 import {
   STRICT_GRID_SPACING,
@@ -240,7 +238,7 @@ class App extends Component {
     };
 
     return (
-      <div className={styles.app} style={{ '--poofDuration': POOF_DURATION }}>
+      <div className={styles.app} style={{ '--poofDuration': `${POOF_DURATION}ms` }}>
         <div className={styles.top}>
           <Header />
           <BasePicker
