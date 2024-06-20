@@ -1,0 +1,217 @@
+@font-face {
+  font-family: 'pkmnrs';
+  src: url(/public/assets/pkmnrs.otf);
+  ascent-override: 110%;
+}
+
+.util-pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+}
+
+.item-image {
+  display: block;
+}
+
+@keyframes poof {
+  0% {
+    background-position: 0px;
+  }
+
+  100% {
+    background-position: calc(-64px * 10);
+  }
+}
+
+.poof img.item-image {
+  opacity: 0;
+}
+
+.poof:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 64px;
+  width: 64px;
+  display: block;
+  background-image: url(poof.png);
+  background-size: calc(64px * 10) 64px;
+  z-index: 1;
+}
+
+.poof.poof-active:before {
+  animation: poof 600ms steps(10);
+  animation-iteration-count: 1;
+}
+
+body {
+  background-image: url(grass.png);
+  font-family: 'pkmnrs', monospace;
+  font-size: 13px;
+}
+
+#root {
+  width: 100%;
+}
+
+/* debug */
+.base-layout {
+  position: relative;
+}
+
+.base-layout.show-grid:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  border-top: 1px solid red;
+  border-left: 1px solid red;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAADhJREFUWEft17ENADAMAjDy/9GJegUdzAMgb0yK2WSn2B8DCBAgQIAAAQIECBAgQIDAHwJvRfMhH7oEP+FlP5hiAAAAAElFTkSuQmCC');
+  transform: translate(-0.5px, -0.5px);
+}
+
+.base-layout.show-outlines .item {
+  outline: 1px solid blue;
+}
+
+
+.grid {
+  --grid-template: repeat(auto-fill, var(--grid-size));
+
+  --picker-end-column: calc(-1 * (var(--base-tile-width) + 2));
+  --base-start-column: calc(-1 * (var(--base-tile-width) + 1));
+  --picker-start-row: 1;
+
+  display: grid;
+  height: 100vh;
+  place-content: start;
+  grid-template: var(--grid-template) / var(--grid-template);
+  margin: var(--grid-size);
+  height: calc(100vh - (var(--grid-size) * 2));
+}
+
+/* .grid.mobile {
+   --picker-end-column: -1;
+   --base-start-column: 1;
+
+   --picker-start-row: calc(var(--base-tile-height) + 3);
+} */
+
+.reserve-gap {
+  grid-column: var(--picker-end-column) / span 1;
+  grid-row: 1 / -1;
+}
+
+.base {
+  grid-column: var(--base-start-column) / -1;
+  grid-row: 1 / span calc(var(--base-tile-height) + 2);
+  display: grid;
+  grid-template: subgrid / subgrid;
+}
+
+.base-picker {
+  grid-row: 1 / span 1;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  min-height: var(--grid-size);
+}
+
+.base-layout {
+  grid-column: 1 / -1;
+  grid-row: 2 / span var(--base-tile-height);
+}
+
+.item-picker {
+  --border-width: 12px;
+  grid-row: var(--picker-start-row) / -1;
+  grid-column: 1 / var(--picker-end-column);
+  display: grid;
+  grid-template: subgrid / subgrid;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile .item-picker {
+  position: fixed;
+  bottom: 0;
+  left: var(--border-width);
+  right: var(--border-width);
+  height: min(calc(100vh - ((var(--base-tile-height) + 3) * var(--grid-size))), 320px);
+  display: block;
+  transition: height 200ms ease;
+}
+
+.mobile .item-picker.is-expanded {
+  height: min(480px, 50vh);
+}
+
+.item-picker:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--border-width) * -1);
+  left: calc(var(--border-width) * -1);
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  border-width: 12px;
+  border-image: url(https://secretbase.cubegho.st/build/border.png) 12 16 12 fill round;
+}
+
+.item-picker-toggle {
+  display: none;
+}
+.mobile .item-picker-toggle {
+  display: block;
+}
+
+.item-picker .toolbar {
+  grid-column: 1 / -1;
+  grid-row: 1 / span 1;
+  min-height: var(--grid-size);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-picker-scroll {
+  grid-column: 1 / -1;
+  grid-row: 2 / -1;
+  height: 100%;
+  overflow-y: scroll;
+  display: grid;
+  grid-template: subgrid / subgrid;
+}
+
+.item-picker-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template: var(--grid-template) / var(--grid-template);
+}
+
+.item-picker-grid .item {
+  grid-column-start: auto;
+  grid-column-end: span var(--tile-width, 1);
+  grid-row-start: auto;
+  grid-row-end: span var(--tile-height, 1);
+}
+
+.item-picker-grid h4 {
+  margin: 0;
+  grid-column: 1 / -1;
+  grid-row: auto / span 1;
+  line-height: var(--grid-size);
+}
+
+.debug {
+  grid-column: var(--base-start-column) / -1;
+}
