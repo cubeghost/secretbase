@@ -4,19 +4,22 @@ import type { Modifier, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
 import { customAlphabet } from 'nanoid'
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
+// @ts-expect-error
+import download from 'downloadjs';
 
 import { StaticItem, DraggableItem } from './components/Item';
 import ItemPicker from './components/ItemPicker';
-import DroppableBase from './components/Base';
+import { DroppableBase } from './components/Base';
 import BasePicker from './components/BasePicker';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
-import type { BaseId, ItemFilename } from './types';
-import { BASE_DIMENSIONS } from './baseDimensions';
+import type { ItemState, BaseId, ItemFilename } from './types';
+// @ts-expect-error
+import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
 
 const MIN_PICKER_WIDTH = 280;
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789');
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12);
 
 function createCustomSnapModifier(): Modifier {
   return ({ active, transform, over }) => {
@@ -60,29 +63,49 @@ function createCustomSnapModifier(): Modifier {
 
 const snapModifier = createCustomSnapModifier();
 
-interface ItemState {
-  id: string,
-  filename: ItemFilename,
-  position: {
-    top: number;
-    left: number;
-  },
-  dropped: number;
-}
 
 function App() {
   const [base, setBase] = useState<BaseId>('base_0005_6');
   const [items, setItems] = useState<Record<string, ItemState>>({});
   const [draggingItem, setDraggingItem] = useState<ItemFilename | null>(null);
   const baseRef = useRef<HTMLDivElement>(null);
-  const poofItemId = useRef<string>(null);
+  const poofItemId = useRef<string | null>(null);
 
   const [showGrid, setShowGrid] = useState(false);
   const [showOutlines, setShowOutlines] = useState(false);
 
+  const sortedItems = useMemo(() =>
+    Object.values(items).sort((a, b) => a.dropped - b.dropped)
+    , [items]);
+
   const clear = useCallback(() => {
     setItems({});
   }, []);
+
+  const save = useCallback(async () => {
+    try {
+      const response = await fetch('/.netlify/functions/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          base,
+          items: sortedItems
+        })
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw Error(message);
+      }
+
+      const blob = await response.blob();
+      download(blob, `secretbase_${nanoid(8)}.png`);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [base, sortedItems]);
 
   const onDragStart = useCallback((event: DragStartEvent) => {
     setDraggingItem(event.active.data?.current?.filename);
@@ -144,10 +167,6 @@ function App() {
     }
   }, []);
 
-  const sortedItems = useMemo(() =>
-    Object.values(items).sort((a, b) => a.dropped - b.dropped)
-    , [items]);
-
   const cssVariables = useMemo(() => {
     const [width, height] = BASE_DIMENSIONS[base];
     return {
@@ -203,6 +222,7 @@ function App() {
         </div>
         <div className="reserve-gap"></div>
         <div className="debug">
+          <button onClick={save}>save</button>
           <button onClick={clear}>clear</button>
           <br />
           <label>

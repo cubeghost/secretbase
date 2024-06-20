@@ -7,11 +7,11 @@ interface BaseProps {
   id: BaseId;
 }
 
-const StaticBase = ({ id }: BaseProps) => (
+export const StaticBase = ({ id }: BaseProps) => (
   <img src={`https://secretbase.cubegho.st/assets/bases/${id}.png`} className="util-pixelated" style={{ display: 'block' }} />
 );
 
-const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
+export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
   const { setNodeRef } = useDroppable({
     id: 'base',
     data: {
@@ -22,6 +22,7 @@ const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
   const setRef = useCallback((element: HTMLElement | null) => {
     setNodeRef(element);
     if (ref) {
+      // @ts-expect-error
       ref.current = element;
     }
   }, [setNodeRef, ref]);
@@ -32,5 +33,3 @@ const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
     </div>
   );
 });
-
-export default DroppableBase;

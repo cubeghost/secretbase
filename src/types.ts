@@ -14,3 +14,13 @@ export interface Item {
     alt: string;
     unofficial?: boolean;
 }
+
+export interface ItemState {
+    id: string,
+    filename: ItemFilename,
+    position: {
+        top: number;
+        left: number;
+    },
+    dropped: number;
+}

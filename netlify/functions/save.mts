@@ -1,15 +1,15 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server.js';
+import ReactDOMServer from 'react-dom/server';
 
-import StaticRender from '../../public/build/StaticRender';
-import BASE_DIMENSIONS from '../../public/build/baseDimensions';
+import StaticRender, { BASE_DIMENSIONS } from '../../dist/server/StaticRender';
+import manifest from '../../dist/client/.vite/manifest.json';
 
 export default async (request) => {
   if (!request.headers.has('Referer') || !request.headers.get('Referer').startsWith(Netlify.env.get('URL'))) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  if (Netlify.env.get('URL').startsWith('http://localhost')) {
+  if (Netlify.env.get('URL')!.startsWith('http://localhost')) {
     return new Response('Image saving disabled on localhost, try using a live tunnel', { status: 418 });
   }
   
@@ -23,8 +23,12 @@ export default async (request) => {
     React.createElement(StaticRender, { base, items })
   );
 
-  const stylesheet = `${Netlify.env.get('URL')}/build/style.css`;
-  const html = `<html><head><link rel="stylesheet" href="${stylesheet}"></head><body>${rendered}</body></html>`;
+  const stylesheetPath = manifest['index.html']['css'][0];
+  const html = `<html>
+    <head><link rel="stylesheet" href="${Netlify.env.get('URL')}/${stylesheetPath}"></head>
+    <body>${rendered}</body>
+  </html>`;
+  console.log(html)
 
   const [width, height] = BASE_DIMENSIONS[base];
 
