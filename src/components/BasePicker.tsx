@@ -22,7 +22,7 @@ const BASE_OPTIONS = BASES.map((base) => ({
   type: base.type
 }));
 
-const BaseTypeIcon = ({ type }: { type: BaseType }) => <img src={`https://secretbase.cubegho.st/assets/bases/icon_${type}.png`} width={16} />
+const BaseTypeIcon = ({ type }: { type: BaseType }) => <img src={`/assets/bases/icon_${type}.png`} width={16} />
 
 const formatOptionLabel = (data: BaseOptionType) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

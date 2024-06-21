@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import type { ItemFilename } from '../types';
-import { ITEMS_MAP } from '../constants';
+import { ASSET_BASE, ITEMS_MAP } from '../constants';
 
 interface ItemProps {
   filename: ItemFilename;
@@ -10,7 +10,7 @@ interface ItemProps {
 
 export const StaticItem = ({ filename, alt }: ItemProps) => (
   <img
-    src={`https://secretbase.cubegho.st/assets/items/${filename}`}
+    src={`${ASSET_BASE}assets/items/${filename}`}
     alt={alt}
     className="item-image util-pixelated"
   />

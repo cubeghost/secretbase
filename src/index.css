@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'pkmnrs';
-  src: url(assets/pkmnrs.otf);
+  src: url(./assets/pkmnrs.otf);
   ascent-override: 110%;
 }
 
@@ -29,11 +29,9 @@
   0% { background-position-x: 0px; }
   100% { background-position-x: calc((-1 * var(--poof-frame-size)) * 10); }
 }
-
 .poof img.item-image {
   opacity: 0;
 }
-
 .poof:before {
   content: '';
   position: absolute;
@@ -43,11 +41,10 @@
   height: var(--poof-frame-size);
   width: var(--poof-frame-size);
   display: block;
-  background-image: url(assets/poof.png);
+  background-image: url(./assets/poof_shadow.png);
   background-size: calc(var(--poof-frame-size) * 10) var(--poof-frame-size);
   z-index: 1;
 }
-
 .poof.poof-active:before {
   animation: poof var(--poof-duration) steps(10);
   animation-iteration-count: 1;
@@ -73,14 +70,14 @@
   height: var(--sparkle-frame-size);
   width: var(--sparkle-frame-size);
   display: block;
-  background-image: url(assets/sparkle.png);
+  background-image: url(./assets/sparkle.png);
   background-size: var(--sparkle-frame-size) calc(var(--sparkle-frame-size) * 7);
   z-index: 1;
   image-rendering: pixelated;
   background-position-y: var(--sparkle-frame-size);
 }
 .animate-sparkle-hover:hover:before {
-  animation: sparkle calc(6 * 60ms * 2) steps(6);
+  animation: sparkle calc(6 * 60ms) steps(6);
   /* animation-iteration-count: 1; */
 }
 
@@ -91,7 +88,7 @@ html {
   font-size: 13px;
 }
 body {
-  background-image: url(assets/grass.png);
+  background-image: url(./assets/grass.png);
   font-family: var(--font-family);
   margin: 0;
 }
@@ -105,36 +102,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 :root {
-  /* --border-width: 12px; */
   --border-width-slice: 9;
   --border-width: calc(var(--border-width-slice) * 1px);
 }
-.has-border:before {
+.with-border:before,
+.with-border-top-bar:before,
+.with-cloud-border:before {
   content: '';
   position: absolute;
   z-index: -1;
+  image-rendering: pixelated;
   top: calc(var(--border-width) * -1);
   left: calc(var(--border-width) * -1);
   width: 100%;
   height: 100%;
   border-style: solid;
   border-width: var(--border-width);
-  /* border-image: url(assets/border.png) 12 16 12 fill round; */
-  border-image: url(assets/border_green_3x.png) var(--border-width-slice) fill round;
-  image-rendering: pixelated;
 }
-.has-border-top-bar:before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: calc(var(--border-width) * -1);
-  left: calc(var(--border-width) * -1);
-  width: 100%;
+.with-border:before {
+  /* --border-width-slice: 12; */
+  /* border-image: url(assets/border.png) 12 16 12 fill round; */
+  border-image: url(./assets/border_green_3x.png) var(--border-width-slice) fill round;
+}
+.with-border-top-bar:before {
   height: calc(100% - (var(--border-width) / 3));
-  border-style: solid;
-  border-width: var(--border-width);
-  border-image: url(assets/border_green_top_3x.png) var(--border-width-slice) fill round;
-  image-rendering: pixelated;
+  border-image: url(./assets/border_green_top_3x.png) var(--border-width-slice) fill round;
+}
+.with-cloud-border {
+  --border-width-slice: 14;
+  --border-width: calc(var(--border-width-slice) * 1px);
+}
+.with-cloud-border:before {
+  border-image: url(./assets/border_cloud_2x.png) 14 fill round;
 }
 
 .grid {
@@ -192,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .options h3 {
   text-transform: uppercase;
-  font-size: 1.23rem;
+  font-size: 1.25rem;
   margin: 0.5rem;
 }
 .icon-button {
@@ -202,7 +201,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: transparent;
   cursor: pointer;
   position: relative;
-  
 }
 .icon-button span {
   text-transform: uppercase;
@@ -233,8 +231,9 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url(./assets/laptop.png);
 }
 @keyframes laptop-blink {
-  0%   { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAECAYAAAC3OK7NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAM0lEQVQImWP0qEj9z0AEYGFgYGCQNdDAqUBBXo3hwcNbDEzEmMbAwEBY4YOHtxgYGBgYAKU6CD4aQqPVAAAAAElFTkSuQmCC'); }
-  100% { background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAECAYAAAC3OK7NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAANElEQVQImWN0nVL0n4EIwMLAwMAgraGJU4G8hCLDwxf3GZiIMY2BgYGwwocv7jMwMDAwAAC5OQhozcx0KgAAAABJRU5ErkJggg=='); }
+  /* these will get inlined */
+  0%   { background-image: url(./assets/blink_1.png); }
+  100% { background-image: url(./assets/blink_2.png); }
 }
 .icon-button.icon-button--save:after {
   content: '';

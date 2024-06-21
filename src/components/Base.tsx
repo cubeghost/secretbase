@@ -2,13 +2,14 @@ import { forwardRef, useCallback } from "react";
 import { useDroppable } from '@dnd-kit/core';
 
 import type { BaseId } from '../types';
+import { ASSET_BASE } from "../constants";
 
 interface BaseProps {
   id: BaseId;
 }
 
 export const StaticBase = ({ id }: BaseProps) => (
-  <img src={`https://secretbase.cubegho.st/assets/bases/${id}.png`} className="util-pixelated" style={{ display: 'block' }} />
+  <img src={`${ASSET_BASE}assets/bases/${id}.png`} className="util-pixelated" style={{ display: 'block' }} />
 );
 
 export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {

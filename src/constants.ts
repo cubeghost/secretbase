@@ -1,3 +1,5 @@
+export const ASSET_BASE = typeof process !== 'undefined' ? `${process.env.URL}/` : '/';
+
 export const GRID_SIZE = 32;
 
 export const POOF_DURATION = 600;
@@ -155,6 +157,12 @@ export const ITEMS = [
   { filename: 'pikachu_poster.png', category: 'wall', size: [1, 1], alt: 'pikachu poster', unofficial: true },
   { filename: 'plant1.png', category: 'plant', size: [1, 2], alt: 'potted plant', unofficial: true },
   { filename: 'plant2.png', category: 'plant', size: [1, 2], alt: 'potted plant', unofficial: true },
+  { filename: 'wooper_doll.png', category: 'doll_small', size: [1, 1], alt: 'wooper doll', unofficial: true },
+  { filename: 'pikachu_doll_alt.png', category: 'doll_small', size: [1, 1], alt: 'alternate pikachu doll', unofficial: true },
+  { filename: 'natu_doll.png', category: 'doll_small', size: [1, 1], alt: 'natu doll', unofficial: true },
+  { filename: 'magnemite_doll.png', category: 'doll_small', size: [1, 1], alt: 'magnemite doll', unofficial: true },
+  { filename: 'squirtle_doll.png', category: 'doll_small', size: [1, 1], alt: 'squirtle doll', unofficial: true },
+  { filename: 'porygon2_doll.png', category: 'doll_small', size: [1, 1], alt: 'porygon2 doll', unofficial: true },
 ] as const;
 
 export const ITEMS_MAP = new Map(ITEMS.map(item => ([item.filename, item])));

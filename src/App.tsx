@@ -71,7 +71,6 @@ function App() {
   const baseRef = useRef<HTMLDivElement>(null);
   const poofItemId = useRef<string | null>(null);
 
-  const [enableUnofficialItems, setUnofficialItems] = useState(true);
   const [enableSnapToGrid, setSnapToGrid] = useState(true);
   const [isSaving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<Error | null>();
@@ -208,7 +207,7 @@ function App() {
       onDragCancel={onDragCancel}
     >
       <div className={clsx('grid', { mobile: isMobile })} style={cssVariables}>
-        <div className="options has-border">
+        <div className="options with-border">
           <div>
             <h3>Options</h3>
             <label style={{ display: 'block' }}>

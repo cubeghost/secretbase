@@ -6,6 +6,7 @@ import StyledSelect from './Select';
 import { DraggableItem } from './Item';
 import { ITEMS as _ITEMS, CATEGORIES } from '../constants';
 import { Category, Item } from '../types';
+import jumpTo from '../assets/jump_to.png';
 
 const ITEMS = _ITEMS as unknown as Item[];
 
@@ -40,13 +41,14 @@ const ItemPicker = () => {
   }, []);
 
   return (
-    <div className={clsx("item-picker", "has-border", { 'is-expanded': isExpanded })}>
-      <div className="toolbar has-border-top-bar">
+    <div className={clsx("item-picker", "with-border", { 'is-expanded': isExpanded })}>
+      <div className="toolbar with-border-top-bar">
         <div className="category-jump">
-          <span>Jump to: </span>
+          <img src={jumpTo} height={12} style={{ display: 'block', flex: '0 0 0%' }} className="util-pixelated" alt="Jump to category" />
           <StyledSelect<CategoryOptionType>
             options={CATEGORY_OPTIONS}
             onChange={jump}
+            placeholder="Category..."
           />
         </div>
 
