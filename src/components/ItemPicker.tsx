@@ -44,11 +44,20 @@ const ItemPicker = () => {
     <div className={clsx("item-picker", "with-border", { 'is-expanded': isExpanded })}>
       <div className="toolbar with-border-top-bar">
         <div className="category-jump">
-          <img src={jumpTo} height={12} style={{ display: 'block', flex: '0 0 0%' }} className="util-pixelated" alt="Jump to category" />
+          <label htmlFor="category-jump-select">
+            <img 
+              src={jumpTo} 
+              height={12} 
+              alt="Jump to category" 
+              style={{ display: 'block' }} 
+              className="util-pixelated"
+            />
+          </label>
           <StyledSelect<CategoryOptionType>
             options={CATEGORY_OPTIONS}
             onChange={jump}
             placeholder="Category..."
+            id="category-jump-select"
           />
         </div>
 

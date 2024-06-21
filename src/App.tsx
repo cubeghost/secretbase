@@ -1,21 +1,20 @@
-import { useCallback, useState, useMemo, useRef } from 'react';
+import { useCallback, useState, useMemo, useRef, useEffect } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import type { Modifier, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
-import { customAlphabet } from 'nanoid'
+import { customAlphabet } from 'nanoid';
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
-// @ts-expect-error
-import download from 'downloadjs';
 
 import { StaticItem, DraggableItem } from './components/Item';
 import ItemPicker from './components/ItemPicker';
 import { DroppableBase } from './components/Base';
 import BasePicker from './components/BasePicker';
-import Music from './components/Music';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, BaseId, ItemFilename } from './types';
 import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
+import { sortItemsByDropped } from './utils';
+import Options from './components/Options';
 
 const MIN_PICKER_WIDTH = 280;
 
@@ -70,52 +69,27 @@ function App() {
   const [draggingItem, setDraggingItem] = useState<ItemFilename | null>(null);
   const baseRef = useRef<HTMLDivElement>(null);
   const poofItemId = useRef<string | null>(null);
+  const saveDataRef = useRef<{ base: BaseId; items: Record<string, ItemState>; }>({ base, items });
 
   const [enableSnapToGrid, setSnapToGrid] = useState(true);
-  const [isSaving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState<Error | null>();
 
   const [showGrid, setShowGrid] = useState(false);
   const [showOutlines, setShowOutlines] = useState(false);
 
-  const sortedItems = useMemo(() =>
-    Object.values(items).sort((a, b) => a.dropped - b.dropped)
-    , [items]);
+  const sortedItems = useMemo(() => sortItemsByDropped(items), [items]);
 
-  const clear = useCallback(() => {
+  useEffect(() => {
+    saveDataRef.current = { base, items };
+  }, [base, items]);
+
+  const onClear = useCallback(() => {
     setItems({});
   }, []);
 
-  const save = useCallback(async () => {
-    setSaving(true);
-    try {
-      const response = await fetch('/.netlify/functions/save', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          base,
-          items: sortedItems
-        })
-      });
-
-      if (!response.ok) {
-        const message = await response.text();
-        throw Error(message);
-      }
-
-      const blob = await response.blob();
-      download(blob, `secretbase_${nanoid(8)}.png`);
-      setSaving(false);
-      setSaveError(null);
-    } catch (error) {
-      console.error(error);
-      setSaving(false);
-      setSaveError(error as Error);
-    }
-  }, [base, sortedItems]);
-
+  const getSaveData = useCallback(() => {
+    return saveDataRef.current;
+  }, []);
+  
   const modifiers = useMemo(() => (
     enableSnapToGrid ? [snapModifier] : []
   ), [enableSnapToGrid]);
@@ -207,37 +181,12 @@ function App() {
       onDragCancel={onDragCancel}
     >
       <div className={clsx('grid', { mobile: isMobile })} style={cssVariables}>
-        <div className="options with-border">
-          <div>
-            <h3>Options</h3>
-            <label style={{ display: 'block' }}>
-              <input
-                type="checkbox"
-                checked={enableSnapToGrid}
-                onChange={(event) => setSnapToGrid(event.target.checked)}
-              /> 
-              Snap to grid
-            </label>
-            <Music />
-          </div>
-          <div style={{marginLeft: 'auto'}}>
-            <button onClick={clear} className="icon-button icon-button--clear">
-              <span>Clear</span>
-            </button>
-            <button className="icon-button icon-button--share">
-              <span>Share</span>
-            </button>
-            <button
-              onClick={save}
-              className={clsx('icon-button', 'icon-button--save', { 
-                'icon-button--active': isSaving, 
-                'icon-button--error': !!saveError 
-              })}
-            >
-              <span>Save</span>
-            </button>
-          </div>
-        </div>
+        <Options 
+          onClear={onClear}
+          getSaveData={getSaveData}
+          enableSnapToGrid={enableSnapToGrid}
+          onChangeSnapToGrid={(event) => setSnapToGrid(event.target.checked)}
+        />
         <ItemPicker />
         <div className="base">
           <div className="base-picker">

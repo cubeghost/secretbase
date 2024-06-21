@@ -4,8 +4,14 @@
   ascent-override: 110%;
 }
 
+@font-face {
+  font-family: 'pkmnem';
+  src: url(./assets/pkmnem.otf);
+  ascent-override: 90%;
+}
+
 :root {
-  --font-family: 'pkmnrs', monospace;
+  --font-family: 'pkmnem', monospace;
 }
 
 .util-pixelated {
@@ -85,7 +91,7 @@
 
 
 html {
-  font-size: 13px;
+  font-size: 14px;
 }
 body {
   background-image: url(./assets/grass.png);
@@ -98,6 +104,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-size: 1rem;;
   font-weight: normal;
 }
 
@@ -169,7 +176,10 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template: subgrid / subgrid;
 }
-
+.mobile .base {
+  grid-row-start: var(--picker-start-row);
+  grid-column-start: 1;
+}
 .base-picker {
   grid-row: 1 / span 1;
   grid-column: 1 / -1;
@@ -177,7 +187,6 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   min-height: var(--grid-size);
 }
-
 .base-layout {
   grid-column: 1 / -1;
   grid-row: 3 / span var(--base-tile-height);
@@ -189,6 +198,9 @@ h1, h2, h3, h4, h5, h6 {
   grid-column: 1 / var(--picker-end-column);
   display: flex;
 }
+.mobile .options {
+  grid-column: 1 / -1;
+}
 .options h3 {
   text-transform: uppercase;
   font-size: 1.25rem;
@@ -196,6 +208,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .icon-button {
   font-family: var(--font-family);
+  font-size: 1rem;
   padding: 0 4px;
   border: 0;
   background-color: transparent;
@@ -255,6 +268,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .music-button {
   font-family: var(--font-family);
+  font-size: 1rem;
   background-color: transparent;
   border: 0;
   padding: 0;
