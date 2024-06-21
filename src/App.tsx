@@ -11,6 +11,7 @@ import { StaticItem, DraggableItem } from './components/Item';
 import ItemPicker from './components/ItemPicker';
 import { DroppableBase } from './components/Base';
 import BasePicker from './components/BasePicker';
+import Music from './components/Music';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, BaseId, ItemFilename } from './types';
@@ -70,6 +71,11 @@ function App() {
   const baseRef = useRef<HTMLDivElement>(null);
   const poofItemId = useRef<string | null>(null);
 
+  const [enableUnofficialItems, setUnofficialItems] = useState(true);
+  const [enableSnapToGrid, setSnapToGrid] = useState(true);
+  const [isSaving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<Error | null>();
+
   const [showGrid, setShowGrid] = useState(false);
   const [showOutlines, setShowOutlines] = useState(false);
 
@@ -82,6 +88,7 @@ function App() {
   }, []);
 
   const save = useCallback(async () => {
+    setSaving(true);
     try {
       const response = await fetch('/.netlify/functions/save', {
         method: 'POST',
@@ -101,10 +108,18 @@ function App() {
 
       const blob = await response.blob();
       download(blob, `secretbase_${nanoid(8)}.png`);
+      setSaving(false);
+      setSaveError(null);
     } catch (error) {
       console.error(error);
+      setSaving(false);
+      setSaveError(error as Error);
     }
   }, [base, sortedItems]);
+
+  const modifiers = useMemo(() => (
+    enableSnapToGrid ? [snapModifier] : []
+  ), [enableSnapToGrid]);
 
   const onDragStart = useCallback((event: DragStartEvent) => {
     setDraggingItem(event.active.data?.current?.filename);
@@ -172,17 +187,9 @@ function App() {
       '--grid-size': `${GRID_SIZE}px`,
       '--base-tile-width': width / GRID_SIZE,
       '--base-tile-height': height / GRID_SIZE,
+      '--poof-duration': `${POOF_DURATION}ms`,
     } as React.CSSProperties;
   }, [base]);
-
-  // useEffect(() => {
-  //   const root = document.documentElement;
-  //   const [width, height] = BASE_DIMENSIONS[base];
-  //   root.style.setProperty('--grid-size', `${GRID_SIZE}px`);
-  //   root.style.setProperty('--base-width-px', `${width}px`);
-  //   root.style.setProperty('--base-tile-width', `${width / GRID_SIZE}`);
-  //   root.style.setProperty('--base-tile-height', `${height / GRID_SIZE}`);
-  // }, [base]);
 
   const query = useMemo(() => {
     const [width] = BASE_DIMENSIONS[base];
@@ -195,12 +202,43 @@ function App() {
 
   return (
     <DndContext
-      modifiers={[snapModifier]}
+      modifiers={modifiers}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragCancel={onDragCancel}
     >
       <div className={clsx('grid', { mobile: isMobile })} style={cssVariables}>
+        <div className="options has-border">
+          <div>
+            <h3>Options</h3>
+            <label style={{ display: 'block' }}>
+              <input
+                type="checkbox"
+                checked={enableSnapToGrid}
+                onChange={(event) => setSnapToGrid(event.target.checked)}
+              /> 
+              Snap to grid
+            </label>
+            <Music />
+          </div>
+          <div style={{marginLeft: 'auto'}}>
+            <button onClick={clear} className="icon-button icon-button--clear">
+              <span>Clear</span>
+            </button>
+            <button className="icon-button icon-button--share">
+              <span>Share</span>
+            </button>
+            <button
+              onClick={save}
+              className={clsx('icon-button', 'icon-button--save', { 
+                'icon-button--active': isSaving, 
+                'icon-button--error': !!saveError 
+              })}
+            >
+              <span>Save</span>
+            </button>
+          </div>
+        </div>
         <ItemPicker />
         <div className="base">
           <div className="base-picker">
@@ -220,9 +258,6 @@ function App() {
         </div>
         <div className="reserve-gap"></div>
         <div className="debug">
-          <button onClick={save}>save</button>
-          <button onClick={clear}>clear</button>
-          <br />
           <label>
             <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
             show grid

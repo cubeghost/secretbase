@@ -1,11 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import type { SingleValue } from 'react-select';
 import clsx from 'clsx';
 
 import StyledSelect from './Select';
 import { DraggableItem } from './Item';
-import { ITEMS, CATEGORIES } from '../constants';
-import { Category } from '../types';
+import { ITEMS as _ITEMS, CATEGORIES } from '../constants';
+import { Category, Item } from '../types';
+
+const ITEMS = _ITEMS as unknown as Item[];
 
 const CATEGORY_OPTIONS = CATEGORIES.map(({ id, label }) => ({ value: id, label }));
 
@@ -16,6 +18,15 @@ interface CategoryOptionType {
 
 const ItemPicker = () => {
   const [isExpanded, setExpanded] = useState(false);
+  const [enableUnofficialItems, setUnofficialItems] = useState(false);
+
+  const filteredItems = useMemo(() => {
+    if (enableUnofficialItems) {
+      return ITEMS;
+    } else {
+      return ITEMS.filter((item) => !item.unofficial);
+    };
+  }, [enableUnofficialItems]);
 
   const toggle = useCallback(() => {
     setExpanded(s => !s);
@@ -29,20 +40,32 @@ const ItemPicker = () => {
   }, []);
 
   return (
-    <div className={clsx("item-picker", { 'is-expanded': isExpanded })}>
-      <div className="toolbar">
-        <span>Jump to: </span>
-        <StyledSelect<CategoryOptionType>
-          options={CATEGORY_OPTIONS}
-          onChange={jump}
-        />
+    <div className={clsx("item-picker", "has-border", { 'is-expanded': isExpanded })}>
+      <div className="toolbar has-border-top-bar">
+        <div className="category-jump">
+          <span>Jump to: </span>
+          <StyledSelect<CategoryOptionType>
+            options={CATEGORY_OPTIONS}
+            onChange={jump}
+          />
+        </div>
+
+        <label>
+          <input
+            type="checkbox"
+            checked={enableUnofficialItems}
+            onChange={(event) => setUnofficialItems(event.target.checked)}
+          />
+          Enable unofficial items
+        </label>
+
         <button onClick={toggle} className="item-picker-toggle">{isExpanded ? 'Collapse' : 'Expand'}</button>
       </div>
       <div className="item-picker-scroll item-picker-grid">
         {CATEGORIES.map(({ id, label }) => (
           <React.Fragment key={id}>
             <h4 id={`category-${id}`}>{label}</h4>
-            {ITEMS.filter(item => item.category === id).map((item) => (
+            {filteredItems.filter(item => item.category === id).map((item) => (
               <DraggableItem
                 key={item.filename}
                 filename={item.filename}
