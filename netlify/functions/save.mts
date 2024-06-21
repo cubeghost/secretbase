@@ -28,7 +28,6 @@ export default async (request) => {
     <head><link rel="stylesheet" href="${Netlify.env.get('URL')}/${stylesheetPath}"></head>
     <body>${rendered}</body>
   </html>`;
-  console.log(html)
 
   const [width, height] = BASE_DIMENSIONS[base];
 

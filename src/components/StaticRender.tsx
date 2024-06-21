@@ -3,7 +3,6 @@ import { StaticItem } from "./Item"
 
 import type { BaseId, ItemState } from "../types";
 
-// @ts-expect-error
 export { BASE_DIMENSIONS } from "virtual:base-dimensions";
 
 interface StaticRenderProps {

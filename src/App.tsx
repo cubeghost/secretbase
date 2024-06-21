@@ -14,7 +14,6 @@ import BasePicker from './components/BasePicker';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, BaseId, ItemFilename } from './types';
-// @ts-expect-error
 import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
 
 const MIN_PICKER_WIDTH = 280;
@@ -193,7 +192,6 @@ function App() {
   }, [base]);
 
   const isMobile = useMediaQuery({ query });
-  console.log({ isMobile })
 
   return (
     <DndContext
