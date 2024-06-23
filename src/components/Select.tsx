@@ -23,7 +23,7 @@ function getStyles<
     container: (baseStyles) => ({
       ...baseStyles,
       flex: '1',
-      maxWidth: '220px',
+      maxWidth: 'var(--select-max-width)',
     }),
     valueContainer: (baseStyles) => ({
       ...baseStyles,

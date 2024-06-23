@@ -12,9 +12,14 @@ import BasePicker from './components/BasePicker';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, BaseId, ItemFilename } from './types';
-import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
 import { sortItemsByDropped } from './utils';
-import Options from './components/Options';
+import title from './assets/title.png';
+import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
+import Credits from './components/Credits';
+import Music from "./components/Music"
+import labelBase from './assets/label_base.png';
+import labelControls from './assets/label_controls.png';
+import Save from "./components/Save";
 
 const MIN_PICKER_WIDTH = 280;
 
@@ -22,6 +27,7 @@ const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12);
 
 function createCustomSnapModifier(): Modifier {
   return ({ active, transform, over }) => {
+    // TODO fix case where previously un-snapped items do not align
     const id = active?.data?.current?.id;
     const baseElement = document.getElementById('base');
 
@@ -64,7 +70,7 @@ const snapModifier = createCustomSnapModifier();
 
 
 function App() {
-  const [base, setBase] = useState<BaseId>('base_0005_6');
+  const [base, setBase] = useState<BaseId>('base_0021_22');
   const [items, setItems] = useState<Record<string, ItemState>>({});
   const [draggingItem, setDraggingItem] = useState<ItemFilename | null>(null);
   const baseRef = useRef<HTMLDivElement>(null);
@@ -84,6 +90,11 @@ function App() {
 
   const onClear = useCallback(() => {
     setItems({});
+
+    // baseRef.current?.classList.add('animate-sparkle', 'animate-sparkle-active');
+    // setTimeout(() => {
+    //   baseRef.current?.classList.remove('animate-sparkle', 'animate-sparkle-active');
+    // }, 360);
   }, []);
 
   const getSaveData = useCallback(() => {
@@ -174,6 +185,7 @@ function App() {
   const isMobile = useMediaQuery({ query });
 
   return (
+    <>
     <DndContext
       modifiers={modifiers}
       onDragStart={onDragStart}
@@ -181,17 +193,42 @@ function App() {
       onDragCancel={onDragCancel}
     >
       <div className={clsx('grid', { mobile: isMobile })} style={cssVariables}>
-        <Options 
-          onClear={onClear}
-          getSaveData={getSaveData}
-          enableSnapToGrid={enableSnapToGrid}
-          onChangeSnapToGrid={(event) => setSnapToGrid(event.target.checked)}
-        />
-        <ItemPicker />
-        <div className="base">
+        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
+            <h1>
+              <img src={title} height={24} alt="hoenn secret base designer" className="util-pixelated" />
+            </h1>
+            <Credits />
+          </div>
+          <Music />
+          <button onClick={onClear} className="icon-button icon-button--clear">
+            <span>Clear</span>
+          </button>
+          <button className="icon-button icon-button--share">
+            <span>Share</span>
+          </button>
+          <Save getSaveData={getSaveData} />
+        </header>
+        <div className="controls base-options with-border">
+          <div className="with-border-top-bar">
+            <h3>
+              <img src={labelBase} height={12} alt="Base" className="util-block util-pixelated" />
+            </h3>
+          </div>
           <div className="base-picker">
             <BasePicker value={base} onChange={setBase} />
           </div>
+          <label className="util-block">
+            <input
+              type="checkbox"
+              checked={enableSnapToGrid}
+              onChange={(event) => setSnapToGrid(event.target.checked)}
+            />
+            Snap to grid
+          </label>
+        </div>
+        <ItemPicker />
+        <div className="base">
           <div className={clsx('base-layout', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
             <DroppableBase id={base} ref={baseRef} />
             {sortedItems.map((item) => (
@@ -204,7 +241,8 @@ function App() {
             ))}
           </div>
         </div>
-        <div className="reserve-gap"></div>
+        <div className="reserve-gap-column"></div>
+        <div className="reserve-gap-row"></div>
         <div className="debug">
           <label>
             <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
@@ -243,6 +281,7 @@ function App() {
         )}
       </DragOverlay>
     </DndContext>
+    </>
   );
 }
 

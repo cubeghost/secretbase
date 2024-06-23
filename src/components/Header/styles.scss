@@ -10,8 +10,8 @@
       &:before,
       &:after {
         content: '';
-        height: $headerFlowerHeight;
-        width: $headerFlowerWidth;
+        height: 44px;
+        width: 56px;
         display: inline-block;
         background-image: url(./flower.png);
         vertical-align: -6px;

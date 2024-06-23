@@ -21,8 +21,8 @@ const Music = () => {
 
   return (
     <>
-      <button onClick={toggleMusic} className="music-button">
-        {isPlaying ? 'Pause' : 'Play'} music
+      <button onClick={toggleMusic} className="icon-button icon-button--music">
+        <span>{isPlaying ? 'Pause' : 'Play'} music</span>
       </button>
       <audio loop ref={audioRef}>
         <source src={music} type="audio/mpeg" />
