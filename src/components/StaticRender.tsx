@@ -1,24 +1,32 @@
 import { StaticBase } from "./Base"
 import { StaticItem } from "./Item"
+import DefaultItems from "./DefaultItems";
 
-import type { BaseId, ItemState } from "../types";
+import type { SaveData } from "../types";
 import { sortItemsByDropped } from "../utils";
+import { useBaseCssVariables, useCssVariables } from "../hooks";
 
 export { BASE_DIMENSIONS } from "virtual:base-dimensions";
 
-interface StaticRenderProps {
-  base: BaseId;
-  items: Record<string, ItemState>;
-}
+type StaticRenderProps = Pick<SaveData, 'base' | 'items' | 'enableDefaultLaptop' | 'enableDefaultLandscape'>;
 
-export default ({ base, items }: StaticRenderProps) => {
+export default ({ base, items, enableDefaultLaptop, enableDefaultLandscape }: StaticRenderProps) => {
+  const cssVariables = useCssVariables();
+  const baseCssVariables = useBaseCssVariables(base);
+
   const sortedItems = sortItemsByDropped(items);
+
   return (
-    <div style={{ position: 'relative' }}>
-      <div id="base" style={{ zIndex: '-1' }}>
+    <div className="base base-static" style={{...cssVariables, ...baseCssVariables}}>
+      <div id="base" className="base-droppable">
         <StaticBase id={base} />
       </div>
-        {sortedItems.map((item) => (
+      <DefaultItems
+        base={base}
+        enableDefaultLaptop={enableDefaultLaptop}
+        enableDefaultLandscape={enableDefaultLandscape}
+      />
+      {sortedItems.map((item) => (
         <div
           key={item.id}
           className="item"

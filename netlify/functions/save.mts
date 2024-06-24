@@ -13,14 +13,14 @@ export default async (request) => {
     return new Response('Image saving disabled on localhost, try using a live tunnel', { status: 418 });
   }
   
-  const { base, items } = await request.json();
+  const { base, items, enableDefaultLaptop, enableDefaultLandscape } = await request.json();
 
   if (!base || !items) {
     return new Response('Missing required parameter (base, items)', { status: 400 });
   }
 
   const rendered = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(StaticRender, { base, items })
+    React.createElement(StaticRender, { base, items, enableDefaultLaptop, enableDefaultLandscape })
   );
 
   const stylesheetPath = manifest['index.html']['css'][0];

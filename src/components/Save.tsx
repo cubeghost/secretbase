@@ -4,13 +4,10 @@ import { nanoid } from 'nanoid';
 // @ts-expect-error
 import download from 'downloadjs';
 
-import { BaseId, ItemState } from "../types";
+import { SaveData } from "../types";
 
 interface SaveProps {
-  getSaveData: () => {
-    base: BaseId;
-    items: Record<string, ItemState>;
-  };
+  getSaveData: () => SaveData;
 }
 
 const Save = ({ getSaveData }: SaveProps) => {
@@ -20,17 +17,12 @@ const Save = ({ getSaveData }: SaveProps) => {
   const onSave = useCallback(async () => {
     setSaving(true);
     try {
-      const { base, items } = getSaveData();
-
       const response = await fetch('/.netlify/functions/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          base,
-          items
-        }),
+        body: JSON.stringify(getSaveData()),
       });
 
       if (!response.ok) {

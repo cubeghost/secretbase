@@ -176,7 +176,7 @@ h1:after {
 .grid {
   --grid-template: repeat(auto-fill, var(--grid-size));
 
-  --header-rows: 4;
+  --header-rows: 3;
   --controls-rows: 3;
 
   display: grid;
@@ -187,7 +187,9 @@ h1:after {
   grid-template-rows: 
     [header-start]
     repeat(var(--header-rows), var(--grid-size))
-    [header-end controls-start]
+    [header-end]
+    var(--grid-size)
+    [controls-start]
     repeat(var(--controls-rows), var(--grid-size))
     [controls-end]
     var(--grid-size)
@@ -214,27 +216,45 @@ h1:after {
 }
 
 .reserve-gap-column {
-  grid-column: base-end / picker-start;
   grid-row: 1 / -1;
 }
 .reserve-gap-row {
   grid-column: 1 / -1;
-  grid-row: controls-end / interactive-area-start;
 }
 
 .base {
   grid-column: base-start / base-end;
-  grid-row: interactive-area-start / span calc(var(--base-tile-height) + 2);
+  grid-row: interactive-area-start / span var(--base-tile-height);
   display: grid;
   grid-template: subgrid / subgrid;
+  position: relative;
 }
 .mobile .base {
   /* grid-row-start: var(--picker-start-row); */
   grid-column-start: 1;
 }
-.base-layout {
-  grid-column: 1 / -1;
+.base-droppable {
+  z-index: -1;
+  grid-column: 1 / span var(--base-tile-width);
   grid-row: 1 / span var(--base-tile-height);
+}
+.base .item--default {
+  pointer-events: none;
+}
+.base .item--default-laptop,
+.base .item--default-landscape {
+  grid-column-end: span 1;
+  grid-row-end: span 1;
+}
+.base .item--default-hole {
+  grid-column-end: span 1;
+  grid-row-end: span 2;
+}
+.base.base-static {
+  width: calc(var(--grid-size) * var(--base-tile-width));
+  height: calc(var(--grid-size) * var(--base-tile-height));
+  display: grid;
+  grid-template: var(--grid-template) / var(--grid-template);
 }
 
 /* .options {
@@ -293,7 +313,11 @@ h1:after {
   position: relative;
 }
 .icon-button span {
+  color: #fff;
   text-transform: uppercase;
+  text-shadow: 1px 1px darkgreen,
+               0px 1px darkgreen,
+               1px 0px darkgreen;
 }
 .icon-button:before {
   content: '';
@@ -471,11 +495,7 @@ h1:after {
   grid-column: base-start / base-end;
 }
 
-.base-layout {
-  position: relative;
-}
-
-.base-layout.show-grid:after {
+.base.show-grid:after {
   content: '';
   position: absolute;
   top: 0;
@@ -490,6 +510,15 @@ h1:after {
   transform: translate(-0.5px, -0.5px);
 }
 
-.base-layout.show-outlines .item {
-  outline: 1px solid blue;
+:root {
+  --debug-item-color: blue;
+  --debug-default-item-color: lime;
+}
+.base.show-outlines .item {
+  outline: 1px solid var(--debug-item-color);
+  z-index: 3;
+}
+.base.show-outlines .item--default {
+  outline: 1px solid var(--debug-default-item-color);
+  z-index: 3;
 }

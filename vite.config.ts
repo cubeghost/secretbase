@@ -7,6 +7,7 @@ import virtualBaseDimensions from './dimensions.plugin';
 export default defineConfig({
   plugins: [react(), virtualBaseDimensions()],
   build: {
+    target: 'esnext',
     outDir: 'dist/client',
     manifest: true
   },

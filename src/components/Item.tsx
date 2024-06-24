@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import type { ItemFilename } from '../types';
-import { ASSET_BASE, ITEMS_MAP } from '../constants';
+import type { BaseType, ItemFilename } from '../types';
+import { ASSET_BASE, BASE_TYPES, ITEMS_MAP } from '../constants';
 
 interface ItemProps {
-  filename: ItemFilename;
+  filename: ItemFilename | (typeof BASE_TYPES)[BaseType]['landscape_item'];
   alt?: string;
 }
 

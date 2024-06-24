@@ -9,7 +9,7 @@ interface BaseProps {
 }
 
 export const StaticBase = ({ id }: BaseProps) => (
-  <img src={`${ASSET_BASE}assets/bases/${id}.png`} className="util-pixelated" style={{ display: 'block' }} />
+  <img src={`${ASSET_BASE}assets/bases/${id}.png`} className="util-pixelated util-block" />
 );
 
 export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
@@ -29,7 +29,7 @@ export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
   }, [setNodeRef, ref]);
 
   return (
-    <div id="base" ref={setRef} style={{ zIndex: '-1' }}>
+    <div id="base" className="base-droppable" ref={setRef}>
       <StaticBase id={id} />
     </div>
   );

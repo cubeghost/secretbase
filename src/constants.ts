@@ -1,3 +1,5 @@
+import { BaseDefaultItemLocations } from "./types";
+
 export const ASSET_BASE = typeof process !== 'undefined' ? `${process.env.URL}/` : '/';
 
 export const GRID_SIZE = 32;
@@ -5,36 +7,47 @@ export const GRID_SIZE = 32;
 export const POOF_DURATION = 600;
 
 export const BASES = [
-  { id: 'base_0000_1', label: 'Square Cave', type: 'cave' },
-  { id: 'base_0005_6', label: 'Long Cave', type: 'cave' },
-  { id: 'base_0016_17', label: '2-Room Cave', type: 'cave' },
-  { id: 'base_0019_20', label: 'Divided Cave', type: 'cave' },
+  { id: 'base_01', label: 'Square Cave', type: 'cave', locations: { laptop: [1, 2], gap: [], landscape: [[7, 4]] } as BaseDefaultItemLocations },
+  { id: 'base_06', label: 'Long Cave', type: 'cave', locations: { laptop: [5, 8], gap: [], landscape: [[1, 5], [3, 1]] } as BaseDefaultItemLocations },
+  { id: 'base_17', label: '2-Room Cave', type: 'cave', locations: { laptop: [7, 12], gap: [[6, 5]], landscape: [[6, 7], [5, 8]] } as BaseDefaultItemLocations },
+  { id: 'base_20', label: 'Divided Cave', type: 'cave', locations: { laptop: [1, 2], gap: [], landscape: [[6, 4], [7, 4], [9, 4], [12, 1]] } as BaseDefaultItemLocations },
 
-  { id: 'base_0001_2', label: 'Square Tree', type: 'tree' },
-  { id: 'base_0015_16', label: '3-Room Tree', type: 'tree' },
-  { id: 'base_0018_19', label: 'Split Tree', type: 'tree' },
-  { id: 'base_0021_22', label: 'Long Tree', type: 'tree' },
+  { id: 'base_02', label: 'Square Tree', type: 'tree', locations: { laptop: [2, 2], gap: [], landscape: [[5, 1]] } as BaseDefaultItemLocations },
+  { id: 'base_16', label: '3-Room Tree', type: 'tree', locations: { laptop: [4, 9], gap: [[3, 6], [11, 7]], landscape: [[3, 8], [10, 9], [11, 9]] } as BaseDefaultItemLocations },
+  { id: 'base_19', label: 'Split Tree', type: 'tree', locations: { laptop: [15, 2], gap: [], landscape: [[1, 2]] } as BaseDefaultItemLocations },
+  { id: 'base_22', label: 'Long Tree', type: 'tree', locations: { laptop: [5, 5], gap: [], landscape: [[3, 1]] } as BaseDefaultItemLocations },
 
-  { id: 'base_0002_3', label: 'Square Shrub', type: 'shrub' },
-  { id: 'base_0011_12', label: 'Divided Shrub', type: 'shrub' },
-  { id: 'base_0014_15', label: '2-Room Shrub', type: 'shrub' },
-  { id: 'base_0020_21', label: 'Wide Shrub', type: 'shrub' },
+  { id: 'base_03', label: 'Square Shrub', type: 'shrub', locations: { laptop: [3, 2], gap: [], landscape: [[5, 2]] } as BaseDefaultItemLocations },
+  { id: 'base_12', label: 'Divided Shrub', type: 'shrub', locations: { laptop: [7, 7], gap: [], landscape: [[5, 7]] } as BaseDefaultItemLocations },
+  { id: 'base_15', label: '2-Room Shrub', type: 'shrub', locations: { laptop: [9, 5], gap: [[3, 1]], landscape: [[3, 5], [9, 7]] } as BaseDefaultItemLocations },
+  { id: 'base_21', label: 'Wide Shrub', type: 'shrub', locations: { laptop: [1, 1], gap: [], landscape: [[13, 2]] } as BaseDefaultItemLocations },
 
-  { id: 'base_0003_4', label: 'Square Mountain Cave', type: 'mountain_cave' },
-  { id: 'base_0007_8', label: '1-Room Mountain Cave', type: 'mountain_cave' },
-  { id: 'base_0009_10', label: 'Split Mountain Cave', type: 'mountain_cave' },
-  { id: 'base_0017_18', label: '2-Room Mountain Cave', type: 'mountain_cave' },
+  { id: 'base_04', label: 'Square Mountain Cave', type: 'mountain_cave', locations: { laptop: [2, 2], gap: [], landscape: [[5, 2]] } as BaseDefaultItemLocations },
+  { id: 'base_08', label: '1-Room Mountain Cave', type: 'mountain_cave', locations: { laptop: [9, 1], gap: [], landscape: [[11, 2]] } as BaseDefaultItemLocations },
+  { id: 'base_10', label: 'Split Mountain Cave', type: 'mountain_cave', locations: { laptop: [13, 3], gap: [], landscape: [[1, 7]] } as BaseDefaultItemLocations },
+  { id: 'base_18', label: '2-Room Mountain Cave', type: 'mountain_cave', locations: { laptop: [1, 1], gap: [[10, 1]], landscape: [[2, 1], [11, 6]] } as BaseDefaultItemLocations },
 
-  { id: 'base_0004_5', label: 'Square Water Cave', type: 'water_cave' },
-  { id: 'base_0010_11', label: 'Winding Water Cave', type: 'water_cave' },
-  { id: 'base_0013_14', label: 'Long Water Cave', type: 'water_cave' },
-  { id: 'base_0023_24', label: 'Wide Water Cave', type: 'water_cave' },
+  { id: 'base_05', label: 'Square Water Cave', type: 'water_cave', locations: { laptop: [1, 2], gap: [], landscape: [[4, 2]] } as BaseDefaultItemLocations },
+  { id: 'base_11', label: 'Winding Water Cave', type: 'water_cave', locations: { laptop: [3, 14], gap: [], landscape: [[5, 1], [3, 7], [4, 7], [7, 11], [5, 14], [6, 14]] } as BaseDefaultItemLocations },
+  { id: 'base_14', label: 'Long Water Cave', type: 'water_cave', locations: { laptop: [3, 13], gap: [[4, 9]], landscape: [[7, 2], [4, 11], [5, 13]] } as BaseDefaultItemLocations },
+  { id: 'base_24', label: 'Wide Water Cave', type: 'water_cave', locations: { laptop: [1, 1], gap: [], landscape: [[2, 1]] } as BaseDefaultItemLocations },
 
-  { id: 'base_0006_7', label: 'Square Desert Cave', type: 'desert_cave' },
-  { id: 'base_0008_9', label: '1-Room Desert Cave', type: 'desert_cave' },
-  { id: 'base_0012_13', label: '2-Room Desert Cave', type: 'desert_cave' },
-  { id: 'base_0022_23', label: 'U-Shape Desert Cave', type: 'desert_cave' },
+  { id: 'base_07', label: 'Square Desert Cave', type: 'desert_cave', locations: { laptop: [9, 2], gap: [], landscape: [[3, 1]] } as BaseDefaultItemLocations },
+  { id: 'base_09', label: '1-Room Desert Cave', type: 'desert_cave', locations: { laptop: [8, 6], gap: [], landscape: [[1, 1]] } as BaseDefaultItemLocations },
+  { id: 'base_13', label: '2-Room Desert Cave', type: 'desert_cave', locations: { laptop: [5, 8], gap: [[9, 1]], landscape: [[9, 8]] } as BaseDefaultItemLocations },
+  { id: 'base_23', label: 'U-Shape Desert Cave', type: 'desert_cave', locations: { laptop: [3, 5], gap: [], landscape: [[7, 5]] } as BaseDefaultItemLocations },
 ] as const;
+
+export const BASE_MAP = new Map(BASES.map(base => ([base.id, base])));
+
+export const BASE_TYPES = {
+  cave: { landscape_item: 'cave_rock.png' },
+  tree: { landscape_item: 'tree_bush.png' },
+  shrub: { landscape_item: 'shrub_bush.png' },
+  mountain_cave: { landscape_item: 'mountain_rock.png' },
+  water_cave: { landscape_item: 'water_rock.png' },
+  desert_cave: { landscape_item: 'desert_rock.png' },
+} as const;
 
 export const ITEMS = [
   { filename: 'rsrh001.png', category: 'table_small', size: [1, 1], alt: 'small table' },
@@ -163,6 +176,13 @@ export const ITEMS = [
   { filename: 'magnemite_doll.png', category: 'doll_small', size: [1, 1], alt: 'magnemite doll', unofficial: true },
   { filename: 'squirtle_doll.png', category: 'doll_small', size: [1, 1], alt: 'squirtle doll', unofficial: true },
   { filename: 'porygon2_doll.png', category: 'doll_small', size: [1, 1], alt: 'porygon2 doll', unofficial: true },
+  { filename: 'hole.png', category: 'misc', size: [1, 2], alt: 'hole in ground', unofficial: true },
+  { filename: 'cave_rock.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'tree_bush_item.png', category: 'misc', size: [1, 1], alt: 'bush', unofficial: true },
+  { filename: 'shrub_bush_item.png', category: 'misc', size: [1, 1], alt: 'bush', unofficial: true },
+  { filename: 'mountain_rock_item.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'water_rock.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'desert_rock_item.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
 ] as const;
 
 export const ITEMS_MAP = new Map(ITEMS.map(item => ([item.filename, item])));

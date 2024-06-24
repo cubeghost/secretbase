@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { ChangeEventHandler, useCallback, useMemo, useState } from 'react';
 import type { SingleValue } from 'react-select';
 import clsx from 'clsx';
 
@@ -17,9 +17,13 @@ interface CategoryOptionType {
   label: string;
 }
 
-const ItemPicker = () => {
+interface ItemPickerProps {
+  enableUnofficialItems: boolean;
+  onChangeUnofficialItems: ChangeEventHandler<HTMLInputElement>;
+}
+
+const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPickerProps) => {
   const [isExpanded, setExpanded] = useState(false);
-  const [enableUnofficialItems, setUnofficialItems] = useState(false);
 
   const filteredItems = useMemo(() => {
     if (enableUnofficialItems) {
@@ -57,7 +61,7 @@ const ItemPicker = () => {
             options={CATEGORY_OPTIONS}
             onChange={jump}
             placeholder="Category..."
-            id="category-jump-select"
+            inputId="category-jump-select"
           />
         </div>
 
@@ -65,7 +69,7 @@ const ItemPicker = () => {
           <input
             type="checkbox"
             checked={enableUnofficialItems}
-            onChange={(event) => setUnofficialItems(event.target.checked)}
+            onChange={onChangeUnofficialItems}
           />
           Enable unofficial items
         </label>
@@ -90,5 +94,4 @@ const ItemPicker = () => {
   )
 }
 
-const MemoizedItemPicker = React.memo(ItemPicker);
-export default MemoizedItemPicker;
+export default React.memo(ItemPicker);

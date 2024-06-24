@@ -1,9 +1,9 @@
-import { useCallback, useState, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useState, useMemo, useRef, useEffect, ChangeEvent } from 'react';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import type { Modifier, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
-import { customAlphabet } from 'nanoid';
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
+import copy from 'copy-to-clipboard';
 
 import { StaticItem, DraggableItem } from './components/Item';
 import ItemPicker from './components/ItemPicker';
@@ -11,19 +11,19 @@ import { DroppableBase } from './components/Base';
 import BasePicker from './components/BasePicker';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
-import type { ItemState, BaseId, ItemFilename } from './types';
-import { sortItemsByDropped } from './utils';
+import type { ItemState, SaveData, BaseId, ItemFilename } from './types';
+import { nanoid, sortItemsByDropped, minimizeSaveData, encodeSaveData, decodeSaveData, maximizeSaveData } from './utils';
 import title from './assets/title.png';
 import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
+// @ts-expect-error
 import Credits from './components/Credits';
 import Music from "./components/Music"
 import labelBase from './assets/label_base.png';
-import labelControls from './assets/label_controls.png';
 import Save from "./components/Save";
+import DefaultItems from './components/DefaultItems';
+import { useBaseCssVariables, useCssVariables } from './hooks';
 
 const MIN_PICKER_WIDTH = 280;
-
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12);
 
 function createCustomSnapModifier(): Modifier {
   return ({ active, transform, over }) => {
@@ -68,25 +68,53 @@ function createCustomSnapModifier(): Modifier {
 
 const snapModifier = createCustomSnapModifier();
 
+// initialize
+const defaultState: SaveData = {
+  base: 'base_01',
+  items: {},
+  enableSnapToGrid: true,
+  enableDefaultLaptop: true,
+  enableDefaultLandscape: true,
+  enableUnofficialItems: false,
+};
+const initialState = await (async () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('share') === '1') {
+    const minimalSaveData = await decodeSaveData(`${window.location.search}`);
+    const saveData = maximizeSaveData(minimalSaveData);
+
+    window.history.replaceState({}, '', window.location.pathname);
+
+    return {
+      ...defaultState,
+      ...saveData,
+    };
+  } else {
+    return defaultState;
+  }
+})();
 
 function App() {
-  const [base, setBase] = useState<BaseId>('base_0021_22');
-  const [items, setItems] = useState<Record<string, ItemState>>({});
+  const [base, setBase] = useState<BaseId>(initialState.base);
+  const [items, setItems] = useState<Record<string, ItemState>>(initialState.items);
   const [draggingItem, setDraggingItem] = useState<ItemFilename | null>(null);
   const baseRef = useRef<HTMLDivElement>(null);
   const poofItemId = useRef<string | null>(null);
-  const saveDataRef = useRef<{ base: BaseId; items: Record<string, ItemState>; }>({ base, items });
 
-  const [enableSnapToGrid, setSnapToGrid] = useState(true);
+  const [enableSnapToGrid, setSnapToGrid] = useState(initialState.enableSnapToGrid);
+  const [enableDefaultLaptop, setDefaultLaptop] = useState(initialState.enableDefaultLaptop);
+  const [enableDefaultLandscape, setDefaultLandscape] = useState(initialState.enableDefaultLandscape);
+  const [enableUnofficialItems, setUnofficialItems] = useState(initialState.enableUnofficialItems);
+
+  const saveDataRef = useRef<SaveData>({ base, items, enableSnapToGrid, enableDefaultLaptop, enableDefaultLandscape, enableUnofficialItems });
+  useEffect(() => {
+    saveDataRef.current = { base, items, enableSnapToGrid, enableDefaultLaptop, enableDefaultLandscape, enableUnofficialItems };
+  }, [base, items, enableSnapToGrid, enableUnofficialItems]);
 
   const [showGrid, setShowGrid] = useState(false);
   const [showOutlines, setShowOutlines] = useState(false);
 
   const sortedItems = useMemo(() => sortItemsByDropped(items), [items]);
-
-  useEffect(() => {
-    saveDataRef.current = { base, items };
-  }, [base, items]);
 
   const onClear = useCallback(() => {
     setItems({});
@@ -97,10 +125,22 @@ function App() {
     // }, 360);
   }, []);
 
+  const onChangeUnofficialItems = useCallback((event: ChangeEvent<HTMLInputElement>) => 
+    setUnofficialItems(event.target.checked)
+  , []);
+
   const getSaveData = useCallback(() => {
     return saveDataRef.current;
   }, []);
-  
+ 
+  const share = useCallback(async () => {
+    const minimalSaveData = minimizeSaveData(getSaveData());
+    const encodedSaveData = await encodeSaveData(minimalSaveData);
+    const url = `${window.location.href}?share=1&${encodedSaveData}`;
+    console.log(url);
+    copy(url);
+  }, [getSaveData]);
+
   const modifiers = useMemo(() => (
     enableSnapToGrid ? [snapModifier] : []
   ), [enableSnapToGrid]);
@@ -165,16 +205,6 @@ function App() {
     }
   }, []);
 
-  const cssVariables = useMemo(() => {
-    const [width, height] = BASE_DIMENSIONS[base];
-    return {
-      '--grid-size': `${GRID_SIZE}px`,
-      '--base-tile-width': width / GRID_SIZE,
-      '--base-tile-height': height / GRID_SIZE,
-      '--poof-duration': `${POOF_DURATION}ms`,
-    } as React.CSSProperties;
-  }, [base]);
-
   const query = useMemo(() => {
     const [width] = BASE_DIMENSIONS[base];
     // margin + picker + gutter + base + margin
@@ -184,27 +214,29 @@ function App() {
 
   const isMobile = useMediaQuery({ query });
 
+  const cssVariables = useCssVariables();
+  const baseCssVariables = useBaseCssVariables(base);
+
   return (
-    <>
     <DndContext
       modifiers={modifiers}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragCancel={onDragCancel}
     >
-      <div className={clsx('grid', { mobile: isMobile })} style={cssVariables}>
+      <div className={clsx('grid', { mobile: isMobile })} style={{ ...cssVariables, ...baseCssVariables }}>
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
             <h1>
               <img src={title} height={24} alt="hoenn secret base designer" className="util-pixelated" />
             </h1>
-            <Credits />
+            {/* <Credits /> */}
           </div>
           <Music />
           <button onClick={onClear} className="icon-button icon-button--clear">
             <span>Clear</span>
           </button>
-          <button className="icon-button icon-button--share">
+          <button onClick={share} className="icon-button icon-button--share">
             <span>Share</span>
           </button>
           <Save getSaveData={getSaveData} />
@@ -226,23 +258,46 @@ function App() {
             />
             Snap to grid
           </label>
+          <label className="util-block">
+            <input
+              type="checkbox"
+              checked={enableDefaultLaptop}
+              onChange={(event) => setDefaultLaptop(event.target.checked)}
+            />
+            Default laptop
+          </label>
+          <label className="util-block">
+            <input
+              type="checkbox"
+              checked={enableDefaultLandscape}
+              onChange={(event) => setDefaultLandscape(event.target.checked)}
+            />
+            Default landscape items
+          </label>
         </div>
-        <ItemPicker />
-        <div className="base">
-          <div className={clsx('base-layout', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
-            <DroppableBase id={base} ref={baseRef} />
-            {sortedItems.map((item) => (
-              <DraggableItem
-                filename={item.filename}
-                id={item.id}
-                style={{ position: 'absolute', top: `${item.position.top}px`, left: `${item.position.left}px` }}
-                key={item.id}
-              />
-            ))}
-          </div>
+        <ItemPicker
+          enableUnofficialItems={enableUnofficialItems}
+          onChangeUnofficialItems={onChangeUnofficialItems}
+        />
+        <div className={clsx('base', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
+          <DroppableBase id={base} ref={baseRef} />
+          <DefaultItems
+            base={base}
+            enableDefaultLaptop={enableDefaultLaptop}
+            enableDefaultLandscape={enableDefaultLandscape}
+          />
+          {sortedItems.map((item) => (
+            <DraggableItem
+              filename={item.filename}
+              id={item.id}
+              style={{ position: 'absolute', top: `${item.position.top}px`, left: `${item.position.left}px` }}
+              key={item.id}
+            />
+          ))}
         </div>
-        <div className="reserve-gap-column"></div>
-        <div className="reserve-gap-row"></div>
+        <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>
+        <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
+        <div className="reserve-gap-row" style={{ gridRow: 'controls-end / interactive-area-start' }}></div>
         <div className="debug">
           <label>
             <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
@@ -253,13 +308,18 @@ function App() {
             <input type="checkbox" checked={showOutlines} onChange={(event) => setShowOutlines(event.target.checked)} />
             show item outlines
           </label>
+          {showOutlines && (
+            <div>
+              <label><div style={{ display: 'inline-block', background: 'var(--debug-item-color)', width: '1rem', height: '1rem' }} /> items</label><br />
+              <label><div style={{ display: 'inline-block', background: 'var(--debug-default-item-color)', width: '1rem', height: '1rem' }} /> default items</label>
+            </div>
+          )}
         </div>
       </div>
       <DragOverlay dropAnimation={({ active, dragOverlay }) => (
         new Promise((resolve) => {
           const id = active.data.current?.id;
           if (id && poofItemId.current === id) {
-            console.log('poof!');
             active.node.classList.add('poof', 'poof-active');
             dragOverlay.node.classList.add('poof');
 
@@ -281,7 +341,6 @@ function App() {
         )}
       </DragOverlay>
     </DndContext>
-    </>
   );
 }
 
