@@ -322,8 +322,6 @@ function App() {
             dragOverlay.node.classList.add('poof');
 
             setTimeout(() => {
-              active.node.classList.remove('poof', 'poof-active');
-              dragOverlay.node.classList.remove('poof');
               poofItemId.current = null;
               resolve();
             }, POOF_DURATION);

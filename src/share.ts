@@ -1,4 +1,4 @@
-import { ItemFilename, MinimalSaveData, SaveData } from "./types";
+import { BaseId, ItemFilename, MinimalSaveData, SAVE_DATA_BOOLEAN_KEYS, SaveData, SaveDataBooleanKey } from "./types";
 import { compress, decompress } from "./compress";
 import { nanoid, sortItemsByDropped } from "./utils";
 
@@ -27,6 +27,7 @@ export const minimizeSaveData = (saveData: SaveData): MinimalSaveData => {
 
   return {
     ...saveData,
+    base: saveData.base.replace('base_', '') as MinimalSaveData['base'],
     items: tinyItems
   };
 };
@@ -46,11 +47,11 @@ export const maximizeSaveData = (saveData: MinimalSaveData): SaveData => {
 
   return {
     ...saveData,
+    base: `base_${saveData.base}` as BaseId,
     items: itemsWithState
   }
 };
 
-const SAVE_DATA_BOOLEAN_KEYS = ['enableSnapToGrid', 'enableDefaultLaptop', 'enableDefaultLandscape', 'enableUnofficialItems'];
 const SAVE_DATA_ALLOWED_KEYS = ['base', 'items', ...SAVE_DATA_BOOLEAN_KEYS];
 
 export const encodeSaveData = async (minimalSaveData: MinimalSaveData) => {
@@ -59,7 +60,7 @@ export const encodeSaveData = async (minimalSaveData: MinimalSaveData) => {
       const compressed = await compress(JSON.stringify(value));
       const base64 = await bufferToBase64(compressed);
       return [key, base64];
-    } else if (SAVE_DATA_BOOLEAN_KEYS.includes(key)) {
+    } else if (SAVE_DATA_BOOLEAN_KEYS.includes(key as SaveDataBooleanKey)) {
       return [key, JSON.stringify(value)];
     }
 
@@ -82,7 +83,7 @@ export const decodeSaveData = async (encodedSaveData: string) => {
       } else {
         return [key, []];
       }
-    } else if (SAVE_DATA_BOOLEAN_KEYS.includes(key)) {
+    } else if (SAVE_DATA_BOOLEAN_KEYS.includes(key as SaveDataBooleanKey)) {
       return [key, value === 'true' ? true : false];
     }
 
