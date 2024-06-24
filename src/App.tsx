@@ -12,7 +12,8 @@ import BasePicker from './components/BasePicker';
 
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, SaveData, BaseId, ItemFilename } from './types';
-import { nanoid, sortItemsByDropped, minimizeSaveData, encodeSaveData, decodeSaveData, maximizeSaveData } from './utils';
+import { nanoid, sortItemsByDropped } from './utils';
+import { minimizeSaveData, encodeSaveData, decodeSaveData, maximizeSaveData } from './share';
 import title from './assets/title.png';
 import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
 // @ts-expect-error
@@ -51,7 +52,6 @@ function createCustomSnapModifier(): Modifier {
         if (itemLeftOffset > (GRID_SIZE / 2)) {
           itemLeftOffset = itemLeftOffset - GRID_SIZE;
         }
-        // console.log({itemTopOffset, itemLeftOffset})
 
         x -= itemLeftOffset;
         y -= itemTopOffset;
@@ -101,6 +101,7 @@ function App() {
   const baseRef = useRef<HTMLDivElement>(null);
   const poofItemId = useRef<string | null>(null);
 
+  // TODO sync these with localstorage
   const [enableSnapToGrid, setSnapToGrid] = useState(initialState.enableSnapToGrid);
   const [enableDefaultLaptop, setDefaultLaptop] = useState(initialState.enableDefaultLaptop);
   const [enableDefaultLandscape, setDefaultLandscape] = useState(initialState.enableDefaultLandscape);
@@ -118,11 +119,6 @@ function App() {
 
   const onClear = useCallback(() => {
     setItems({});
-
-    // baseRef.current?.classList.add('animate-sparkle', 'animate-sparkle-active');
-    // setTimeout(() => {
-    //   baseRef.current?.classList.remove('animate-sparkle', 'animate-sparkle-active');
-    // }, 360);
   }, []);
 
   const onChangeUnofficialItems = useCallback((event: ChangeEvent<HTMLInputElement>) => 
