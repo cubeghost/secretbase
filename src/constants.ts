@@ -176,13 +176,13 @@ export const ITEMS = [
   { filename: 'magnemite_doll.png', category: 'doll_small', size: [1, 1], alt: 'magnemite doll', unofficial: true },
   { filename: 'squirtle_doll.png', category: 'doll_small', size: [1, 1], alt: 'squirtle doll', unofficial: true },
   { filename: 'porygon2_doll.png', category: 'doll_small', size: [1, 1], alt: 'porygon2 doll', unofficial: true },
-  { filename: 'hole.png', category: 'misc', size: [1, 2], alt: 'hole in ground', unofficial: true },
-  { filename: 'cave_rock.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
-  { filename: 'tree_bush_item.png', category: 'misc', size: [1, 1], alt: 'bush', unofficial: true },
-  { filename: 'shrub_bush_item.png', category: 'misc', size: [1, 1], alt: 'bush', unofficial: true },
-  { filename: 'mountain_rock_item.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
-  { filename: 'water_rock.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
-  { filename: 'desert_rock_item.png', category: 'misc', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'hole.png', category: 'terrain', size: [1, 2], alt: 'hole in ground', unofficial: true },
+  { filename: 'cave_rock.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'tree_bush_item.png', category: 'terrain', size: [1, 1], alt: 'bush', unofficial: true },
+  { filename: 'shrub_bush_item.png', category: 'terrain', size: [1, 1], alt: 'bush', unofficial: true },
+  { filename: 'mountain_rock_item.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'water_rock.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'desert_rock_item.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
 ] as const;
 
 export const ITEMS_MAP = new Map(ITEMS.map(item => ([item.filename, item])));
@@ -201,4 +201,5 @@ export const CATEGORIES = [
   { id: 'doll_small', label: 'small dolls' },
   { id: 'doll_large', label: 'large dolls' },
   { id: 'misc', label: 'miscellaneous' },
+  { id: 'terrain', label: 'terrain', unofficial: true },
 ] as const;

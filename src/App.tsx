@@ -221,13 +221,14 @@ function App() {
       onDragCancel={onDragCancel}
     >
       <div className={clsx('grid', { mobile: isMobile })} style={{ ...cssVariables, ...baseCssVariables }}>
-        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', marginRight: 'auto' }}>
+        <header>
+          <div>
             <h1>
-              <img src={title} height={24} alt="hoenn secret base designer" className="util-pixelated" />
+              <img src={title} alt="hoenn secret base designer" className="util-pixelated" />
             </h1>
             {/* <Credits /> */}
           </div>
+          <div>
           <Music />
           <button onClick={onClear} className="icon-button icon-button--clear">
             <span>Clear</span>
@@ -236,15 +237,16 @@ function App() {
             <span>Share</span>
           </button>
           <Save getSaveData={getSaveData} />
+          </div>
         </header>
         <div className="controls base-options with-border">
           <div className="with-border-top-bar">
             <h3>
               <img src={labelBase} height={12} alt="Base" className="util-block util-pixelated" />
             </h3>
-          </div>
-          <div className="base-picker">
-            <BasePicker value={base} onChange={setBase} />
+            <div className="base-picker">
+              <BasePicker value={base} onChange={setBase} />
+            </div>
           </div>
           <label className="util-block">
             <input
@@ -291,7 +293,7 @@ function App() {
             />
           ))}
         </div>
-        <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>
+        {!isMobile && <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>}
         <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
         <div className="reserve-gap-row" style={{ gridRow: 'controls-end / interactive-area-start' }}></div>
         <div className="debug">

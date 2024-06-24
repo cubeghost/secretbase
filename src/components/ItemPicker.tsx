@@ -76,19 +76,26 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
 
         <button onClick={toggle} className="item-picker-toggle">{isExpanded ? 'Collapse' : 'Expand'}</button>
       </div>
-      <div className="item-picker-scroll item-picker-grid">
-        {CATEGORIES.map(({ id, label }) => (
-          <React.Fragment key={id}>
-            <h4 id={`category-${id}`}>{label}</h4>
-            {filteredItems.filter(item => item.category === id).map((item) => (
-              <DraggableItem
-                key={item.filename}
-                filename={item.filename}
-                style={{ display: 'inline-block' }}
-              />
-            ))}
-          </React.Fragment>
-        ))}
+      <div className="item-picker-scroll ">
+        <div className="item-picker-grid">
+        {CATEGORIES.map(({ id, label }) => {
+          const categoryItems = filteredItems.filter(item => item.category === id);
+          if (categoryItems.length === 0) return null;
+          
+          return (
+            <React.Fragment key={id}>
+              <h4 id={`category-${id}`}><span>{label}</span></h4>
+              {categoryItems.map((item) => (
+                <DraggableItem
+                  key={item.filename}
+                  filename={item.filename}
+                  style={{ display: 'inline-block' }}
+                />
+              ))}
+            </React.Fragment>
+          );
+          })}
+        </div>
       </div>
     </div>
   )

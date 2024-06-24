@@ -112,7 +112,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 img {
+  height: 24px;
   mix-blend-mode: hard-light;
+}
+.mobile h1 img {
+  height: 16px;
 }
 h1:before,
 h1:after {
@@ -125,6 +129,12 @@ h1:after {
   margin: 0 0.75rem;
   image-rendering: pixelated;
 }
+.mobile h1:before,
+.mobile h1:after {
+  transform: scale(0.75);
+}
+
+
 .credits-button {
   font-family: var(--font-family);
   font-size: 1rem;
@@ -203,16 +213,36 @@ h1:after {
     [picker-start]
     var(--grid-template)
     [picker-end];
-  margin: var(--grid-size) auto; 
-  height: calc(100vh - (var(--grid-size) * 2));
+  margin: calc(var(--grid-size) / 2) auto; 
+  height: calc(100vh - var(--grid-size));
 }
 .grid > * {
   direction: ltr;
+}
+.grid.mobile {
+  --header-rows: 4;
+
+  margin-right: 0;
+  margin-left: 0;
+
+  grid-template-columns: 
+    [base-start picker-start]
+    var(--grid-template)
+    [base-end picker-end];
 }
 
 .grid header {
   grid-column: 1 / -1;
   grid-row: header-start / header-end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.grid.mobile header {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .reserve-gap-column {
@@ -231,7 +261,7 @@ h1:after {
 }
 .mobile .base {
   /* grid-row-start: var(--picker-start-row); */
-  grid-column-start: 1;
+  /* grid-column-start: 1; */
 }
 .base-droppable {
   z-index: -1;
@@ -257,21 +287,6 @@ h1:after {
   grid-template: var(--grid-template) / var(--grid-template);
 }
 
-/* .options {
-  position: relative;
-  grid-row: calc(var(--header-rows) + 1) / calc(var(--picker-start-row) - 1);
-  grid-column: 1 / var(--picker-end-column);
-  display: flex;
-} */
-.controls-container {
-  
-  /* grid-row: controls-start / controls-end;
-  grid-column: 1 / -1;
-  display: flex;
-  gap: var(--grid-size); */
-  /* display: grid;
-  grid-template: subgrid / subgrid; */
-}
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -280,16 +295,20 @@ h1:after {
   grid-row: controls-start / controls-end;
   grid-column: base-start / base-end;
 }
+.mobile .controls.base-options {
+  grid-column: 2 / -2;
+}
 .controls:has(.with-border-top-bar) {
-  padding-top: var(--grid-size);
+  padding-top: calc(var(--grid-size) * 1.5);
 }
 .controls .with-border-top-bar {
   position: absolute;
   top: 0;
   width: 100%;
-  height: calc(var(--grid-size) * 0.75);
+  height: var(--grid-size);
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 .controls h3 {
   color: #fff;
@@ -300,78 +319,9 @@ h1:after {
 .base-picker {
   display: flex;
   align-items: center;
-  flex: 1 0 var(--select-max-width);
+  flex: 0 1 var(--select-max-width);
 }
 
-.icon-button {
-  font-family: var(--font-family);
-  font-size: 1rem;
-  padding: 0 4px;
-  border: 0;
-  background-color: transparent;
-  cursor: pointer;
-  position: relative;
-}
-.icon-button span {
-  color: #fff;
-  text-transform: uppercase;
-  text-shadow: 1px 1px darkgreen,
-               0px 1px darkgreen,
-               1px 0px darkgreen;
-}
-.icon-button:before {
-  content: '';
-  width: 64px;
-  height: 64px;
-  display: block;
-  background-position: center center;
-  background-repeat: no-repeat;
-  margin-bottom: 8px;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: pixelated;
-}
-.icon-button.icon-button--clear:before {
-  background-image: url(./assets/trash.png);
-  background-size: auto 48px;
-}
-.icon-button.icon-button--share:before {
-  background-image: url(./assets/pokeball.png);
-  background-size: auto 40px;
-  background-position: center 16px;
-}
-.icon-button.icon-button--music:before {
-  background-image: url(./assets/note.png);
-  background-size: auto 40px;
-  background-position: center 16px;
-}
-.icon-button.icon-button--save:before {
-  background-image: url(./assets/laptop.png);
-}
-@keyframes laptop-blink {
-  /* these will get inlined */
-  0%   { background-image: url(./assets/blink_1.png); }
-  100% { background-image: url(./assets/blink_2.png); }
-}
-.icon-button.icon-button--save:after {
-  content: '';
-  position: absolute;
-  width: 30px;
-  height: 12px;
-  left: 21px;
-  top: 17px;
-}
-.icon-button.icon-button--save.icon-button--active:after {
-  background-color: #73bfa1;
-  background-size: 100%;
-  image-rendering: pixelated;
-  animation: 500ms steps(2) laptop-blink alternate infinite;
-}
-.icon-button.icon-button--save.icon-button--error:after {
-  background-color: #8a1212;
-  mix-blend-mode: color;
-}
 
 .music-button {
   font-family: var(--font-family);
@@ -406,7 +356,8 @@ h1:after {
   bottom: 0;
   left: var(--border-width);
   right: var(--border-width);
-  height: min(calc(100vh - ((var(--base-tile-height) + 3) * var(--grid-size))), 320px);
+  min-height: calc(var(--grid-size) * 3);
+  height: min(calc(100vh - ((var(--base-tile-height) + var(--header-rows) + var(--controls-rows) + 4) * var(--grid-size))), 320px);
   display: block;
   transition: height 200ms ease;
 }
@@ -449,27 +400,110 @@ h1:after {
   display: grid;
   grid-template: subgrid / subgrid;
 }
-
 .item-picker-grid {
   grid-column: 1 / -1;
+  grid-row: 1 / -1;
   display: grid;
   grid-template: var(--grid-template) / var(--grid-template);
+  height: fit-content;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' viewBox='0,0,32,32' width='32' height='32' patternUnits='userSpaceOnUse'%3E%3Cline x1='0' y1='32' x2='32' y2='32' stroke='gray' stroke-width='1' stroke-dasharray='1 3' /%3E%3Cline x1='32' y1='0' x2='32' y2='32' stroke='gray' stroke-width='1' stroke-dasharray='1 3' /%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%23f0f8f8' /%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)' stroke='%23f0f8f8' stroke-width='2' /%3E%3C/svg%3E");
 }
-
 .item-picker-grid .item {
   grid-column-start: auto;
   grid-column-end: span var(--tile-width, 1);
   grid-row-start: auto;
   grid-row-end: span var(--tile-height, 1);
 }
-
 .item-picker-grid h4 {
   margin: 0;
   grid-column: 1 / -1;
   grid-row: auto / span 1;
-  line-height: var(--grid-size);
+  height: var(--grid-size);
+  display: flex;
+  align-items: flex-end;
+  /* text-transform: uppercase; */
+}
+.item-picker-grid h4 span {
+  padding-bottom: 4px;
 }
 
+
+.icon-button {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  padding: 0 4px;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+}
+.icon-button span {
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 1px 1px darkgreen,
+               0px 1px darkgreen,
+               1px 0px darkgreen;
+}
+.icon-button:before {
+  content: '';
+  width: 64px;
+  height: 64px;
+  display: block;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin-bottom: 8px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+}
+.mobile .icon-button:before {
+  transform: scale(0.75);
+  margin-bottom: 0;
+}
+.icon-button.icon-button--clear:before {
+  background-image: url(./assets/trash.png);
+  background-size: auto 48px;
+}
+.icon-button.icon-button--share:before {
+  background-image: url(./assets/pokeball.png);
+  background-size: auto 40px;
+  background-position: center 16px;
+}
+.icon-button.icon-button--music:before {
+  background-image: url(./assets/note.png);
+  background-size: auto 40px;
+  background-position: center 16px;
+}
+.icon-button.icon-button--save:before {
+  background-image: url(./assets/laptop.png);
+}
+@keyframes laptop-blink {
+  /* these will get inlined */
+  0%   { background-image: url(./assets/blink_1.png); }
+  100% { background-image: url(./assets/blink_2.png); }
+}
+.icon-button.icon-button--save:after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 12px;
+  left: 21px;
+  top: 17px;
+}
+.icon-button.icon-button--save.icon-button--active:after {
+  background-color: #73bfa1;
+  background-size: 100%;
+  image-rendering: pixelated;
+  animation: 500ms steps(2) laptop-blink alternate infinite;
+}
+.icon-button.icon-button--save.icon-button--error:after {
+  background-color: #8a1212;
+  mix-blend-mode: color;
+}
+.icon-button.icon-button--music {
+  width: 76px;
+}
 
 
 .credits .poof {
