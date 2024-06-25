@@ -166,10 +166,15 @@ export const ITEMS = [
   { filename: 'laptop.png', category: 'device', size: [1, 1], alt: 'laptop', unofficial: true },
   { filename: 'pc.png', category: 'device', size: [1, 2], alt: 'pc', unofficial: true },
   { filename: 'gamecube.png', category: 'device', size: [1, 1], alt: 'gamecube', unofficial: true },
+  { filename: 'tv_big.png', category: 'device', size: [1, 2], alt: 'big tv', unofficial: true },
   { filename: 'map.png', category: 'wall', size: [2, 1], alt: 'map', unofficial: true },
+  { filename: 'pot.png', category: 'misc', size: [1, 1], alt: 'pot', unofficial: true },
+  { filename: 'pokeball.png', category: 'misc', size: [1, 1], alt: 'pokeball', unofficial: true },
   { filename: 'pikachu_poster.png', category: 'wall', size: [1, 1], alt: 'pikachu poster', unofficial: true },
   { filename: 'plant1.png', category: 'plant', size: [1, 2], alt: 'potted plant', unofficial: true },
   { filename: 'plant2.png', category: 'plant', size: [1, 2], alt: 'potted plant', unofficial: true },
+  { filename: 'flower.png', category: 'plant', size: [1, 1], alt: 'flower', unofficial: true },
+  { filename: 'flowerpot.png', category: 'plant', size: [1, 1], alt: 'flowerpot', unofficial: true },
   { filename: 'wooper_doll.png', category: 'doll_small', size: [1, 1], alt: 'wooper doll', unofficial: true },
   { filename: 'pikachu_doll_alt.png', category: 'doll_small', size: [1, 1], alt: 'alternate pikachu doll', unofficial: true },
   { filename: 'natu_doll.png', category: 'doll_small', size: [1, 1], alt: 'natu doll', unofficial: true },
@@ -183,6 +188,7 @@ export const ITEMS = [
   { filename: 'mountain_rock_item.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
   { filename: 'water_rock.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
   { filename: 'desert_rock_item.png', category: 'terrain', size: [1, 1], alt: 'rock', unofficial: true },
+  { filename: 'rock_big.png', category: 'terrain', size: [1, 1], alt: 'big rock', unofficial: true },
 ] as const;
 
 export const ITEMS_MAP = new Map(ITEMS.map(item => ([item.filename, item])));

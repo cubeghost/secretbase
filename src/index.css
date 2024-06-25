@@ -150,12 +150,14 @@ h1:after {
 }
 .with-border,
 .with-border-top-bar,
-.with-cloud-border {
+.with-cloud-border,
+.with-bw-border {
   position: relative;
 }
 .with-border:before,
 .with-border-top-bar:before,
-.with-cloud-border:before {
+.with-cloud-border:before,
+.with-bw-border:before {
   content: '';
   position: absolute;
   z-index: -1;
@@ -180,6 +182,9 @@ h1:after {
 }
 .with-cloud-border:before {
   border-image: url(./assets/border_cloud_2x.png) 14 fill round;
+}
+.with-bw-border:before {
+  border-image: url(./assets/border_2.png) var(--border-width-slice) fill round;
 }
 
 
@@ -550,9 +555,18 @@ h1:after {
 
 
 
+
+
 /* debug */
 .debug {
   grid-column: base-start / base-end;
+  grid-row: calc(var(--base-tile-height) + var(--controls-rows) + var(--controls-rows) + 4) / span 2;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+}
+.debug h4 {
+  margin: 0 0 0.25rem;
 }
 
 .base.show-grid:after {

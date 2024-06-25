@@ -287,16 +287,19 @@ function App() {
         {!isMobile && <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>}
         <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
         <div className="reserve-gap-row" style={{ gridRow: 'controls-end / interactive-area-start' }}></div>
-        <div className="debug">
-          <label>
-            <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
-            show grid
-          </label>
-          <br />
-          <label>
-            <input type="checkbox" checked={showOutlines} onChange={(event) => setShowOutlines(event.target.checked)} />
-            show item outlines
-          </label>
+        <div className="debug with-bw-border">
+          <div>
+            <h4>debug</h4>
+            <label>
+              <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
+              show grid
+            </label>
+            <br />
+            <label>
+              <input type="checkbox" checked={showOutlines} onChange={(event) => setShowOutlines(event.target.checked)} />
+              show item outlines
+            </label>
+          </div>
           {showOutlines && (
             <div>
               <label><div style={{ display: 'inline-block', background: 'var(--debug-item-color)', width: '1rem', height: '1rem' }} /> items</label><br />
