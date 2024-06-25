@@ -506,6 +506,32 @@ h1:after {
 }
 
 
+.tooltip {
+  transition: all 400ms;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-1rem);
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  text-align: center;
+}
+.tooltip.entering {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-1rem);
+}
+.tooltip.preEnter {
+  opacity: 0;
+  transform: translateX(-50%) translateY(0);
+}
+.tooltip.exiting {
+  opacity: 0;
+}
+.tooltip.exited {
+  display: none;
+}
+
 .credits .poof {
   position: relative;
 }

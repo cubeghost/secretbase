@@ -201,5 +201,7 @@ export const CATEGORIES = [
   { id: 'doll_small', label: 'small dolls' },
   { id: 'doll_large', label: 'large dolls' },
   { id: 'misc', label: 'miscellaneous' },
-  { id: 'terrain', label: 'terrain', unofficial: true },
+  { id: 'terrain', label: 'terrain' },
 ] as const;
+
+export const CATEGORIES_MAP = new Map(CATEGORIES.map(category => ([category.id, category])));

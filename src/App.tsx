@@ -23,6 +23,7 @@ import labelBase from './assets/label_base.png';
 import Save from "./components/Save";
 import DefaultItems from './components/DefaultItems';
 import { useBaseCssVariables, useCssVariables } from './hooks';
+import Share from './components/Share';
 
 const MIN_PICKER_WIDTH = 280;
 
@@ -129,14 +130,6 @@ function App() {
     return saveDataRef.current;
   }, []);
  
-  const share = useCallback(async () => {
-    const minimalSaveData = minimizeSaveData(getSaveData());
-    const encodedSaveData = await encodeSaveData(minimalSaveData);
-    const url = `${window.location.href}?share=1&${encodedSaveData}`;
-    console.log(url);
-    copy(url);
-  }, [getSaveData]);
-
   const modifiers = useMemo(() => (
     enableSnapToGrid ? [snapModifier] : []
   ), [enableSnapToGrid]);
@@ -228,15 +221,13 @@ function App() {
             </h1>
             {/* <Credits /> */}
           </div>
-          <div>
-          <Music />
-          <button onClick={onClear} className="icon-button icon-button--clear">
-            <span>Clear</span>
-          </button>
-          <button onClick={share} className="icon-button icon-button--share">
-            <span>Share</span>
-          </button>
-          <Save getSaveData={getSaveData} />
+          <div style={{display: 'flex'}}>
+            <Music />
+            <button onClick={onClear} className="icon-button icon-button--clear">
+              <span>Clear</span>
+            </button>
+            <Share getSaveData={getSaveData} />
+            <Save getSaveData={getSaveData} />
           </div>
         </header>
         <div className="controls base-options with-border">

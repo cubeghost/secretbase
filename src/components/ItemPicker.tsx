@@ -4,13 +4,26 @@ import clsx from 'clsx';
 
 import StyledSelect from './Select';
 import { DraggableItem } from './Item';
-import { ITEMS as _ITEMS, CATEGORIES } from '../constants';
+import { ITEMS as _ITEMS, CATEGORIES, CATEGORIES_MAP } from '../constants';
 import { Category, Item } from '../types';
 import jumpTo from '../assets/jump_to.png';
 
 const ITEMS = _ITEMS as unknown as Item[];
 
+const CATEGORIES_WITH_ITEMS = CATEGORIES.map(category => ({
+  ...category, 
+  items: ITEMS.filter(item => item.category === category.id)
+}));
+const CATEGORIES_WITH_OFFICIAL_ITEMS = CATEGORIES.map(category => ({
+  ...category,
+  items: ITEMS.filter(item => item.unofficial !== true && item.category === category.id)
+}));
+
 const CATEGORY_OPTIONS = CATEGORIES.map(({ id, label }) => ({ value: id, label }));
+const OFFICIAL_CATEGORY_OPTIONS = CATEGORIES_WITH_OFFICIAL_ITEMS
+  .filter(({ items }) => items.length > 0)
+  .map(({ id, label }) => ({ value: id, label }));
+
 
 interface CategoryOptionType {
   value: Category;
@@ -25,13 +38,14 @@ interface ItemPickerProps {
 const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPickerProps) => {
   const [isExpanded, setExpanded] = useState(false);
 
-  const filteredItems = useMemo(() => {
-    if (enableUnofficialItems) {
-      return ITEMS;
-    } else {
-      return ITEMS.filter((item) => !item.unofficial);
-    };
-  }, [enableUnofficialItems]);
+  const categoryOptions = useMemo(() => 
+    enableUnofficialItems ? CATEGORY_OPTIONS : OFFICIAL_CATEGORY_OPTIONS
+  , [enableUnofficialItems]);
+
+  const categoriesWithItems = useMemo(() => (
+    (enableUnofficialItems ? CATEGORIES_WITH_ITEMS : CATEGORIES_WITH_OFFICIAL_ITEMS)
+      .filter(({ items }) => items.length > 0)
+  ), [enableUnofficialItems]);
 
   const toggle = useCallback(() => {
     setExpanded(s => !s);
@@ -58,7 +72,7 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
             />
           </label>
           <StyledSelect<CategoryOptionType>
-            options={CATEGORY_OPTIONS}
+            options={categoryOptions}
             onChange={jump}
             placeholder="Category..."
             inputId="category-jump-select"
@@ -76,16 +90,12 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
 
         <button onClick={toggle} className="item-picker-toggle">{isExpanded ? 'Collapse' : 'Expand'}</button>
       </div>
-      <div className="item-picker-scroll ">
+      <div className="item-picker-scroll">
         <div className="item-picker-grid">
-        {CATEGORIES.map(({ id, label }) => {
-          const categoryItems = filteredItems.filter(item => item.category === id);
-          if (categoryItems.length === 0) return null;
-          
-          return (
+          {categoriesWithItems.map(({ id, label, items }) => (
             <React.Fragment key={id}>
               <h4 id={`category-${id}`}><span>{label}</span></h4>
-              {categoryItems.map((item) => (
+              {items.map((item) => (
                 <DraggableItem
                   key={item.filename}
                   filename={item.filename}
@@ -93,8 +103,7 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
                 />
               ))}
             </React.Fragment>
-          );
-          })}
+          ))}
         </div>
       </div>
     </div>
