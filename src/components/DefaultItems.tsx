@@ -20,6 +20,7 @@ const DefaultItems = ({ base, enableDefaultLaptop, enableDefaultLandscape }: Def
   if (enableDefaultLaptop && defaultItemLocations.laptop) {
     items.push(
       <div
+        key="laptop"
         className="item--default item--default-laptop"
         style={coordinatesTupleToGridStyle(defaultItemLocations.laptop)}
       >

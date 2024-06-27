@@ -1,9 +1,8 @@
 import { useCallback, useState, useMemo, useRef, useEffect, ChangeEvent } from 'react';
-import { DndContext, DragOverlay } from '@dnd-kit/core';
-import type { Modifier, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
+import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import type { Modifier, DragStartEvent, DragEndEvent, KeyboardCoordinateGetter } from '@dnd-kit/core';
 import clsx from 'clsx';
 import { useMediaQuery } from 'react-responsive';
-import copy from 'copy-to-clipboard';
 
 import { StaticItem, DraggableItem } from './components/Item';
 import ItemPicker from './components/ItemPicker';
@@ -13,7 +12,7 @@ import BasePicker from './components/BasePicker';
 import { GRID_SIZE, POOF_DURATION } from './constants';
 import type { ItemState, SaveData, BaseId, ItemFilename } from './types';
 import { nanoid, sortItemsByDropped } from './utils';
-import { minimizeSaveData, encodeSaveData, decodeSaveData, maximizeSaveData } from './share';
+import { decodeSaveData, maximizeSaveData } from './share';
 import title from './assets/title.png';
 import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
 // @ts-expect-error
@@ -27,7 +26,7 @@ import Share from './components/Share';
 
 const MIN_PICKER_WIDTH = 280;
 
-function createCustomSnapModifier(): Modifier {
+const createCustomSnapModifier = (): Modifier => {
   return ({ active, transform, over }) => {
     // TODO fix case where previously un-snapped items do not align
     const id = active?.data?.current?.id;
@@ -68,6 +67,32 @@ function createCustomSnapModifier(): Modifier {
 }
 
 const snapModifier = createCustomSnapModifier();
+
+const customCoordinatesGetter: KeyboardCoordinateGetter = (event, { currentCoordinates, context }) => {
+  switch (event.key) {
+    case 'ArrowRight':
+    case 'd':
+      return { ...currentCoordinates, x: currentCoordinates.x + GRID_SIZE };
+    case 'ArrowLeft':
+    case 'a':
+      return { ...currentCoordinates, x: currentCoordinates.x - GRID_SIZE };
+    case 'ArrowDown':
+    case 's':
+      return { ...currentCoordinates, y: currentCoordinates.y + GRID_SIZE };
+    case 'ArrowUp':
+    case 'w':
+      return { ...currentCoordinates, y: currentCoordinates.y - GRID_SIZE };
+    case 'j':
+      const baseRect = context.droppableRects.get('base');
+      if (baseRect) {
+        return { x: baseRect.left, y: baseRect.top };
+      } else {
+        return currentCoordinates;
+      }
+  }
+
+  return undefined;
+};
 
 // initialize
 const defaultState: SaveData = {
@@ -133,6 +158,13 @@ function App() {
   const modifiers = useMemo(() => (
     enableSnapToGrid ? [snapModifier] : []
   ), [enableSnapToGrid]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: customCoordinatesGetter,
+    })
+  );
 
   const onDragStart = useCallback((event: DragStartEvent) => {
     setDraggingItem(event.active.data?.current?.filename);
@@ -208,6 +240,7 @@ function App() {
 
   return (
     <DndContext
+      sensors={sensors}
       modifiers={modifiers}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}

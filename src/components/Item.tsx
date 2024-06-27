@@ -43,7 +43,7 @@ export const DraggableItem = ({ id, filename, style }: DraggableItemProps) => {
   }), [size]);
 
   return (
-    <div
+    <button
       ref={setNodeRef}
       className="item"
       style={{ ...style, ...dragStyle, ...sizeStyle }}
@@ -51,6 +51,6 @@ export const DraggableItem = ({ id, filename, style }: DraggableItemProps) => {
       {...attributes}
     >
       <StaticItem filename={filename} alt={alt} />
-    </div>
+    </button>
   );
 }
