@@ -25,6 +25,14 @@ function getStyles<
       flex: '1',
       maxWidth: 'var(--select-max-width)',
     }),
+    control: (baseStyles, state) => ({
+      ...baseStyles,
+      borderColor: state.isFocused ? 'var(--green)' : baseStyles.borderColor,
+      boxShadow: state.isFocused ? '0 0 0 1px var(--green)' : baseStyles.boxShadow,
+      ':hover': {
+        borderColor: 'var(--green)'
+      }
+    }),
     valueContainer: (baseStyles) => ({
       ...baseStyles,
       paddingLeft: `${8}px`,

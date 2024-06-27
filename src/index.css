@@ -13,6 +13,8 @@
 :root {
   --font-family: 'pkmnem', monospace;
   --select-max-width: 220px;
+  --green: #18a068;
+  accent-color: var(--green);
 }
 
 .util-block {
