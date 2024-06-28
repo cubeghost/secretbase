@@ -1,18 +1,10 @@
-import { forwardRef, useCallback } from "react";
+import React, { forwardRef, useCallback } from "react";
 import { useDroppable } from '@dnd-kit/core';
 
-import type { BaseId } from '../types';
-import { ASSET_BASE } from "../constants";
+import StaticBase from "./StaticBase";
+import type { BaseProps } from "./StaticBase";
 
-interface BaseProps {
-  id: BaseId;
-}
-
-export const StaticBase = ({ id }: BaseProps) => (
-  <img src={`${ASSET_BASE}assets/bases/${id}.png`} className="util-pixelated util-block" />
-);
-
-export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
+const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
   const { setNodeRef } = useDroppable({
     id: 'base',
     data: {
@@ -34,3 +26,5 @@ export const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
     </div>
   );
 });
+
+export default React.memo(DroppableBase);

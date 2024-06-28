@@ -1,20 +1,9 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import type { BaseType, ItemFilename } from '../types';
-import { ASSET_BASE, BASE_TYPES, ITEMS_MAP } from '../constants';
 
-interface ItemProps {
-  filename: ItemFilename | (typeof BASE_TYPES)[BaseType]['landscape_item'];
-  alt?: string;
-}
-
-export const StaticItem = ({ filename, alt }: ItemProps) => (
-  <img
-    src={`${ASSET_BASE}assets/items/${filename}`}
-    alt={alt}
-    className="item-image util-pixelated"
-  />
-);
+import type { ItemFilename } from '../types';
+import { ITEMS_MAP } from '../constants';
+import StaticItem from './StaticItem';
 
 interface DraggableItemProps {
   id?: string;
@@ -22,20 +11,21 @@ interface DraggableItemProps {
   style: React.CSSProperties;
 }
 
-export const DraggableItem = ({ id, filename, style }: DraggableItemProps) => {
+const DraggableItem = ({ id, filename, style }: DraggableItemProps) => {
+  const { alt, size } = useMemo(() => ITEMS_MAP.get(filename)!, [filename]);
+
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: id ? `item-${id}` : `item-${filename}`,
     data: {
       id,
       filename,
+      alt,
     }
   });
 
   const dragStyle = useMemo(() => (isDragging ? {
     opacity: id ? 0 : 1,
   } : {}), [isDragging, id]);
-
-  const { alt, size } = useMemo(() => ITEMS_MAP.get(filename)!, [filename]);
 
   const sizeStyle = useMemo(() => ({
     '--tile-width': size[0],
@@ -53,4 +43,6 @@ export const DraggableItem = ({ id, filename, style }: DraggableItemProps) => {
       <StaticItem filename={filename} alt={alt} />
     </button>
   );
-}
+};
+
+export default React.memo(DraggableItem);

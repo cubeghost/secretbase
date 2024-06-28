@@ -12,7 +12,6 @@ interface ShareProps {
 }
 
 const Share = ({ getSaveData }: ShareProps) => {
-  // const [tooltip, setTooltip] = useState<string | null>(null);
   const [tooltipState, toggleTooltip] = useTransition({ timeout: 400, preEnter: true })
 
   const share = useCallback(async () => {
@@ -29,8 +28,8 @@ const Share = ({ getSaveData }: ShareProps) => {
 
   return (
     <div style={{position: "relative"}}>
-      <span className={clsx('tooltip', tooltipState.status)}>
-        Copied ✅
+      <span role="alert" className={clsx('tooltip', tooltipState.status)}>
+        {tooltipState.isEnter && 'Copied ✅'}
       </span>
       <button onClick={share} className="icon-button icon-button--share">
         <span>Share</span>

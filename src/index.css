@@ -28,6 +28,19 @@
   image-rendering: pixelated;
 }
 
+.util-visually-hidden {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.util-visually-hidden:focus {
+  left: auto;
+  width: auto;
+  height: auto;
+}
+
 .item-image {
   display: block;
 }
@@ -135,7 +148,6 @@ h1:after {
 .mobile h1:after {
   transform: scale(0.75);
 }
-
 
 .credits-button {
   font-family: var(--font-family);
@@ -347,6 +359,13 @@ h1:after {
   height: 16px;
   margin-right: 5px;
   vertical-align: -1px;
+}
+
+.item {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
 }
 
 .item-picker {

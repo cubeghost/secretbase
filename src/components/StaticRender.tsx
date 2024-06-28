@@ -1,5 +1,5 @@
-import { StaticBase } from "./Base"
-import { StaticItem } from "./Item"
+import StaticBase from "./StaticBase"
+import StaticItem from "./StaticItem"
 import DefaultItems from "./DefaultItems";
 
 import type { SaveData } from "../types";

@@ -3,8 +3,8 @@ import type { SingleValue } from 'react-select';
 import clsx from 'clsx';
 
 import StyledSelect from './Select';
-import { DraggableItem } from './Item';
-import { ITEMS as _ITEMS, CATEGORIES, CATEGORIES_MAP } from '../constants';
+import DraggableItem from './DraggableItem';
+import { ITEMS as _ITEMS, CATEGORIES } from '../constants';
 import { Category, Item } from '../types';
 import jumpTo from '../assets/jump_to.png';
 
@@ -23,7 +23,6 @@ const CATEGORY_OPTIONS = CATEGORIES.map(({ id, label }) => ({ value: id, label }
 const OFFICIAL_CATEGORY_OPTIONS = CATEGORIES_WITH_OFFICIAL_ITEMS
   .filter(({ items }) => items.length > 0)
   .map(({ id, label }) => ({ value: id, label }));
-
 
 interface CategoryOptionType {
   value: Category;
@@ -60,6 +59,7 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
 
   return (
     <div className={clsx("item-picker", "with-border", { 'is-expanded': isExpanded })}>
+      <h2 className="util-visually-hidden">item picker</h2>
       <div className="toolbar with-border-top-bar">
         <div className="category-jump">
           <label htmlFor="category-jump-select">

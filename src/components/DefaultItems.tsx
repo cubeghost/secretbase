@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
+
+import StaticItem from "./StaticItem";
 import { BASE_MAP, BASE_TYPES } from "../constants";
 import { SaveData } from "../types"
-import { StaticItem } from "./Item";
 import { coordinatesTupleToGridStyle } from "../utils";
 
 type DefaultItemsProps = Pick<SaveData, 'base' | 'enableDefaultLaptop' | 'enableDefaultLandscape'>;
