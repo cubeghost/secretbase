@@ -1,14 +1,20 @@
-import React, { forwardRef, useCallback } from "react";
+import React, { forwardRef, useCallback, useMemo } from "react";
 import { useDroppable } from '@dnd-kit/core';
 
 import StaticBase from "./StaticBase";
 import type { BaseProps } from "./StaticBase";
+import { BASE_MAP } from "../constants";
 
-const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
+type DroppableBaseProps = Omit<BaseProps, 'alt'>;
+
+const DroppableBase = forwardRef(({ id }: DroppableBaseProps, ref) => {
+  const { label } = useMemo(() => BASE_MAP.get(id)!, [id]);
+
   const { setNodeRef } = useDroppable({
     id: 'base',
     data: {
-      id
+      id,
+      alt: label
     }
   });
 
@@ -22,7 +28,7 @@ const DroppableBase = forwardRef(({ id }: BaseProps, ref) => {
 
   return (
     <div id="base" className="base-droppable" ref={setRef}>
-      <StaticBase id={id} />
+      <StaticBase id={id} alt={label} />
     </div>
   );
 });

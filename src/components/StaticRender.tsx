@@ -19,7 +19,7 @@ export default ({ base, items, enableDefaultLaptop, enableDefaultLandscape }: St
   return (
     <div className="base base-static" style={{...cssVariables, ...baseCssVariables}}>
       <div id="base" className="base-droppable">
-        <StaticBase id={base} />
+        <StaticBase id={base} alt="" />
       </div>
       <DefaultItems
         base={base}

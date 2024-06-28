@@ -179,14 +179,14 @@ function App() {
             </h1>
             {/* <Credits /> */}
           </div>
-          <div style={{display: 'flex'}}>
+          <nav style={{display: 'flex'}}>
             <Music />
             <button onClick={onClear} className="icon-button icon-button--clear">
               <span>Clear</span>
             </button>
             <Share getSaveData={getSaveData} />
             <Save getSaveData={getSaveData} />
-          </div>
+          </nav>
         </header>
 
         <ItemPicker
@@ -194,8 +194,7 @@ function App() {
           onChangeUnofficialItems={onChangeUnofficialItems}
         />
 
-        <div className="controls base-options with-border">
-          <h2 className="util-visually-hidden">base options</h2>
+        <div aria-role="region" aria-label="options" className="controls base-options with-border">
           <div className="with-border-top-bar">
             <h3>
               <img src={labelBase} height={12} alt="Base" className="util-block util-pixelated" />
@@ -230,7 +229,7 @@ function App() {
           </label>
         </div>
 
-        <div className={clsx('base', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
+        <main className={clsx('base', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
           <DroppableBase id={base} ref={baseRef} />
           <DefaultItems
             base={base}
@@ -245,7 +244,7 @@ function App() {
               key={item.id}
             />
           ))}
-        </div>
+        </main>
 
         {!isMobile && <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>}
         <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
