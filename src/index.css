@@ -133,6 +133,9 @@ h1 img {
 .mobile h1 img {
   height: 16px;
 }
+.mobile h1 {
+  position: relative;
+}
 h1:before,
 h1:after {
   content: '';
@@ -146,7 +149,16 @@ h1:after {
 }
 .mobile h1:before,
 .mobile h1:after {
-  transform: scale(0.75);
+  position: absolute;
+  top: -3px;
+}
+.mobile h1:before {
+  left: 0;
+  transform: translateX(-150%) scale(0.75);
+}
+.mobile h1:after {
+  right: 0;
+  transform: translateX(150%) scale(0.75);
 }
 
 .credits-button {
@@ -463,7 +475,11 @@ h1:after {
   cursor: pointer;
   position: relative;
 }
-.icon-button span {
+.mobile .icon-button {
+  display: flex;
+  align-items: center;
+}
+.icon-button span:not([role=alert]) {
   color: #fff;
   text-transform: uppercase;
   text-shadow: 1px 1px darkgreen,
@@ -484,8 +500,9 @@ h1:after {
   image-rendering: pixelated;
 }
 .mobile .icon-button:before {
-  transform: scale(0.75);
+  transform: scale(0.5);
   margin-bottom: 0;
+  margin-right: -12px;
 }
 .icon-button.icon-button--clear:before {
   background-image: url(./assets/trash.png);
@@ -529,6 +546,11 @@ h1:after {
 }
 .icon-button.icon-button--music {
   width: 76px;
+}
+.mobile .icon-button.icon-button--music {
+  /* width: 128px; */
+  width: auto;
+  white-space: nowrap;
 }
 
 

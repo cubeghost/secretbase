@@ -58,7 +58,7 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPick
   }, []);
 
   return (
-    <div aria-role="region" aria-label="item picker" className={clsx("item-picker", "with-border", { 'is-expanded': isExpanded })}>
+    <div role="region" aria-label="item picker" className={clsx("item-picker", "with-border", { 'is-expanded': isExpanded })}>
       <div className="toolbar with-border-top-bar">
         <div className="category-jump">
           <label htmlFor="category-jump-select">

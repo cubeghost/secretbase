@@ -27,14 +27,12 @@ const Share = ({ getSaveData }: ShareProps) => {
   }, [getSaveData]);
 
   return (
-    <div style={{position: "relative"}}>
+    <button onClick={share} className="icon-button icon-button--share">
       <span role="alert" className={clsx('tooltip', tooltipState.status)}>
         {tooltipState.isEnter && 'Copied ✅'}
       </span>
-      <button onClick={share} className="icon-button icon-button--share">
-        <span>Share</span>
-      </button>
-    </div>
+      <span>Share</span>
+    </button>
   );
 }
 

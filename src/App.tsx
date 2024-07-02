@@ -194,7 +194,7 @@ function App() {
           onChangeUnofficialItems={onChangeUnofficialItems}
         />
 
-        <div aria-role="region" aria-label="options" className="controls base-options with-border">
+        <div role="region" aria-label="options" className="controls base-options with-border">
           <div className="with-border-top-bar">
             <h3>
               <img src={labelBase} height={12} alt="Base" className="util-block util-pixelated" />
