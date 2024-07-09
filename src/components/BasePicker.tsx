@@ -5,7 +5,7 @@ import { BASES } from '../constants';
 import type { BaseType, BaseId } from '../types';
 import StyledSelect from './Select';
 
-interface BasePickerProps {
+export interface BasePickerProps {
   value: BaseId;
   onChange: (value: BaseId) => void;
 }

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import { BASE_DIMENSIONS } from "virtual:base-dimensions";
 import { GRID_SIZE, POOF_DURATION } from "./constants";
@@ -18,3 +19,17 @@ export const useBaseCssVariables = (base: BaseId) => useMemo(() => {
     '--base-tile-height': height / GRID_SIZE,
   } as React.CSSProperties;
 }, [base]);
+
+const MIN_PICKER_WIDTH = 280;
+export const useMobileQuery = (base: BaseId) => {
+  const query = useMemo(() => {
+    const [width] = BASE_DIMENSIONS[base];
+    // margin + picker + gutter + base + margin
+    const minWidth = GRID_SIZE + MIN_PICKER_WIDTH + GRID_SIZE + width + GRID_SIZE;
+    return `(max-width: ${minWidth}px)`;
+  }, [base]);
+
+  const isMobile = useMediaQuery({ query });
+
+  return isMobile;
+}

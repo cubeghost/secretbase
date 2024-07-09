@@ -251,7 +251,7 @@ h1:after {
   direction: ltr;
 }
 .grid.mobile {
-  --header-rows: 4;
+  --header-rows: 3;
 
   margin-right: 0;
   margin-left: 0;
@@ -328,6 +328,13 @@ h1:after {
 }
 .mobile .controls.base-options {
   grid-column: 2 / -2;
+}
+.grid.mobile:has(.controls.base-options) {
+  --controls-rows: 1;
+  transition: 200ms ease;
+}
+.grid.mobile:has(.controls.base-options.is-expanded) {
+  --controls-rows: 3;
 }
 .controls:has(.with-border-top-bar) {
   padding-top: calc(var(--grid-size) * 1.5);
@@ -503,6 +510,7 @@ h1:after {
   transform: scale(0.5);
   margin-bottom: 0;
   margin-right: -12px;
+  margin-left: -12px;
 }
 .icon-button.icon-button--clear:before {
   background-image: url(./assets/trash.png);
@@ -607,6 +615,9 @@ h1:after {
   display: flex;
   gap: 2rem;
   align-items: flex-end;
+}
+.mobile .debug {
+  background-color: #18a068;
 }
 .debug h4 {
   margin: 0 0 0.25rem;

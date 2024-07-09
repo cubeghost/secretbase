@@ -7,6 +7,7 @@ import DraggableItem from './DraggableItem';
 import { ITEMS as _ITEMS, CATEGORIES } from '../constants';
 import { Category, Item } from '../types';
 import jumpTo from '../assets/jump_to.png';
+import { useMobileQuery } from '../hooks';
 
 const ITEMS = _ITEMS as unknown as Item[];
 
@@ -32,9 +33,10 @@ interface CategoryOptionType {
 interface ItemPickerProps {
   enableUnofficialItems: boolean;
   onChangeUnofficialItems: ChangeEventHandler<HTMLInputElement>;
+  isMobileLayout: boolean;
 }
 
-const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems }: ItemPickerProps) => {
+const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems, isMobileLayout }: ItemPickerProps) => {
   const [isExpanded, setExpanded] = useState(false);
 
   const categoryOptions = useMemo(() => 

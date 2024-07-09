@@ -1,30 +1,25 @@
 import { useCallback, useState, useMemo, useRef, useEffect, ChangeEvent } from 'react';
 import type { DragEndEvent, DropAnimationFunction } from '@dnd-kit/core';
 import clsx from 'clsx';
-import { useMediaQuery } from 'react-responsive';
 
 import CustomDndContext from './components/DndContext';
 import DraggableItem from './components/DraggableItem';
 import ItemPicker from './components/ItemPicker';
 import DroppableBase from './components/DroppableBase';
-import BasePicker from './components/BasePicker';
+import BaseOptions from './components/BaseOptions';
 import DefaultItems from './components/DefaultItems';
 import Credits from './components/Credits';
 import Music from "./components/Music"
 import Save from "./components/Save";
 import Share from './components/Share';
 
-import { GRID_SIZE, POOF_DURATION } from './constants';
+import { POOF_DURATION } from './constants';
 import type { ItemState, SaveData, BaseId } from './types';
 import { nanoid, sortItemsByDropped } from './utils';
 import { decodeSaveData, maximizeSaveData } from './share';
 import title from './assets/title.png';
-import labelBase from './assets/label_base.png';
-import { useBaseCssVariables, useCssVariables } from './hooks';
+import { useMobileQuery, useBaseCssVariables, useCssVariables } from './hooks';
 
-import { BASE_DIMENSIONS } from 'virtual:base-dimensions';
-
-const MIN_PICKER_WIDTH = 280;
 
 // initialize
 const defaultState: SaveData = {
@@ -80,6 +75,15 @@ function App() {
 
   const onChangeUnofficialItems = useCallback((event: ChangeEvent<HTMLInputElement>) => 
     setUnofficialItems(event.target.checked)
+  , []);
+  const onChangeSnapToGrid = useCallback((event: ChangeEvent<HTMLInputElement>) => 
+    setSnapToGrid(event.target.checked)
+  , []);
+  const onChangeDefaultLaptop = useCallback((event: ChangeEvent<HTMLInputElement>) => 
+    setDefaultLaptop(event.target.checked)
+  , []);
+  const onChangeDefaultLandscape = useCallback((event: ChangeEvent<HTMLInputElement>) => 
+    setDefaultLandscape(event.target.checked)
   , []);
 
   const getSaveData = useCallback(() => {
@@ -153,15 +157,7 @@ function App() {
     }
   }, []);
 
-  const query = useMemo(() => {
-    const [width] = BASE_DIMENSIONS[base];
-    // margin + picker + gutter + base + margin
-    const minWidth = GRID_SIZE + MIN_PICKER_WIDTH + GRID_SIZE + width + GRID_SIZE;
-    return `(max-width: ${minWidth}px)`;
-  }, [base]);
-
-  const isMobile = useMediaQuery({ query });
-
+  const isMobileLayout = useMobileQuery(base);
   const cssVariables = useCssVariables();
   const baseCssVariables = useBaseCssVariables(base);
 
@@ -171,7 +167,7 @@ function App() {
       dropAnimation={dropAnimation}
       onDragEnd={onDragEnd}
     >
-      <div className={clsx('grid', { mobile: isMobile })} style={{ ...cssVariables, ...baseCssVariables }}>
+      <div className={clsx('grid', { mobile: isMobileLayout })} style={{ ...cssVariables, ...baseCssVariables }}>
         <header>
           <div>
             <h1>
@@ -192,42 +188,20 @@ function App() {
         <ItemPicker
           enableUnofficialItems={enableUnofficialItems}
           onChangeUnofficialItems={onChangeUnofficialItems}
+          isMobileLayout={isMobileLayout}
         />
 
-        <div role="region" aria-label="options" className="controls base-options with-border">
-          <div className="with-border-top-bar">
-            <h3>
-              <img src={labelBase} height={12} alt="Base" className="util-block util-pixelated" />
-            </h3>
-            <div className="base-picker">
-              <BasePicker value={base} onChange={setBase} />
-            </div>
-          </div>
-          <label className="util-block">
-            <input
-              type="checkbox"
-              checked={enableSnapToGrid}
-              onChange={(event) => setSnapToGrid(event.target.checked)}
-            />
-            Snap to grid
-          </label>
-          <label className="util-block">
-            <input
-              type="checkbox"
-              checked={enableDefaultLaptop}
-              onChange={(event) => setDefaultLaptop(event.target.checked)}
-            />
-            Default laptop
-          </label>
-          <label className="util-block">
-            <input
-              type="checkbox"
-              checked={enableDefaultLandscape}
-              onChange={(event) => setDefaultLandscape(event.target.checked)}
-            />
-            Default landscape items
-          </label>
-        </div>
+        <BaseOptions
+          base={base}
+          enableSnapToGrid={enableSnapToGrid}
+          enableDefaultLaptop={enableDefaultLaptop}
+          enableDefaultLandscape={enableDefaultLandscape}
+          onChangeBase={setBase}
+          onChangeSnapToGrid={onChangeSnapToGrid}
+          onChangeDefaultLaptop={onChangeDefaultLaptop}
+          onChangeDefaultLandscape={onChangeDefaultLandscape}
+          isMobileLayout={isMobileLayout}
+        />
 
         <main className={clsx('base', { 'show-grid': showGrid, 'show-outlines': showOutlines })}>
           <DroppableBase id={base} ref={baseRef} />
@@ -246,11 +220,11 @@ function App() {
           ))}
         </main>
 
-        {!isMobile && <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>}
+        {!isMobileLayout && <div className="reserve-gap-column" style={{ gridColumn: 'base-end / picker-start' }}></div>}
         <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
         <div className="reserve-gap-row" style={{ gridRow: 'controls-end / interactive-area-start' }}></div>
         
-        <div className="debug with-bw-border">
+        <div className={clsx('debug', {'with-bw-border': !isMobileLayout})}>
           <div>
             <h4>debug</h4>
             <label>
