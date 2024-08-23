@@ -8,7 +8,7 @@ import ItemPicker from './components/ItemPicker';
 import DroppableBase from './components/DroppableBase';
 import BaseOptions from './components/BaseOptions';
 import DefaultItems from './components/DefaultItems';
-import Credits from './components/Credits';
+// import Credits from './components/Credits';
 import Music from "./components/Music"
 import Save from "./components/Save";
 import Share from './components/Share';
