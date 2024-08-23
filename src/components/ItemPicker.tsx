@@ -56,6 +56,7 @@ const ItemPicker = ({ enableUnofficialItems, onChangeUnofficialItems, isMobileLa
     if (option) {
       const category = document.getElementById(`category-${option.value}`);
       category?.scrollIntoView({ behavior: 'smooth' });
+      // TODO focus?
     }
   }, []);
 
