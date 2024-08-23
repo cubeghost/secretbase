@@ -46,6 +46,10 @@ const initialState = await (async () => {
     return defaultState;
   }
 })();
+const enableDebug = (() => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('debug') === '1';
+})();
 
 function App() {
   const [base, setBase] = useState<BaseId>(initialState.base);
@@ -224,26 +228,29 @@ function App() {
         <div className="reserve-gap-row" style={{ gridRow: 'header-end / controls-start' }}></div>
         <div className="reserve-gap-row" style={{ gridRow: 'controls-end / interactive-area-start' }}></div>
         
-        <div className={clsx('debug', {'with-bw-border': !isMobileLayout})}>
-          <div>
-            <h4>debug</h4>
-            <label>
-              <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
-              show grid
-            </label>
-            <br />
-            <label>
-              <input type="checkbox" checked={showOutlines} onChange={(event) => setShowOutlines(event.target.checked)} />
-              show item outlines
-            </label>
-          </div>
-          {showOutlines && (
+
+        {enableDebug && (
+          <div className={clsx('debug', {'with-bw-border': !isMobileLayout})}>
             <div>
-              <label><div style={{ display: 'inline-block', background: 'var(--debug-item-color)', width: '1rem', height: '1rem' }} /> items</label><br />
-              <label><div style={{ display: 'inline-block', background: 'var(--debug-default-item-color)', width: '1rem', height: '1rem' }} /> default items</label>
+              <h4>debug</h4>
+              <label>
+                <input type="checkbox" checked={showGrid} onChange={(event) => setShowGrid(event.target.checked)} />
+                show grid
+              </label>
+              <br />
+              <label>
+                <input type="checkbox" checked={showOutlines} onChange={(event) => setShowOutlines(event.target.checked)} />
+                show item outlines
+              </label>
             </div>
-          )}
-        </div>
+            {showOutlines && (
+              <div>
+                <label><div style={{ display: 'inline-block', background: 'var(--debug-item-color)', width: '1rem', height: '1rem' }} /> items</label><br />
+                <label><div style={{ display: 'inline-block', background: 'var(--debug-default-item-color)', width: '1rem', height: '1rem' }} /> default items</label>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </CustomDndContext>
   );
